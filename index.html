@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivam Asthana | Sustainability & Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1a3328;
+      --moss: #2d5a3d;
+      --sage: #4a7c59;
+      --leaf: #6aab7a;
+      --mist: #a8c5b0;
+      --cream: #f4f0e8;
+      --parchment: #ede8dc;
+      --warm-white: #faf8f4;
+      --ink: #1c1c1a;
+      --stone: #6b6b64;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(244,240,232,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--forest);
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--stone);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--moss); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--forest);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 60px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(106,171,122,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 30%;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(106,171,122,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(106,171,122,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .hero-name em {
+      font-style: normal;
+      color: var(--leaf);
+    }
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 300;
+      color: var(--mist);
+      margin-bottom: 48px;
+      max-width: 560px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .pill {
+      padding: 8px 18px;
+      border: 1px solid rgba(106,171,122,0.4);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      color: var(--mist);
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+    .pill:hover {
+      background: rgba(106,171,122,0.12);
+      border-color: var(--leaf);
+      color: var(--leaf);
+    }
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--leaf);
+      color: var(--forest);
+      border: none;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(244,240,232,0.3);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-outline:hover {
+      background: rgba(244,240,232,0.08);
+      border-color: rgba(244,240,232,0.6);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--mist);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s forwards;
+    }
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--mist);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 100px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--forest);
+      line-height: 1.2;
+      margin-bottom: 48px;
+    }
+    .section-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--leaf);
+      margin-bottom: 48px;
+      border-radius: 2px;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--parchment); }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 60px;
+    }
+
+    /* Header row: label + title + divider */
+    .about-header {
+      margin-bottom: 48px;
+    }
+
+    /* Cards row */
+    .about-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .about-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(74,124,89,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .about-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26,51,40,0.1);
+    }
+    .about-card h4 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1rem;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+    .about-card p {
+      font-size: 0.85rem;
+      color: var(--stone);
+      line-height: 1.6;
+    }
+
+    /* Bio text below cards */
+    .about-bio {
+      max-width: 860px;
+    }
+    .about-bio p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #3a3a35;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .about-bio p:last-child { margin-bottom: 0; }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--warm-white); }
+
+    .projects-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+    }
+
+    .project-type-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid rgba(74,124,89,0.2);
+      color: var(--stone);
+      background: transparent;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .tab.active, .tab:hover {
+      background: var(--forest);
+      color: white;
+      border-color: var(--forest);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      min-height: 200px;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(74,124,89,0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(26,51,40,0.12);
+    }
+    .project-card.hidden { display: none; }
+
+    .project-banner {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-banner.carbon {
+      background: linear-gradient(135deg, #1a3328 0%, #2d5a3d 60%, #4a7c59 100%);
+    }
+    .project-banner.placeholder-banner {
+      background: linear-gradient(135deg, #2a3240 0%, #3d4a5c 60%, #536070 100%);
+    }
+    .project-banner-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      z-index: 1;
+    }
+    .project-banner-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .project-type-badge {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+    }
+    .project-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-body h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--forest);
+      margin-bottom: 10px;
+    }
+    .project-body p {
+      font-size: 0.9rem;
+      color: var(--stone);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: rgba(74,124,89,0.1);
+      color: var(--moss);
+      border-radius: 100px;
+      font-weight: 500;
+    }
+    .project-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-sm-primary { background: var(--forest); color: white; }
+    .btn-sm-primary:hover { background: var(--moss); }
+    .btn-sm-ghost {
+      background: transparent;
+      color: var(--stone);
+      border: 1px solid rgba(107,107,100,0.25);
+    }
+    .btn-sm-ghost:hover {
+      background: var(--parchment);
+      color: var(--forest);
+    }
+    .coming-soon-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,51,40,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+    }
+    .coming-soon-badge {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      padding: 6px 16px;
+      border-radius: 100px;
+    }
+
+    /* ── PAGINATION ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 48px;
+    }
+    .pagination-btn {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(74,124,89,0.2);
+      background: transparent;
+      color: var(--stone);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pagination-btn:hover,
+    .pagination-btn.active {
+      background: var(--forest);
+      color: white;
+      border-color: var(--forest);
+    }
+    .pagination-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+    .pagination-btn.active { font-weight: 700; }
+    .pagination-arrow {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--parchment); }
+
+    .experience-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--leaf), var(--mist));
+      border-radius: 2px;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 48px;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -38px;
+      top: 8px;
+      width: 14px; height: 14px;
+      background: var(--leaf);
+      border-radius: 50%;
+      border: 3px solid var(--parchment);
+      box-shadow: 0 0 0 2px var(--leaf);
+    }
+    .exp-card {
+      background: white;
+      padding: 28px 32px;
+      border-radius: 12px;
+      border: 1px solid rgba(74,124,89,0.1);
+      transition: box-shadow 0.2s;
+    }
+    .exp-card:hover { box-shadow: 0 8px 24px rgba(26,51,40,0.08); }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .exp-org {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--forest);
+    }
+    .exp-date {
+      font-size: 0.8rem;
+      color: var(--stone);
+      background: rgba(74,124,89,0.08);
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .exp-role {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--sage);
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+    .exp-desc {
+      font-size: 0.9rem;
+      color: var(--stone);
+      line-height: 1.75;
+      font-style: italic;
+    }
+    ul.exp-desc { padding-left: 18px; }
+    ul.exp-desc li { margin-bottom: 6px; }
+
+    /* ── EDUCATION ── */
+    #education { background: var(--warm-white); }
+
+    .edu-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+    }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .edu-card {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      border-left: 4px solid var(--leaf);
+      box-shadow: 0 2px 12px rgba(26,51,40,0.05);
+      transition: transform 0.2s;
+    }
+    .edu-card:hover { transform: translateX(4px); }
+    .edu-degree {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+    /* CHANGED: university name now larger */
+    .edu-school {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--sage);
+      margin-bottom: 6px;
+    }
+    .edu-date {
+      font-size: 0.82rem;
+      color: var(--stone);
+      margin-bottom: 8px;
+    }
+    .edu-focus {
+      font-size: 0.88rem;
+      color: var(--stone);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--forest); }
+
+    .skills-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+    }
+    .skills-inner .section-title { color: var(--cream); }
+    .skills-inner .section-label { color: var(--gold); }
+    .skills-inner .section-divider { background: var(--gold); }
+
+    .skills-clusters {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .skill-cluster {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 24px;
+      border-radius: 12px;
+    }
+    .skill-cluster h4 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .skill-item {
+      font-size: 0.88rem;
+      color: var(--mist);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .skill-item::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--leaf);
+      flex-shrink: 0;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--parchment); }
+
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .contact-text .section-title { margin-bottom: 16px; }
+    .contact-text p {
+      font-size: 1rem;
+      color: var(--stone);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--moss); }
+    .contact-link-icon {
+      width: 40px; height: 40px;
+      background: white;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(26,51,40,0.1);
+      transition: transform 0.2s;
+    }
+    .contact-link:hover .contact-link-icon { transform: scale(1.1); }
+    .contact-visual {
+      background: var(--forest);
+      border-radius: 20px;
+      padding: 48px;
+      text-align: center;
+    }
+    .contact-visual-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+    .contact-visual p {
+      color: var(--mist);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .sustainability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 10px 20px;
+      border: 1px solid rgba(106,171,122,0.4);
+      border-radius: 100px;
+      color: var(--leaf);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.82rem;
+    }
+    footer span { color: var(--leaf); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .about-inner { padding: 60px 24px; }
+      .about-cards { grid-template-columns: 1fr 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .section, .projects-inner, .experience-inner, .skills-inner, .edu-inner { padding: 60px 24px; }
+    }
+    @media (max-width: 540px) {
+      .about-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SA</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Sustainability · Business · Data</p>
+  <h1 class="hero-name">Shivam<br><em>Asthana</em></h1>
+  <p class="hero-tagline">Turning sustainability data into insights on business, strategy, and real-world impact.</p>
+  <div class="hero-pills">
+    <span class="pill">Sustainability Reporting</span>
+    <span class="pill">Sustainability Data</span>
+    <span class="pill">Emissions & Scope 1-3</span>
+    <span class="pill">ESG Frameworks</span>
+    <span class="pill">Energy & Climate Data</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">View My Work</a>
+    <!-- Download CV button — replace href with actual CV file path when available -->
+    <a href="cv.pdf" download="Shivam_Asthana_CV.pdf" class="btn-outline">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 10.5L3.5 6.5M7.5 10.5L11.5 6.5M7.5 10.5V1.5M2 13.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Download CV
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-line"></span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div id="about">
+
+  <div class="about-inner">
+
+    <!-- Header -->
+    <div class="about-header reveal">
+      <p class="section-label">About Me</p>
+      <div class="section-divider"></div>
+    </div><div class="about-bio reveal">
+      <p>I am an MBA graduate from the University of Mannheim, with a focus on sustainability, strategy, and data. Sustainability is no longer a side agenda  it is becoming the operating system of modern business, and I focus on understanding how that transition plays out in practice.</p>
+      <p>My thesis explored how emerging technologies intersect with regulatory pressure, and what that means for business adoption translating complex technical and ESG frameworks into structured go-to-market implications. I then applied this in practice, working on CSRD reporting and ESG data analysis, building dashboards that made compliance data more usable for decision-makers.</p>
+      <p>I sit at the intersection of data, regulation, and business strategy and that is where some of the most important work is happening right now.</p>
+
+<h2 class="section-title">Understanding sustainability<br>through a business lens.</h2>    
+    <!-- Four cards -->
+    <div class="about-cards">
+      <div class="about-card reveal">
+        <h4>Making compliance strategic</h4>
+        <p>I don't treat ESG frameworks as a checklist. I use them to understand where regulation creates business risk and where it can shape opportunity.</p>
+      </div>
+      <div class="about-card reveal">
+        <h4>Turning data into decisions</h4>
+        <p>I work with sustainability and emissions data end-to-end from structuring raw data to building dashboards that make insights clearer and more usable.</p>
+      </div>
+      <div class="about-card reveal">
+        <h4>Bridging technical and business thinking</h4>
+        <p>I work across regulatory frameworks and market contexts, translating both into structured insights that make sense from a business perspective.</p>
+      </div>
+      <div class="about-card reveal">
+        <h4>Seeing the bigger picture</h4>
+        <p>I look at sustainability as a system how policy, technology, and markets interact and what that means for companies navigating this space.</p>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects">
+  <div class="projects-inner">
+    <p class="section-label reveal">Featured Work</p>
+    <h2 class="section-title reveal">Projects & Analysis</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="project-type-tabs reveal">
+      <button class="tab active" data-filter="all">All</button>
+      <button class="tab" data-filter="data">Data Analysis</button>
+      <button class="tab" data-filter="Insights">Insights Analysis</button>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+
+      <!-- PROJECT 1 — LIVE -->
+      <div class="project-card reveal" data-category="data">
+        <div class="project-banner carbon">
+          <div style="text-align:center; z-index:1;">
+            <span class="project-banner-icon"> </span>
+            <div class="project-banner-text">Carbon × Cost</div>
+          </div>
+          <span class="project-type-badge">Data Analysis</span>
+        </div>
+        <div class="project-body">
+          <h3>Carbon Pricing × Manufacturing</h3>
+          <p>How EU ETS carbon prices translate industrial emissions into real financial cost pressure — and what this means for manufacturing strategy in a decarbonising Europe.</p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">EU ETS</span>
+            <span class="tag">Scenario Analysis</span>
+            <span class="tag">Cost Modelling</span>
+          </div>
+          <div class="project-actions">
+            <a href="project1_esg_style.html" class="btn-sm btn-sm-primary">View Project →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project-card reveal" data-category="data">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #233a63 0%, #2f4f82 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">Corporate Carbon</div>
+    </div>
+    <span class="project-type-badge">Data Analysis</span>
+  </div>
+  <div class="project-body">
+    <h3>Where Corporate Carbon Actually Lives</h3>
+    <p>Analysis of how Scope 3 dominates corporate emissions across sectors, and why disclosure depth often fails to match real exposure.</p>
+    <div class="project-tags">
+      <span class="tag">Scope 3</span>
+      <span class="tag">Emissions Data</span>
+      <span class="tag">Disclosure</span>
+      <span class="tag">Python</span>
+    </div>
+    <div class="project-actions">
+      <a href="corporate_carbon_analysis.html" class="btn-sm btn-sm-primary">View Project →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- PROJECT 3 -->
+      <div class="project-card reveal" data-category="data">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1f5fbf 0%, #4d84d6 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">Net Zero Gap</div>
+    </div>
+    <span class="project-type-badge">Data Analysis</span>
+  </div>
+  <div class="project-body">
+    <h3>Germany’s Net Zero Gap</h3>
+    <p>Comparing Germany’s historical emissions reductions with the pace now required to stay aligned with its climate targets.</p>
+    <div class="project-tags">
+      <span class="tag">Germany</span>
+      <span class="tag">Net Zero</span>
+      <span class="tag">Sector Analysis</span>
+      <span class="tag">Climate Policy</span>
+    </div>
+    <div class="project-actions">
+      <a href="germany_net_zero_gap_analysis.html" class="btn-sm btn-sm-primary">View Project →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- PROJECT 4 -->
+      <div class="project-card reveal" data-category="data">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1f5fbf 0%, #4d84d6 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">Supply Chain x ESG </div>
+    </div>
+    <span class="project-type-badge">Data Analysis</span>
+  </div>
+  <div class="project-body">
+    <h3>Food Supply Chain ESG Risk Dashboard</h3>
+    <p>This dashboard maps supply chain risk across 8 key food-sourcing countries using four independently measured dimensions.</p>
+    <div class="project-tags">
+      <span class="tag">Supply Chain</span>
+      <span class="tag">ESG</span>
+      <span class="tag">Python</span>
+          </div>
+    <div class="project-actions">
+      <a href="food_supply_chain_esg_dashboard.html" class="btn-sm btn-sm-primary">View Project →</a>
+    </div>
+  </div>
+</div>
+      <!-- PROJECT 4 -->
+      <div class="project-card reveal" data-category="Insights">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1f3c5a 0%, #355c85 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">ESG Ratings</div>
+    </div>
+    <span class="project-type-badge">Insights </span>
+  </div>
+  <div class="project-body">
+    <h3>Why ESG Ratings Don’t Measure the Same Thing</h3>
+    <p>Why the same company can look like a leader, laggard, or something in between depending on which ESG rating framework is used.</p>
+    <div class="project-tags">
+      <span class="tag">ESG Ratings</span>
+      <span class="tag">MSCI</span>
+      <span class="tag">Sustainalytics</span>
+      <span class="tag">CDP</span>
+    </div>
+    <div class="project-actions">
+      <a href="Article1.html" class="btn-sm btn-sm-primary">Read Article →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- PROJECT 5 -->
+      <div class="project-card reveal" data-category="Insights">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #244b63 0%, #3f6f8f 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">Scope 3</div>
+    </div>
+    <span class="project-type-badge">Insights</span>
+  </div>
+  <div class="project-body">
+    <h3>Scope 3 Emissions: Why Most Corporate Carbon Is Still Invisible</h3>
+    <p>A business-focused article on why value-chain emissions dominate corporate footprints and why they are still poorly managed.</p>
+    <div class="project-tags">
+      <span class="tag">Scope 3</span>
+      <span class="tag">GHG Protocol</span>
+      <span class="tag">CSRD</span>
+      <span class="tag">Climate Strategy</span>
+    </div>
+    <div class="project-actions">
+      <a href="scope3_article.html" class="btn-sm btn-sm-primary">Read Article →</a>
+    </div>
+  </div>
+</div>
+
+                </div>
+        </div>
+      </div>
+
+    </div><!-- /projects-grid -->
+
+    <!-- PAGINATION -->
+    <div class="pagination" id="pagination"></div>
+
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div id="experience">
+  <div class="experience-inner">
+    <p class="section-label reveal">Background</p>
+    <h2 class="section-title reveal">Professional Experience</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-org">Drees & Sommer</span>
+            <span class="exp-date">Oct 25 – Present</span>
+          </div>
+          <p class="exp-role">Sustainability Intern</p>
+          <ul class="exp-desc">
+            <li>Consolidated Scope 1-3 emissions data across multiple offices, structuring it into CSRD-aligned outputs that fed directly into the Sustainability Report 2024.</li>
+            <li>Built Power BI and Excel dashboards, creating a more consistent and usable view of ESG data across leadership, finance, and operations.</li>
+            <li>Defined a sustainability KPI framework for project teams, establishing how sustainability considerations could be systematically evaluated across projects.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-org">Microsoft: Thesis Project</span>
+            <span class="exp-date">May 2025 – August 2025</span>
+          </div>
+          <p class="exp-role">Consultant</p>
+          <ul class="exp-desc">
+            <li>Built scenario models quantifying real-world energy consumption differences across AI workloads, linking technical performance to CSRD, SBTi, and SASB frameworks to establish the emissions impact case.</li>
+            <li>Analysed enterprise adoption patterns across industries, identifying segments under the highest decarbonisation pressure and most likely to drive early adoption.</li>
+            <li>Translated technical and ESG insights into a go-to-market recommendation, positioning the product as a Scope 2 reduction lever rather than just a productivity tool.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-org">Rotary</span>
+            <span class="exp-date">August 2022 – April 2024</span>
+          </div>
+          <p class="exp-role">Project Consultant</p>
+          <ul class="exp-desc">
+            <li>Designed and implemented a data-driven monitoring and evaluation system, using baseline–endline analysis and statistical methods to measure outcomes and identify what was actually driving results.</li>
+            <li>Conducted field-based research and iterative testing (including outreach and engagement experiments), using both qualitative insights and quantitative data to refine program design and improve effectiveness.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="exp-card">
+          <div class="exp-header">
+            <span class="exp-org">National Skill Development Corporation</span>
+            <span class="exp-date">May 2018 – May 2022</span>
+          </div>
+          <p class="exp-role">Policy Consultant</p>
+          <ul class="exp-desc">
+            <li>Designed performance-based funding models and KPI frameworks across 38 sectors, supporting €60M+ program flows and reducing process timelines from 40 to 13 days through system redesign.</li>
+            <li>Built audit-ready dashboards and verification systems used by government officials and senior leadership for resource allocation and oversight.</li>
+            <li>Structured an Impact Bond pilot and conducted sector research (including green jobs and renewables), linking large-scale program design with measurable outcomes.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<div id="education">
+  <div class="edu-inner">
+    <p class="section-label reveal">Academic Background</p>
+    <h2 class="section-title reveal">Education</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <p class="edu-degree">Master of Business Administration</p>
+        <p class="edu-school">University of Mannheim</p>
+        <p class="edu-date">September 2024 – December 2025</p>
+        <p class="edu-focus">Sustainability Strategy, Data Analytics, and Corporate Transformation</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="skills-inner">
+    <p class="section-label reveal">Capabilities</p>
+    <h2 class="section-title reveal">Skills & Tools</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="skills-clusters">
+      <div class="skill-cluster reveal">
+        <h4>Data & Analytics</h4>
+        <div class="skill-list">
+          <span class="skill-item">ESG & Emissions Data Analysis</span>
+          <span class="skill-item">Data Structuring & Cleaning</span>
+          <span class="skill-item">Dashboarding (Power BI, Excel)</span>
+          <span class="skill-item">Scenario Modelling</span>
+          <span class="skill-item">Python (Pandas, Matplotlib)</span>
+        </div>
+      </div>
+      <div class="skill-cluster reveal">
+        <h4>Sustainability</h4>
+        <div class="skill-list">
+          <span class="skill-item">Scope 1-3 Accounting</span>
+          <span class="skill-item">CSRD/ESRS reporting</span>
+          <span class="skill-item">GHG Protocol</span>
+          <span class="skill-item">Carbon Markets</span>
+          <span class="skill-item">TCFD</span>
+        </div>
+      </div>
+      <div class="skill-cluster reveal">
+        <h4>Business & Strategy</h4>
+        <div class="skill-list">
+          <span class="skill-item">Market & Adoption Analysis</span>
+          <span class="skill-item">Regulatory Impact Assessment</span>
+          <span class="skill-item">Stakeholder Analysis</span>
+          <span class="skill-item">Competitive Analysis</span>
+        </div>
+      </div>
+      <div class="skill-cluster reveal">
+        <h4>Communication</h4>
+        <div class="skill-list">
+          <span class="skill-item">Data Storytelling</span>
+          <span class="skill-item">ESG Reporting & Narratives</span>
+          <span class="skill-item">Presentations</span>
+          <span class="skill-item">English (C2) · German (B1)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="contact-inner">
+    <div class="contact-text reveal">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's work<br>together.</h2>
+      <div class="section-divider"></div>
+      <p>I am actively looking for roles in sustainability, ESG consulting, and strategy. If you are working on something at the intersection of business and the environment — I would love to hear from you.</p>
+      <div class="contact-links">
+       <a href="mailto:shivamasthana.sa@gmail.com" class="contact-link">
+  <span class="contact-link-icon">✉️</span>
+  shivamasthana.sa@gmail.com
+	</a>
+        </a>
+        <a href="https://www.linkedin.com/in/shivam-asthana-/" class="contact-link" target="_blank">
+          <span class="contact-link-icon">💼</span>
+          https://www.linkedin.com/in/shivam-asthana-/
+        </a>
+      </div>
+    </div>
+    <div class="contact-visual reveal">
+      <div class="contact-visual-title">Shivam Asthana</div>
+      <p>MBA · University of Mannheim <br>Sustainability · Strategy · Analytics</p>
+      <div class="sustainability-badge">
+        🌿 Open to opportunities
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Shivam Asthana · Built with intent · <span>Sustainability & Strategy</span></p>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Stagger children
+  document.querySelectorAll('.about-cards, .skills-clusters, .edu-grid').forEach(container => {
+    container.querySelectorAll('.reveal').forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+
+  // ── Projects pagination ──
+  const CARDS_PER_PAGE = 6;
+  let currentPage = 1;
+  let activeFilter = 'all';
+
+  const grid = document.getElementById('projectsGrid');
+  const paginationEl = document.getElementById('pagination');
+
+  function getFilteredCards() {
+    return Array.from(grid.querySelectorAll('.project-card')).filter(card => {
+      if (activeFilter === 'all') return true;
+      if (activeFilter === 'data') return card.dataset.category === 'data';
+      if (activeFilter === 'Insights') return card.dataset.category === 'Insights';
+      return true;
+    });
+  }
+
+  function renderPage(page) {
+    currentPage = page;
+    const filtered = getFilteredCards();
+    const allCards = Array.from(grid.querySelectorAll('.project-card'));
+    const start = (page - 1) * CARDS_PER_PAGE;
+    const end = start + CARDS_PER_PAGE;
+
+    // Hide all first
+    allCards.forEach(c => c.classList.add('hidden'));
+
+    // Show only cards for this page + filter
+    filtered.slice(start, end).forEach(c => c.classList.remove('hidden'));
+
+    renderPagination(filtered.length);
+    // Scroll projects section into view gently when page changes (not on first render)
+    if (page > 1) {
+      document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function renderPagination(total) {
+    const totalPages = Math.ceil(total / CARDS_PER_PAGE);
+    paginationEl.innerHTML = '';
+
+    if (totalPages <= 1) return; // No pagination needed for 6 or fewer
+
+    // Prev button
+    const prev = document.createElement('button');
+    prev.className = 'pagination-btn pagination-arrow';
+    prev.innerHTML = '‹';
+    prev.disabled = currentPage === 1;
+    prev.addEventListener('click', () => renderPage(currentPage - 1));
+    paginationEl.appendChild(prev);
+
+    // Page number buttons
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.addEventListener('click', () => renderPage(i));
+      paginationEl.appendChild(btn);
+    }
+
+    // Next button
+    const next = document.createElement('button');
+    next.className = 'pagination-btn pagination-arrow';
+    next.innerHTML = '›';
+    next.disabled = currentPage === totalPages;
+    next.addEventListener('click', () => renderPage(currentPage + 1));
+    paginationEl.appendChild(next);
+  }
+
+  // Initial render
+  renderPage(1);
+
+  // ── Tab filtering ──
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeFilter = tab.dataset.filter;
+      renderPage(1);
+    });
+  });
+</script>
+</body>
+</html>

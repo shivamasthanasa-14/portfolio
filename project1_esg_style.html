@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon Pricing × Manufacturing — Portfolio Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --text: #18263a;
+    --muted: #5f6f86;
+    --accent: #243b63;
+    --accent-2: #2f4f82;
+    --border: #dbe3ef;
+    --shadow: 0 10px 30px rgba(23, 43, 77, 0.08);
+    --radius: 18px;
+    --soft: #eef3fb;
+    --success-bg: #eaf6ef;
+    --success-text: #1f6b45;
+    --warning-bg: #fff4e8;
+    --warning-text: #b96a10;
+    --teal-soft: #e8f6f4;
+    --teal-text: #177b71;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 16px 64px;
+  }
+
+  .page-header,
+  .main,
+  .page-footer {
+    width: min(1100px, calc(100% - 0px));
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    background: linear-gradient(145deg, #eef3fb 0%, #ffffff 55%);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    padding: 42px 42px 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    color: var(--text);
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(36, 59, 99, 0.08);
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    right: 60px;
+    top: 60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(36, 59, 99, 0.06);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.9);
+    border-radius: 999px;
+    padding: 8px 12px;
+  }
+
+  h1 {
+    margin: 0 0 14px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    color: var(--accent);
+    font-weight: 800;
+    max-width: 760px;
+    letter-spacing: -0.02em;
+  }
+
+  .sub {
+    font-size: 1.08rem;
+    color: var(--muted);
+    max-width: 860px;
+    margin-bottom: 22px;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 10px;
+  }
+
+  .kpi {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 4px 18px rgba(23, 43, 77, 0.04);
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .kpi-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .kpi-num.down { color: #1f6b45; }
+  .kpi-num.up { color: #c46b1a; }
+
+  .kpi-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.45;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .full, .left, .right, .caveat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .full { grid-column: 1 / -1; }
+  .left { grid-column: 1; }
+  .right { grid-column: 2; }
+
+  .section-title {
+    display: block;
+    margin: 0 0 14px;
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .chart-wrap {
+    position: relative;
+    height: 260px;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
+    padding: 10px;
+  }
+
+  svg.chart { width: 100%; height: 100%; overflow: visible; }
+
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    overflow: hidden;
+    border-radius: 14px;
+  }
+
+  table.data thead th {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    padding: 0 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-weight: 700;
+  }
+
+  table.data thead th:first-child { text-align: left; }
+
+  table.data tbody tr:hover td { background: #f8fbff; }
+
+  table.data tbody td {
+    padding: 9px 8px;
+    text-align: right;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 13px;
+    color: var(--text);
+    transition: background 0.15s;
+  }
+
+  table.data tbody td:first-child {
+    text-align: left;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .ph-badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    margin-left: 6px;
+    color: white;
+    vertical-align: middle;
+    font-weight: 700;
+  }
+
+  .insights { display: flex; flex-direction: column; gap: 14px; }
+
+  .insight-card {
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: #fafcff;
+    border: 1px solid var(--border);
+  }
+
+  .insight-card.amber {
+    background: var(--warning-bg);
+    border-color: #f3dfc5;
+  }
+
+  .insight-card.teal {
+    background: var(--teal-soft);
+    border-color: #cfe8e4;
+  }
+
+  .insight-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+
+  .insight-card.amber .insight-title { color: var(--warning-text); }
+  .insight-card.teal .insight-title { color: var(--teal-text); }
+
+  .insight-text {
+    font-size: 0.96rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .insight-text strong { color: var(--text); }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .company-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .company-card:hover {
+    box-shadow: 0 8px 32px rgba(23, 43, 77, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-head {
+    padding: 18px 20px 14px;
+    background: linear-gradient(135deg, #233a63 0%, #2f4f82 100%);
+    color: white;
+  }
+
+  .card-company {
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .card-sector {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .card-body { padding: 18px 20px 20px; }
+
+  .card-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-stat-label {
+    font-size: 0.76rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+  }
+
+  .card-stat-value {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .card-strategy {
+    font-size: 0.94rem;
+    color: var(--muted);
+    line-height: 1.62;
+    margin-bottom: 14px;
+  }
+
+  .card-verdict {
+    font-size: 0.86rem;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 12px;
+    line-height: 1.5;
+  }
+
+  .verdict-invest { background: var(--success-bg); color: var(--success-text); }
+  .verdict-watch { background: var(--warning-bg); color: var(--warning-text); }
+  .verdict-pioneer { background: var(--teal-soft); color: var(--teal-text); }
+
+  .caveat {
+    background: #fafcff;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .caveat strong { color: var(--text); }
+
+  .page-footer {
+    color: var(--muted);
+    font-size: 0.92rem;
+    text-align: center;
+    margin-top: 18px;
+    padding: 0;
+    border-top: none;
+    display: block;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+  }
+
+  .page-footer span {
+    display: inline-block;
+    margin: 0 8px 8px;
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 24px 12px 48px; }
+    .page-header { padding: 30px 24px 22px; }
+    .main { grid-template-columns: 1fr; gap: 20px; }
+    .full, .left, .right, .caveat { grid-column: 1; padding: 22px; }
+    .kpi-row, .company-grid { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <span class="tag">Portfolio · Sustainability Analysis </span>
+  <h1>Carbon Pricing & EU Manufacturing:<br>Financial Exposure and Strategic Response</h1>
+  <p class="sub">An analysis of how rising EU ETS allowance prices translate into material financial costs for manufacturing and how three German industrial companies are responding.</p>
+  <div style="margin-top: 18px; display: flex; gap: 24px; flex-wrap: wrap;">
+    <span style="font-size:0.82rem;color:var(--muted);"><strong style="color:var(--accent);">Sector:</strong> Manufacturing </span>
+    <span style="font-size:0.82rem;color:var(--muted);"><strong style="color:var(--accent);">Period:</strong> 2010–2023 </span>
+    <span style="font-size:0.82rem;color:var(--muted);"><strong style="color:var(--accent);">Data sources:</strong> Eurostat · EEA / EC ETS Reports · Company Disclosures</span>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="full" style="background: linear-gradient(145deg, #eef3fb 0%, #ffffff 60%); border-color: #d4dff0;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 36px;">
+      <div>
+        <div class="section-title" style="margin-bottom:10px;">Purpose of this Analysis</div>
+        <h2 style="font-size:1.18rem; margin-bottom:12px;">Why We Conducted This</h2>
+        <p style="font-size:0.95rem; color:var(--muted); line-height:1.7; margin-bottom:12px;">
+          Carbon pricing is increasingly central to investment risk assessment in European manufacturing. The EU Emissions Trading System (EU ETS) has undergone substantial reform since 2021, with allowance prices rising from single-digit levels to over €80/tonne. This analysis was conducted to quantify the financial materiality of carbon exposure across the EU manufacturing sector and to assess how companies in carbon-intensive sub-sectors are positioning their capital allocation in response.
+        </p>
+        <p style="font-size:0.95rem; color:var(--muted); line-height:1.7;">
+          The analysis draws on Eurostat emissions data (NACE Rev.2, Division C), European Environment Agency ETS price records, and published company disclosures. Three German manufacturers BASF, ThyssenKrupp Steel, and Heidelberg Materials were selected as case studies representing the chemicals, steel, and cement sub-sectors, each with distinct decarbonisation constraints and strategic responses.
+        </p>
+      </div>
+      <div>
+        <div class="section-title" style="margin-bottom:10px;">Key Learnings</div>
+        <h2 style="font-size:1.18rem; margin-bottom:14px;">What the Data Shows</h2>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;margin-top:1px;">1</div>
+            <p style="font-size:0.93rem;color:var(--muted);line-height:1.65;margin:0;"><strong style="color:var(--text);">Emissions declined; financial exposure did not.</strong> Manufacturing sector emissions fell 33% between 2010 and 2023. However, the 5.8× rise in the EUA price over the same period caused implied carbon costs to nearly quadruple, demonstrating that ETS reform is working as a financial mechanism even as physical progress is made.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;margin-top:1px;">2</div>
+            <p style="font-size:0.93rem;color:var(--muted);line-height:1.65;margin:0;"><strong style="color:var(--text);">Carbon price level is the primary driver of decarbonisation investment.</strong> The data shows that below ~€15/t (2013–2018), emissions reduction stalled. The post-2021 price surge to €53–84/t is correlated with accelerated investment in green hydrogen, CCS, and electrification across the sector.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="min-width:28px;height:28px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;margin-top:1px;">3</div>
+            <p style="font-size:0.93rem;color:var(--muted);line-height:1.65;margin:0;"><strong style="color:var(--text);">Strategic responses are constrained by technical abatement options.</strong> Companies cannot adopt a uniform approach. Cement faces irreducible process emissions requiring CCS; steel can transition to direct reduction with hydrogen; chemicals can electrify and optimise through integration. Investors should assess abatement feasibility, not just stated ambition.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="full">
+    <div class="section-title"> Manufacturing Emissions × Carbon Price × Implied Cost · 2010–2023</div>
+    <div class="chart-wrap">
+      <svg class="chart" viewBox="0 0 960 220" preserveAspectRatio="none" id="mainChart">
+        <defs>
+          <linearGradient id="costGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E65100" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#E65100" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="emGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0A2540" stop-opacity="0.12"/>
+            <stop offset="100%" stop-color="#0A2540" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div style="display:flex;gap:24px;margin-top:10px;font-size:12px;color:var(--dim);font-family:'DM Mono',monospace;flex-wrap:wrap;">
+      <span><span style="display:inline-block;width:28px;height:2px;background:#0A2540;vertical-align:middle;margin-right:6px;"></span>Emissions (Mt CO₂e)</span>
+      <span><span style="display:inline-block;width:28px;height:2px;background:#E65100;vertical-align:middle;margin-right:6px;"></span>Implied cost (€ billion)</span>
+      <span><span style="display:inline-block;width:8px;height:8px;background:#00897B;border-radius:50%;vertical-align:middle;margin-right:6px;"></span>EUA price (€/t, right axis)</span>
+    </div>
+  </div>
+
+  <div class="left">
+    <div class="section-title">Year-by-Year Breakdown</div>
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Emissions<br>(Mt)</th>
+          <th>Price<br>(€/t)</th>
+          <th>Cost<br>(€ bn)</th>
+        </tr>
+      </thead>
+      <tbody id="dataTable"></tbody>
+    </table>
+  </div>
+
+  <div class="right">
+    <div class="section-title">Analytical Observations</div>
+    <div class="insights">
+      <div class="insight-card">
+        <div class="insight-title">Emissions fell; costs did not</div>
+        <div class="insight-text">Manufacturing sector emissions declined by <strong>75 Mt (−33%)</strong> between 2010 and 2023. Despite this, implied carbon costs rose <strong>3.9×</strong> over the same period, driven by a <strong>5.8× increase in EUA prices</strong>. Carbon has transitioned from a compliance item to a material cost line.</div>
+      </div>
+      <div class="insight-card teal">
+        <div class="insight-title">Low carbon prices stall investment</div>
+        <div class="insight-text">Between 2013 and 2015, emissions were flat at <strong>195 Mt for three consecutive years</strong> while prices ranged €4–8/t. The evidence suggests a price threshold of approximately <strong>€15/t</strong> below which the business case for capital-intensive decarbonisation is insufficient to drive action.</div>
+      </div>
+      <div class="insight-card amber">
+        <div class="insight-title">Phase 4 is financially material</div>
+        <div class="insight-text">At <strong>€83.7/t in 2023</strong>, a facility emitting 3 Mt/year faces carbon exposure of up to <strong>€250M annually</strong>. This is now a board-level consideration shaping capital allocation, M&A strategy, and long-term production footprint decisions across the sector.</div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:14px 16px;border:1px dashed var(--rule);border-radius:6px;">
+      <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Forward outlook</div>
+      <div style="font-size:13px;color:#444;line-height:1.55;">By 2034, full carbon cost pass-through applies to all covered installations, with price projections of <strong>€100–150/t</strong>. The window for low-cost abatement investment is narrowing.</div>
+    </div>
+  </div>
+
+  <div class="full">
+    <div class="section-title">Company Case Studies: Divergent Responses to a Common Price Signal</div>
+    <div class="company-grid">
+
+      <div class="company-card">
+        <div class="card-head">
+          <div class="card-company">BASF SE</div>
+          <div class="card-sector">Chemicals · NACE 20</div>
+        </div>
+        <div class="card-body">
+          <div class="card-stat">
+            <span class="card-stat-label">Estimated Annual CO₂ Exposure</span>
+            <span class="card-stat-value">~€1.7 bn</span>
+          </div>
+          <p class="card-strategy">BASF operates the world's largest integrated chemical complex (Verbund, Ludwigshafen), where process heat integration already provides structural efficiency advantages. Its Antwerp installation holds an estimated surplus of ~575k EUAs (~€41M), which can be banked or traded. Decarbonisation strategy centres on industrial electrification and steam cracker upgrades. The 2024–27 capex programme (€19.5bn) is weighted toward Asian expansion, with European low-carbon investment progressing at a measured pace.</p>
+          <div class="card-verdict verdict-watch"><strong>Compliance-managed.</strong> Carbon cost is being absorbed and partially offset through allocation surplus. Structural transformation of European operations is a medium-to-long-term horizon.</div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="card-head">
+          <div class="card-company">ThyssenKrupp Steel</div>
+          <div class="card-sector">Steel · NACE 241</div>
+        </div>
+        <div class="card-body">
+          <div class="card-stat">
+            <span class="card-stat-label">Estimated Annual CO₂ Exposure</span>
+            <span class="card-stat-value">~€1.7 bn</span>
+          </div>
+          <p class="card-strategy">ThyssenKrupp's Duisburg site is the EU's largest steel plant, generating approximately 20 Mt CO₂/year from conventional blast furnace operations. The company is investing in <strong>tkH2Steel®</strong>, a €3bn direct reduction facility designed to transition from natural gas to green hydrogen by 2045. €2bn in EU and federal subsidies has been approved. The hydrogen procurement tender was paused in 2024 due to market prices (~€9/kg) exceeding project assumptions.</p>
+          <div class="card-verdict verdict-invest"> <strong>Committed transition.</strong> At €84/t and projected increases to €100–150/t, the avoided-cost case for green steel investment is financially compelling. Execution risk remains tied to hydrogen supply economics.</div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="card-head">
+          <div class="card-company">Heidelberg Materials</div>
+          <div class="card-sector">Cement · NACE 235</div>
+        </div>
+        <div class="card-body">
+          <div class="card-stat">
+            <span class="card-stat-label">Estimated Annual CO₂ Exposure</span>
+            <span class="card-stat-value">~€1.0 bn</span>
+          </div>
+          <p class="card-strategy">Approximately 60% of cement's CO₂ emissions arise from calcination, a chemical process that cannot be addressed through fuel switching. Carbon capture and storage (CCS) is the primary viable pathway. Heidelberg Materials is commissioning the world's first industrial-scale CCS cement facility at Brevik, Norway (2025, 400k t/yr capture capacity), alongside the GeZero CCS project in Geseke, Germany. It has launched <strong>evoZero®</strong>, a net-zero certified cement product for commercial procurement.</p>
+          <div class="card-verdict verdict-pioneer"> 	<strong>First-mover.</strong> CBAM creates procurement-level demand for low-carbon cement. EU Innovation Fund (financed via ETS revenues) partially de-risks CCS capital. First-mover advantage in certified net-zero product supply is strategically significant.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="full caveat">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;">
+      <div>
+        <div class="section-title" style="margin-bottom:8px;">Methodology</div>
+        <div style="font-size:0.76rem;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.06em;"></div>
+      </div>
+      <div style="border-left:2px solid var(--border);padding-left:20px;">
+        <p style="margin-bottom:10px;"><strong>Carbon cost calculation:</strong> Implied carbon cost is computed as sector-level emissions (Mt CO₂e) multiplied by the annual average EUA spot price (€/t). This represents a gross upper-bound exposure; actual net cash outflow is lower due to benchmark-based free allocation under Phase 3 and Phase 4 rules. Free allocation phases out progressively between 2026 and 2034 in parallel with CBAM.</p>
+        <p style="margin-bottom:10px;"><strong>Company exposure estimates:</strong> Figures represent approximate Scope 1 emissions before free allocation deduction, using publicly disclosed or estimated installation-level data. These are indicative and should not be used as reported compliance figures.</p>
+        <p style="margin:0;"><strong>Sources:</strong> Eurostat NACE Rev.2 Division C energy and emissions data · European Environment Agency EU ETS Compliance Data · European Commission ETS Transaction Logs · Company annual reports and sustainability disclosures (BASF, ThyssenKrupp, Heidelberg Materials) · EU Innovation Fund project registry.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="page-footer">
+  <span> Manufacturing · 2010–2023</span>
+  <span>Sustainability Market Analysis · Portfolio Project</span>
+</footer>
+
+<script>
+const years     = [2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023];
+const emissions = [228,220,205,195,195,195,183,186,178,174,162,170,163,153];
+const prices    = [14.4,13.0,7.4,4.4,5.9,7.7,5.3,5.8,15.9,24.8,24.7,53.4,80.8,83.7];
+const costs     = years.map((_,i) => +(emissions[i]*prices[i]/1000).toFixed(2));
+const phase     = y => y<=2012?2:y<=2020?3:4;
+const phaseColor = p => p===2?'#4A6FA5':p===3?'#00897B':'#E65100';
+
+const tbody = document.getElementById('dataTable');
+years.forEach((y,i) => {
+  const ph = phase(y);
+  const bg = i%2===0?'':'background:#F8FAFC';
+  tbody.innerHTML += `<tr style="${bg}">
+    <td>${y}<span class="ph-badge" style="background:${phaseColor(ph)}">P${ph}</span></td>
+    <td>${emissions[i]}</td>
+    <td>€${prices[i].toFixed(1)}</td>
+    <td>€${costs[i].toFixed(1)}bn</td>
+  </tr>`;
+});
+
+const svg    = document.getElementById('mainChart');
+const W = 960, H = 220, padL = 0, padR = 0, padT = 20, padB = 30;
+const cW = W - padL - padR;
+const n  = years.length;
+
+const minE = 140, maxE = 240;
+const minP = 0,   maxP = 100;
+const minC = 0,   maxC = 14;
+
+const xOf  = i => padL + (i / (n-1)) * cW;
+const yOfE = v => padT + (1 - (v-minE)/(maxE-minE)) * (H - padT - padB);
+const yOfC = v => padT + (1 - (v-minC)/(maxC-minC)) * (H - padT - padB);
+const yOfP = v => padT + (1 - (v-minP)/(maxP-minP)) * (H - padT - padB);
+
+[0,30,60,90].forEach(p => {
+  const y = yOfP(p);
+  svg.innerHTML += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#E8ECF0" stroke-width="1"/>`;
+  svg.innerHTML += `<text x="${W-padR+4}" y="${y+4}" font-size="9" fill="#999" font-family="DM Mono,monospace">€${p}</text>`;
+});
+
+let areaPath = `M${xOf(0)},${H-padB}`;
+costs.forEach((_,i) => { areaPath += ` L${xOf(i)},${yOfC(costs[i])}`; });
+areaPath += ` L${xOf(n-1)},${H-padB} Z`;
+svg.innerHTML += `<path d="${areaPath}" fill="url(#costGrad)"/>`;
+
+let emArea = `M${xOf(0)},${H-padB}`;
+emissions.forEach((_,i) => { emArea += ` L${xOf(i)},${yOfE(emissions[i])}`; });
+emArea += ` L${xOf(n-1)},${H-padB} Z`;
+svg.innerHTML += `<path d="${emArea}" fill="url(#emGrad)"/>`;
+
+let emLine = emissions.map((_,i) => `${i===0?'M':'L'}${xOf(i)},${yOfE(emissions[i])}`).join(' ');
+svg.innerHTML += `<path d="${emLine}" fill="none" stroke="#0A2540" stroke-width="2"/>`;
+
+let costLine = costs.map((_,i) => `${i===0?'M':'L'}${xOf(i)},${yOfC(costs[i])}`).join(' ');
+svg.innerHTML += `<path d="${costLine}" fill="none" stroke="#E65100" stroke-width="2"/>`;
+
+prices.forEach((p,i) => {
+  svg.innerHTML += `<circle cx="${xOf(i)}" cy="${yOfP(p)}" r="4" fill="#00897B" opacity="0.85"/>`;
+});
+
+let priceLine = prices.map((_,i) => `${i===0?'M':'L'}${xOf(i)},${yOfP(prices[i])}`).join(' ');
+svg.innerHTML += `<path d="${priceLine}" fill="none" stroke="#00897B" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.7"/>`;
+
+years.forEach((y,i) => {
+  if (i%2===0 || i===n-1) {
+    svg.innerHTML += `<text x="${xOf(i)}" y="${H-2}" text-anchor="middle" font-size="10" fill="#999" font-family="DM Mono,monospace">${y}</text>`;
+  }
+});
+
+const phaseLabels = [
+  {label:'Ph. 2 Weak signal', start:0, end:2, col:'#4A6FA5'},
+  {label:'Phase 3 — oversupply, low prices', start:3, end:10, col:'#00897B'},
+  {label:'Ph. 4 High prices', start:11, end:13, col:'#E65100'}
+];
+
+phaseLabels.forEach(({label,start,end,col}) => {
+  const x1 = xOf(start), x2 = xOf(end);
+  svg.innerHTML += `<rect x="${x1}" y="${padT-16}" width="${x2-x1}" height="6" rx="1" fill="${col}" opacity="0.18"/>`;
+  if (end-start > 1) {
+    svg.innerHTML += `<text x="${(x1+x2)/2}" y="${padT-10}" text-anchor="middle" font-size="9" fill="${col}" font-family="DM Mono,monospace" font-weight="600">${label}</text>`;
+  }
+});
+</script>
+</body>
+</html>
