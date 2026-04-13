@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSRD & ESRS: What the Framework Actually Requires — and What Just Changed</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid #e8e8e4;
+      background: #fafaf8;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: #1a1a1a; }
+
+    .article-header {
+      max-width: 720px;
+      margin: 4rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .article-tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #ddd;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-family: 'Georgia', serif;
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .article-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid #e8e8e4;
+      border-bottom: 1px solid #e8e8e4;
+      margin-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .article-meta .sep { color: #ccc; }
+
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      font-family: 'Georgia', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #1a1a1a;
+    }
+
+    .article-body p {
+      margin-bottom: 1.4rem;
+    }
+
+    .article-body h2 {
+      font-family: 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-body strong {
+      font-weight: bold;
+    }
+
+    .callout {
+      border-left: 3px solid #1a1a1a;
+      padding: 0.9rem 1.5rem;
+      margin: 2rem 0;
+      background: #f2f2ee;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 1.75rem 0;
+    }
+
+    .scope-card {
+      background: #f2f2ee;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .scope-card .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .scope-card .val {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .scope-card .note {
+      font-size: 0.78rem;
+      color: #777;
+      line-height: 1.5;
+    }
+
+    .changes-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .changes-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+
+    .changes-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #aaa;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+
+    .changes-list strong {
+      font-weight: 600;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e8e8e4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      color: #777;
+    }
+
+    .closing-note {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .article-title { font-size: 1.8rem; }
+      .scope-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#projects">Work</a></li>
+    <li><a href="/#experience">Experience</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="article-header">
+  <div class="article-tag">Regulatory Frameworks</div>
+  <h1 class="article-title">CSRD & ESRS: What the framework actually requires — and what just changed</h1>
+  <p class="article-subtitle">The Corporate Sustainability Reporting Directive is the most ambitious sustainability disclosure law the EU has ever passed. But after a year of political pressure, it looks significantly different from what companies were originally preparing for.</p>
+  <div class="article-meta">
+    <span>Shivam Asthana</span>
+    <span class="sep">·</span>
+    <span>April 2026</span>
+    <span class="sep">·</span>
+    <span>6 min read</span>
+    <span class="sep">·</span>
+    <span>CSRD · ESRS · Omnibus</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+  <h2>The original framework</h2>
+
+  <p>Adopted in 2022, the CSRD replaced the Non-Financial Reporting Directive (NFRD) and massively expanded who had to report — and what they had to say. The key architectural idea was <strong>double materiality</strong>: companies are required to disclose not just how sustainability risks affect their business (financial materiality), but also how their business affects people and the environment (impact materiality). This was a genuine shift from how most ESG disclosure had worked before.</p>
+
+  <p>The technical substance of that disclosure is defined by the European Sustainability Reporting Standards — ESRS — drafted by EFRAG. These cover environmental topics (climate, water, biodiversity), social topics (workforce, communities, consumers), and governance — with significant requirements for quantitative data across all of them.</p>
+
+  <div class="callout">
+    Double materiality is the conceptual core of CSRD. A company that ignores climate risk to its own operations is missing financial materiality. A company that ignores the carbon its operations emit into the world is missing impact materiality. CSRD requires both perspectives simultaneously.
+  </div>
+
+  <h2>Who was originally in scope</h2>
+
+  <p>The CSRD was designed to roll out in waves, progressively pulling in more companies over time:</p>
+
+  <div class="scope-grid">
+    <div class="scope-card">
+      <div class="label">Wave 1</div>
+      <div class="val">~1,000</div>
+      <div class="note">Large public-interest entities with 500+ employees — reporting from 2025 for FY2024</div>
+    </div>
+    <div class="scope-card">
+      <div class="label">Wave 2</div>
+      <div class="val">~15,000</div>
+      <div class="note">Other large EU undertakings — originally due to report in 2026 for FY2025</div>
+    </div>
+    <div class="scope-card">
+      <div class="label">Wave 3</div>
+      <div class="val">~3,500</div>
+      <div class="note">Listed SMEs — originally due 2027 for FY2026</div>
+    </div>
+  </div>
+
+  <p>Adding non-EU companies with significant EU revenue (Wave 4), the total scope reached around 50,000 entities globally. That was always politically ambitious — and it did not survive contact with the 2025 competitiveness debate.</p>
+
+  <h2>The Omnibus intervention</h2>
+
+  <p>In February 2025, the European Commission released what became known as the Omnibus package — a sweeping proposal to simplify sustainability reporting obligations across CSRD, the EU Taxonomy, and the Corporate Sustainability Due Diligence Directive (CSDDD). The stated goal was reducing administrative burden, particularly for smaller companies. After a year of negotiations, Omnibus I was formally published in the EU's Official Journal on 26 February 2026.</p>
+
+  <p>The changes to CSRD are substantial. Here is what actually shifted:</p>
+
+  <ul class="changes-list">
+    <li><strong>Scope reduction:</strong> The employee threshold jumped from 250 to over 1,000, with a net turnover threshold of €450 million. This cuts the number of in-scope EU companies from roughly 50,000 down to approximately 5,000.</li>
+    <li><strong>Stop-the-Clock:</strong> Wave 2 and Wave 3 reporting was delayed by two years. Companies that would have reported in 2026 now do not report until 2028.</li>
+    <li><strong>ESRS simplification:</strong> EFRAG was directed to redraft the standards. The revised ESRS, submitted to the Commission in December 2025, removed over 60% of the original data points. Sector-specific standards were dropped entirely. Interoperability with ISSB frameworks became an explicit design goal.</li>
+    <li><strong>Assurance requirements:</strong> The pathway to reasonable assurance was removed. Only limited assurance is required, applying from FY2027 reporting onward.</li>
+    <li><strong>Value chain cap:</strong> Reporting companies are prohibited from requesting sustainability data from suppliers with fewer than 1,000 employees beyond what voluntary standards prescribe — a direct limit on compliance burden trickling down the supply chain.</li>
+    <li><strong>Double materiality:</strong> The principle survives, but the assessment process has been simplified. Companies no longer need to conduct formal stakeholder consultations and may rely on available information without incurring undue cost or effort.</li>
+  </ul>
+
+  <h2>What this means in practice</h2>
+
+  <p>For Wave 1 companies — those already reporting — very little changes immediately. They continue under the existing ESRS, with some transitional relief for FY2025 and FY2026. The simplified ESRS, once formally adopted by the Commission, apply from FY2027 reporting.</p>
+
+  <p>For everyone else, the calculus shifted significantly. Many companies that had invested in CSRD readiness have bought time — but not indefinitely. The underlying disclosure architecture remains intact. What simplified is the volume of required data points and the breadth of entities required to comply.</p>
+
+  <div class="callout">
+    The direction of travel is clear: fewer companies in scope, later and lighter obligations, with explicit protections for smaller value-chain counterparties. But the core — double materiality, ESRS structure, sustainability reporting as a legal obligation for large EU entities — is not going away.
+  </div>
+
+  <p>For sustainability professionals, the practical implication is to build reporting infrastructure that is robust but modular. The datapoint architecture will change again. What will not change is the need to understand how emissions, social impacts, and governance risks connect to business strategy — and to communicate that clearly to decision-makers.</p>
+
+  <h2>Why this matters beyond compliance</h2>
+
+  <p>There is a temptation to treat CSRD as a compliance exercise — a reporting obligation to be managed and minimised. That misses the strategic dimension. The double materiality lens, even in its simplified post-Omnibus form, forces companies to map where sustainability intersects with business risk and opportunity in both directions.</p>
+
+  <p>Companies that use CSRD as an analytical tool — rather than a reporting burden — will leave the process with a sharper understanding of where they are exposed and where they can build advantage. That is the real value of the framework, independent of what the final datapoint count turns out to be.</p>
+
+  <div class="closing-note">
+    Prepared as an independent portfolio article on EU sustainability reporting frameworks. Sources include Directive (EU) 2026/470 (Omnibus I), EFRAG technical advice December 2025, and analysis from Deloitte, PwC, and Morrison Foerster.
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">CSRD</span>
+    <span class="tag">ESRS</span>
+    <span class="tag">Omnibus</span>
+    <span class="tag">Double materiality</span>
+    <span class="tag">EU regulation</span>
+    <span class="tag">ESG frameworks</span>
+    <span class="tag">Sustainability reporting</span>
+  </div>
+
+</article>
+
+<footer>
+  © 2026 Shivam Asthana · Sustainability & Strategy
+</footer>
+
+</body>
+</html>

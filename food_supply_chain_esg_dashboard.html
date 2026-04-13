@@ -18,173 +18,85 @@
       --shadow-lg: 0 16px 40px rgba(16,24,40,0.06);
       --radius: 22px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: Inter, "Segoe UI", Arial, sans-serif;
       background: linear-gradient(180deg, #f8fafc 0%, #f4f7fb 100%);
       color: var(--text);
       line-height: 1.65;
-      min-height: 100vh;
     }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 20px 80px; }
 
-    .wrap {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 48px 20px 80px;
-    }
-
-    /* ── HERO ── */
+    /* HERO */
     .hero {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 40px 36px 32px;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 24px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 40px 36px 32px;
+      box-shadow: var(--shadow-lg); margin-bottom: 24px;
     }
     .eyebrow {
-      display: inline-block;
-      background: var(--accent-soft);
-      color: var(--accent);
-      border: 1px solid var(--accent-border);
-      border-radius: 999px;
-      font-size: 0.84rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      padding: 6px 14px;
-      margin-bottom: 18px;
+      display: inline-block; background: var(--accent-soft); color: var(--accent);
+      border: 1px solid var(--accent-border); border-radius: 999px;
+      font-size: 0.84rem; font-weight: 700; padding: 6px 14px; margin-bottom: 18px;
     }
-    h1 {
-      font-size: clamp(1.9rem, 3.8vw, 2.8rem);
-      line-height: 1.12;
-      margin: 0 0 14px;
-      letter-spacing: -0.03em;
-    }
-    .hero-sub {
-      color: var(--muted);
-      font-size: 1.02rem;
-      max-width: 820px;
-      margin-bottom: 24px;
-    }
-    .hero-meta {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    h1 { font-size: clamp(1.9rem,3.8vw,2.8rem); line-height: 1.12; margin: 0 0 14px; letter-spacing: -0.03em; }
+    .hero-sub { color: var(--muted); font-size: 1.02rem; max-width: 820px; margin-bottom: 24px; }
+    .hero-meta { display: flex; gap: 10px; flex-wrap: wrap; }
     .meta-tag {
-      background: #f1f4f9;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 5px 12px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 500;
+      background: #f1f4f9; border: 1px solid var(--line); border-radius: 8px;
+      padding: 5px 12px; font-size: 0.8rem; color: var(--muted); font-weight: 500;
+    }
+    .meta-tag.verified {
+      background: #f0faf4; border-color: #b6e8cc; color: #1a7a47; font-weight: 700;
     }
 
-    /* ── CARDS ── */
+    /* CARDS */
     .section-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 22px;
-      overflow: hidden;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 22px; overflow: hidden;
     }
     .section-inner { padding: 30px 32px; }
-
-    h2 {
-      font-size: 1.35rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-      color: var(--text);
-    }
-    p {
-      color: #2d3748;
-      font-size: 0.97rem;
-      margin-bottom: 14px;
-      line-height: 1.72;
-    }
+    h2 { font-size: 1.35rem; letter-spacing: -0.02em; margin-bottom: 12px; }
+    p { color: #2d3748; font-size: 0.97rem; margin-bottom: 14px; line-height: 1.72; }
     p:last-child { margin-bottom: 0; }
 
     .insight {
       background: linear-gradient(180deg,#f5f9ff 0%,#edf4ff 100%);
-      border: 1px solid var(--accent-border);
-      border-left: 5px solid var(--accent);
-      border-radius: 14px;
-      padding: 16px 18px;
-      margin: 18px 0 0;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #173b73;
-      line-height: 1.6;
+      border: 1px solid var(--accent-border); border-left: 5px solid var(--accent);
+      border-radius: 14px; padding: 16px 18px; margin: 18px 0 0;
+      font-weight: 600; font-size: 0.95rem; color: #173b73; line-height: 1.6;
     }
 
-    /* ── WHY GRID ── */
-    .why-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .why-card {
-      background: #fafbfd;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 18px 20px;
-    }
-    .why-card h4 {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
+    /* WHY GRID */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+    .why-card { background: #fafbfd; border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+    .why-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
     .why-card p { font-size: 0.87rem; color: var(--muted); margin: 0; line-height: 1.6; }
 
-    /* ── DIM GRID ── */
-    .dim-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .dim-card {
-      background: #fafbfd;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 16px 18px;
-    }
+    /* DIM GRID */
+    .dim-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 18px; }
+    .dim-card { background: #fafbfd; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
     .dim-icon { font-size: 1.4rem; margin-bottom: 8px; }
-    .dim-title { font-size: 0.86rem; font-weight: 700; color: var(--text); margin-bottom: 5px; }
-    .dim-source { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
-
-    /* ── LEGEND ── */
-    .legend {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-top: 16px;
-      font-size: 0.8rem;
-      color: var(--muted);
+    .dim-title { font-size: 0.86rem; font-weight: 700; margin-bottom: 5px; }
+    .dim-source { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+    .dim-badge {
+      display: inline-block; margin-top: 8px; padding: 2px 8px; border-radius: 20px;
+      font-size: 0.7rem; font-weight: 700;
     }
+    .badge-real { background: #f0faf4; color: #1a7a47; border: 1px solid #b6e8cc; }
+    .badge-doc  { background: #fffaed; color: #a07800; border: 1px solid #f0d88a; }
+
+    /* LEGEND */
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 16px; font-size: 0.8rem; color: var(--muted); }
     .legend-item { display: flex; align-items: center; gap: 6px; }
     .ldot { width: 9px; height: 9px; border-radius: 50%; }
 
-    /* ── TABLE ── */
+    /* TABLE */
     .table-scroll { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 760px; }
     thead th {
-      background: #f7f9fc;
-      color: var(--muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 11px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--line);
-      white-space: nowrap;
+      background: #f7f9fc; color: var(--muted); font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 11px 16px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap;
     }
     tbody tr { border-bottom: 1px solid var(--line); cursor: pointer; transition: background .12s; }
     tbody tr:last-child { border-bottom: none; }
@@ -196,19 +108,15 @@
     .cname { font-weight: 600; font-size: 0.9rem; }
     .score-chip {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 48px; height: 28px; border-radius: 7px;
-      font-size: 0.84rem; font-weight: 600;
+      width: 48px; height: 28px; border-radius: 7px; font-size: 0.84rem; font-weight: 600;
     }
     .composite-val { font-size: 1.05rem; font-weight: 700; }
-    .risk-badge {
-      display: inline-block; padding: 3px 10px; border-radius: 20px;
-      font-size: 0.74rem; font-weight: 600; letter-spacing: .02em;
-    }
+    .risk-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.74rem; font-weight: 600; }
 
-    /* ── TWO COL ── */
+    /* TWO COL */
     .two-col { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 22px; margin-bottom: 22px; }
 
-    /* ── DETAIL ── */
+    /* DETAIL */
     .detail-flag-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
     .detail-flag { font-size: 2rem; }
     .detail-name { font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; }
@@ -221,19 +129,13 @@
     .dim-bar-fill { height: 100%; border-radius: 4px; transition: width .45s ease; }
     .dim-bar-note { font-size: 0.74rem; color: var(--muted); line-height: 1.45; }
     .insight-box {
-      margin-top: 18px;
-      background: #f7f9fc;
-      border: 1px solid var(--line);
-      border-left: 4px solid var(--accent);
-      border-radius: 12px;
-      padding: 14px 16px;
-      font-size: 0.86rem;
-      color: var(--muted);
-      line-height: 1.65;
+      margin-top: 18px; background: #f7f9fc; border: 1px solid var(--line);
+      border-left: 4px solid var(--accent); border-radius: 12px;
+      padding: 14px 16px; font-size: 0.86rem; color: var(--muted); line-height: 1.65;
     }
     .insight-box strong { color: var(--text); }
 
-    /* ── EUDR ── */
+    /* EUDR */
     .eudr-rows { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
     .eudr-row {
       background: #fafbfd; border: 1px solid var(--line); border-radius: 12px;
@@ -244,49 +146,35 @@
     .eudr-pips { display: flex; gap: 4px; flex-shrink: 0; }
     .pip { width: 9px; height: 20px; border-radius: 3px; background: var(--line); }
 
-    /* ── SOURCES ── */
-    .sources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-      gap: 14px; margin-top: 18px;
-    }
-    .source-item {
-      background: #fafbfd; border: 1px solid var(--line);
-      border-radius: 12px; padding: 14px 16px;
-    }
+    /* SOURCES */
+    .sources-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 14px; margin-top: 18px; }
+    .source-item { background: #fafbfd; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
     .source-dim { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--accent); font-weight: 700; margin-bottom: 5px; }
     .source-name { font-size: 0.86rem; font-weight: 600; margin-bottom: 4px; }
     .source-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+    .source-verified { font-size: 0.72rem; font-weight: 700; color: #1a7a47; margin-top: 6px; }
 
-    /* ── CONCLUSION ── */
-    .conclusion-grid {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px; margin-top: 18px;
-    }
-    .conclusion-card {
-      background: #fafbfd; border: 1px solid var(--line);
-      border-radius: 14px; padding: 20px 20px 18px;
-    }
+    /* CONCLUSION */
+    .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 18px; }
+    .conclusion-card { background: #fafbfd; border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 18px; }
     .conclusion-card .icon { font-size: 1.5rem; margin-bottom: 10px; }
     .conclusion-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
     .conclusion-card p { font-size: 0.84rem; color: var(--muted); margin: 0; line-height: 1.62; }
-
     .final-box {
-      margin-top: 20px;
-      background: #111827;
-      color: #f9fafb;
-      border-radius: 16px;
-      padding: 22px 26px;
-      font-size: 0.98rem;
-      font-weight: 500;
-      line-height: 1.72;
+      margin-top: 20px; background: #111827; color: #f9fafb;
+      border-radius: 16px; padding: 22px 26px; font-size: 0.98rem; font-weight: 500; line-height: 1.72;
     }
     .final-box span { color: #93c5fd; }
+    .footer-note { color: var(--muted); font-size: 0.84rem; margin-top: 16px; text-align: center; }
 
-    .footer-note {
-      color: var(--muted); font-size: 0.84rem;
-      margin-top: 16px; text-align: center;
+    /* DATA INTEGRITY BANNER */
+    .integrity-banner {
+      background: #f0faf4; border: 1px solid #b6e8cc; border-radius: 14px;
+      padding: 14px 20px; margin-bottom: 22px; display: flex; align-items: center; gap: 14px;
     }
+    .integrity-banner .check { font-size: 1.4rem; flex-shrink: 0; }
+    .integrity-banner p { font-size: 0.86rem; color: #1a5c35; margin: 0; line-height: 1.6; }
+    .integrity-banner strong { color: #0f3d24; }
 
     @media (max-width: 820px) {
       .wrap { padding: 24px 16px 60px; }
@@ -306,57 +194,68 @@
     <p class="hero-sub">
       Where a company sources its ingredients determines a large part of its ESG risk profile.
       This dashboard maps supply chain risk across 8 key food-sourcing countries using four independently
-      measured dimensions — carbon &amp; deforestation, water stress, labor rights, and EU regulatory exposure.
+      measured dimensions   carbon &amp; deforestation, water stress, labor rights, and EU regulatory exposure.
     </p>
     <div class="hero-meta">
       <span class="meta-tag">8 Sourcing Countries</span>
       <span class="meta-tag">4 ESG Dimensions</span>
-      <span class="meta-tag">FAO · WRI Aqueduct 4.0 · Walk Free GSI 2023 · EUDR 2023</span>
-      <span class="meta-tag">Relevant to German &amp; EU food companies</span>
+      <span class="meta-tag verified">✓ 3 of 4 dimensions: verified open datasets</span>
+      <span class="meta-tag">Data: 2023</span>
     </div>
   </section>
+
+  <!-- DATA INTEGRITY BANNER -->
+  <div class="integrity-banner">
+    <div class="check">✅</div>
+    <p>
+      <strong>Data integrity note:</strong> Three of four dimensions in this dashboard use verified, downloadable open datasets  
+      WRI Aqueduct 4.0 (water stress), Walk Free Global Slavery Index 2023 (labor rights), and Our World in Data / GHG by sector 2023 (carbon &amp; deforestation).
+      EUDR regulatory exposure is a documented qualitative assessment based on EU Regulation 2023/1115 commodity classifications.
+      All scores are normalized to a 1–10 scale from their original units.
+    </p>
+  </div>
 
   <!-- WHY THIS ANALYSIS -->
   <section class="section-card">
     <div class="section-inner">
       <h2>Why This Analysis</h2>
       <p>
-        When sustainability teams at food companies talk about reducing ESG risk, they often focus on what is directly visible —
+        When sustainability teams at food companies talk about reducing ESG risk, they often focus on what is directly visible  
         their own operations, energy use, packaging. But for most large food companies, the majority of environmental and social
         impact sits upstream: in the farms, forests, and supply networks of the countries where their ingredients originate.
       </p>
       <p>
         A German food company sourcing cocoa, palm oil, coffee, or soy is effectively importing the ESG risk profile of those
-        supply chains. That risk is no longer optional to manage. Regulation — particularly the EU Deforestation Regulation (EUDR),
-        the German Supply Chain Act (LkSG), and the forthcoming CSRD value chain requirements — is making supply chain ESG
+        supply chains. That risk is no longer optional to manage. Regulation   particularly the EU Deforestation Regulation (EUDR),
+        the German Supply Chain Act (LkSG), and the forthcoming CSRD value chain requirements   is making supply chain ESG
         transparency a legal obligation, not just a reputational consideration.
       </p>
       <p>
         This analysis addresses a practical question: <strong>if you are a procurement, sustainability, or ESG analyst at a
-        European food company, which sourcing countries carry the highest risk — and across which dimensions?</strong>
+        European food company, which sourcing countries carry the highest risk   and across which dimensions?</strong>
       </p>
 
       <div class="why-grid">
         <div class="why-card">
           <h4>Why food specifically?</h4>
-          <p>Food supply chains are among the most globally dispersed and risk-exposed of any industry. They rely on agricultural commodities from tropical regions where deforestation, water scarcity, and labour vulnerabilities are most acute — and where regulatory scrutiny is now highest.</p>
+          <p>Food supply chains are among the most globally dispersed and risk-exposed of any industry. They rely on agricultural commodities from tropical regions where deforestation, water scarcity, and labour vulnerabilities are most acute   and where regulatory scrutiny is now highest.</p>
         </div>
         <div class="why-card">
           <h4>Why these 8 countries?</h4>
-          <p>These countries represent the dominant sourcing origins for the commodities most commonly found in European food products: soy, palm oil, cocoa, coffee, beef, rice, spices, and seafood. Together they cover the most material supply chain ESG exposure for EU food importers.</p>
+          <p>These countries represent the dominant sourcing origins for commodities most commonly found in European food products: soy, palm oil, cocoa, coffee, beef, rice, spices, and seafood. Together they cover the most material supply chain ESG exposure for EU food importers.</p>
         </div>
         <div class="why-card">
           <h4>Why 4 dimensions?</h4>
-          <p>Supply chain ESG risk is multi-dimensional. Carbon, water stress, labour rights, and regulatory compliance each capture a different type of exposure — and a country that appears low-risk on one dimension can be critical on another, which a single headline score would obscure.</p>
+          <p>Supply chain ESG risk is multi-dimensional. Carbon, water stress, labour rights, and regulatory compliance each capture a different type of exposure   a country that appears low-risk on one dimension can be critical on another, which a single score would obscure.</p>
         </div>
         <div class="why-card">
           <h4>Why now?</h4>
-          <p>The EUDR came into force in December 2024. The German LkSG has required supply chain due diligence since 2023. CSRD Scope 3 reporting is expanding. Companies that cannot map and score their supply chain origins are already behind on compliance obligations.</p>
+          <p>The EUDR came into force in December 2024. The German LkSG has required supply chain due diligence since 2023. CSRD Scope 3 reporting is expanding. Companies that cannot map their supply chain origins are already behind on compliance obligations.</p>
         </div>
       </div>
 
       <div class="insight">
-        Key framing: Supply chain ESG risk does not sit in a company's offices or factories. It sits in the countries and communities where ingredients are grown — and those risks are now regulated, measurable, and financially material.
+        Key framing: Supply chain ESG risk does not sit in a company's offices or factories. It sits in the countries where ingredients are grown   and those risks are now regulated, measurable, and financially material.
       </div>
     </div>
   </section>
@@ -365,27 +264,31 @@
   <section class="section-card">
     <div class="section-inner">
       <h2>The Four Risk Dimensions</h2>
-      <p>Each country is scored 1–10 per dimension (higher = greater risk), then averaged into a composite score. All scores are derived from independent, publicly available datasets. Click any row in the table below to see the full breakdown.</p>
+      <p>Each country is scored 1–10 per dimension (higher = greater risk), then averaged into a composite. Three dimensions use raw data downloaded from open datasets and normalized to 1–10. The EUDR dimension is a documented qualitative assessment.</p>
       <div class="dim-grid">
         <div class="dim-card">
           <div class="dim-icon">🌳</div>
           <div class="dim-title">Carbon &amp; Deforestation</div>
-          <div class="dim-source">Source: FAO FAOSTAT, Our World in Data. Agricultural GHG emissions and deforestation rates by country.</div>
+          <div class="dim-source">Agriculture + land-use change emissions (Mt CO₂eq, 2023). Negative LULUCF (forest sinks) treated as zero deforestation risk.</div>
+          <span class="dim-badge badge-real">✓ Real data   Our World in Data / GHG by sector</span>
         </div>
         <div class="dim-card">
           <div class="dim-icon">💧</div>
           <div class="dim-title">Water Stress</div>
-          <div class="dim-source">Source: WRI Aqueduct 4.0 (2023). Baseline water stress country rankings. Open data, CC BY 4.0.</div>
+          <div class="dim-source">Baseline water stress score, WRI Aqueduct 4.0 (0–5 scale). Converted to 1–10 using linear mapping.</div>
+          <span class="dim-badge badge-real">✓ Real data   WRI Aqueduct 4.0, 2023</span>
         </div>
         <div class="dim-card">
           <div class="dim-icon">⚠️</div>
           <div class="dim-title">Labor Rights Risk</div>
-          <div class="dim-source">Source: Walk Free Global Slavery Index 2023. Vulnerability score across 160 countries.</div>
+          <div class="dim-source">Total vulnerability score (0–100) from Walk Free GSI 2023. Normalized within this 8-country sample to 1–10.</div>
+          <span class="dim-badge badge-real">✓ Real data   Walk Free GSI 2023</span>
         </div>
         <div class="dim-card">
           <div class="dim-icon">📋</div>
           <div class="dim-title">EUDR Regulatory Exposure</div>
-          <div class="dim-source">Source: EU Regulation 2023/1115. Risk by commodity and country under the EU Deforestation Regulation.</div>
+          <div class="dim-source">Documented qualitative assessment based on EU Regulation 2023/1115   commodity risk classifications and country designations.</div>
+          <span class="dim-badge badge-doc">⚠ Documented qualitative   EU Reg 2023/1115</span>
         </div>
       </div>
       <div class="legend">
@@ -397,10 +300,10 @@
     </div>
   </section>
 
-  <!-- HEATMAP -->
+  <!-- HEATMAP TABLE -->
   <section class="section-card">
     <div class="section-inner" style="padding-bottom:0">
-      <h2>Risk Heatmap — All 8 Countries</h2>
+      <h2>Risk Heatmap   All 8 Countries</h2>
       <p style="color:var(--muted);font-size:0.88rem;margin-bottom:16px">Ranked by composite ESG risk score, highest first. Click any row to explore the detailed breakdown.</p>
     </div>
     <div class="table-scroll">
@@ -420,7 +323,9 @@
         <tbody id="tableBody"></tbody>
       </table>
     </div>
-    <div style="padding:12px 32px 16px;font-size:0.76rem;color:var(--muted)">All scores 1–10. Composite = equal-weighted average of four dimensions.</div>
+    <div style="padding:12px 32px 16px;font-size:0.76rem;color:var(--muted)">
+      All scores 1–10. Composite = equal-weighted average. Carbon &amp; Water &amp; Labor = verified open data. EUDR = documented qualitative assessment.
+    </div>
   </section>
 
   <!-- DETAIL + EUDR -->
@@ -446,50 +351,83 @@
       <div class="section-inner">
         <h2>EUDR Commodity Exposure</h2>
         <p style="font-size:0.86rem;color:var(--muted)">
-          The EU Deforestation Regulation (2023/1115), in force December 2024, restricts imports of
-          commodities linked to deforestation. Filled bars indicate exposure level (5 = maximum).
+          EU Regulation 2023/1115 restricts imports of commodities linked to deforestation.
+          Filled bars show exposure level (5 = maximum). Source: European Commission.
         </p>
         <div class="eudr-rows" id="eudrRows"></div>
-        <p style="font-size:0.74rem;color:var(--muted);margin-top:12px">Source: European Commission EU Regulation 2023/1115</p>
+        <p style="font-size:0.74rem;color:var(--muted);margin-top:12px">Source: EU Regulation 2023/1115 (EUDR), in force December 2024</p>
       </div>
     </section>
   </div>
+
+  <!-- KEY FINDINGS -->
+  <section class="section-card">
+    <div class="section-inner">
+      <h2>Key Findings from the Real Data</h2>
+      <p>
+        The verified data reveals patterns that differ meaningfully from conventional assumptions about food supply chain risk.
+        Understanding these differences matters for how companies prioritise due diligence.
+      </p>
+      <div class="why-grid">
+        <div class="why-card">
+          <h4>Brazil: carbon risk, not water risk</h4>
+          <p>Brazil has the highest carbon score (10.0)   driven by 916 Mt of land-use change emissions, the largest in this sample. But its water stress score is just 1.5 (Low), because the Amazon basin makes Brazil water-abundant. Companies focused only on water stress would systematically underestimate Brazil's ESG exposure.</p>
+        </div>
+        <div class="why-card">
+          <h4>Ivory Coast: social and regulatory, not carbon</h4>
+          <p>Ivory Coast has very low absolute carbon emissions (1.0) because it is a small economy. But its labor vulnerability score (7.6) and EUDR exposure (8.5) are among the highest in the sample. Its risk is concentrated in cocoa   a social and regulatory challenge, not a carbon one.</p>
+        </div>
+        <div class="why-card">
+          <h4>Ethiopia: pure labor risk</h4>
+          <p>Ethiopia has the highest labor vulnerability score in the sample (10.0   Walk Free GSI 2023), driven by food insecurity, conflict, and weak institutional protections. Its carbon and water scores are low. This is a country where the risk is entirely social, not environmental.</p>
+        </div>
+        <div class="why-card">
+          <h4>China: the forest sink effect</h4>
+          <p>China's LULUCF score is actually -834 Mt CO₂   a net carbon sink due to large-scale reforestation. This is treated as zero deforestation risk in this analysis. China's overall risk profile is driven by water stress and labor concerns, not land-use emissions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- DATA SOURCES -->
   <section class="section-card">
     <div class="section-inner">
       <h2>Data Sources &amp; Methodology</h2>
-      <p>All data is drawn from publicly available, independently produced datasets. Scores are normalised to a 1–10 scale relative to the 8-country peer group. The composite score is an equal-weighted average of all four dimensions.</p>
+      <p>Three dimensions use verified open datasets downloaded directly from their source institutions. The fourth (EUDR) is a documented qualitative assessment based on published regulation text. All scores are normalized to 1–10 within the 8-country peer group. The composite is an equal-weighted average.</p>
       <div class="sources-grid">
         <div class="source-item">
           <div class="source-dim">Carbon &amp; Deforestation</div>
-          <div class="source-name">FAO FAOSTAT + Our World in Data</div>
-          <div class="source-desc">Agricultural GHG emissions by country (CO₂eq); deforestation rates and trade-embedded emissions. Covers 245+ countries from 1990.</div>
+          <div class="source-name">Our World in Data   GHG Emissions by Sector</div>
+          <div class="source-desc">Agriculture + Land-Use Change &amp; Forestry emissions (Mt CO₂eq) for 2023. Negative LULUCF (net forest sinks) set to zero   only positive land-use emissions represent deforestation risk. Underlying source: Global Carbon Project / Climate Watch.</div>
+          <div class="source-verified">✓ Raw data downloaded and verified</div>
         </div>
         <div class="source-item">
           <div class="source-dim">Water Stress</div>
-          <div class="source-name">WRI Aqueduct 4.0 (2023)</div>
-          <div class="source-desc">Baseline water stress country rankings. Raw 0–5 scale converted to 1–10. Open data, CC BY 4.0. wri.org/data/aqueduct-40</div>
+          <div class="source-name">WRI Aqueduct 4.0 Country Rankings (2023)</div>
+          <div class="source-desc">Baseline water stress score (0–5 scale) from the Aqueduct 4.0 country rankings dataset. Measures ratio of total water demand to available renewable supply. Converted to 1–10 using linear mapping. Open data, CC BY 4.0.</div>
+          <div class="source-verified">✓ Raw data downloaded and verified</div>
         </div>
         <div class="source-item">
           <div class="source-dim">Labor Rights Risk</div>
           <div class="source-name">Walk Free Global Slavery Index 2023</div>
-          <div class="source-desc">Vulnerability score measuring exposure to modern slavery conditions. Covers 160 countries. walkfree.org/global-slavery-index</div>
+          <div class="source-desc">Total vulnerability score (0–100) from the GSI 2023 country-level dataset. Covers governance issues, lack of basic needs, inequality, disenfranchised groups, and effects of conflict. Normalized within this 8-country sample to 1–10.</div>
+          <div class="source-verified">✓ Raw data downloaded and verified</div>
         </div>
         <div class="source-item">
-          <div class="source-dim">Regulatory Exposure</div>
+          <div class="source-dim">EUDR Regulatory Exposure</div>
           <div class="source-name">EU Regulation 2023/1115 (EUDR)</div>
-          <div class="source-desc">Country-commodity risk classification. High-risk designation for deforestation-linked commodities: beef, soy, palm oil, cocoa, coffee, wood.</div>
+          <div class="source-desc">Documented qualitative assessment. Scores reflect which regulated commodities (beef, soy, palm oil, cocoa, coffee, wood) each country is a major source for, and whether those commodities are linked to deforestation under EUDR country risk classifications.</div>
+          <div class="source-verified" style="color:#a07800">⚠ Documented qualitative   not raw data</div>
         </div>
         <div class="source-item">
-          <div class="source-dim">Supporting Context</div>
-          <div class="source-name">Sedex, Forest 500, EcoVadis Index 2024</div>
-          <div class="source-desc">Sector-level audit findings, commodity risk profiles, and ESG maturity benchmarks across food &amp; beverage supply chains.</div>
+          <div class="source-dim">Normalization</div>
+          <div class="source-name">Within-sample linear normalization</div>
+          <div class="source-desc">All dimensions normalized to 1–10 relative to the 8-country peer group using min-max scaling: score = 1 + (value − min) / (max − min) × 9. This preserves relative differences between countries while enabling comparison across dimensions.</div>
         </div>
         <div class="source-item">
           <div class="source-dim">Composite Score</div>
-          <div class="source-name">Equal-weighted average</div>
-          <div class="source-desc">All four dimensions are normalised to 1–10 and averaged equally. Weightings can be adjusted for sector-specific or commodity-specific analysis.</div>
+          <div class="source-name">Equal-weighted average of 4 dimensions</div>
+          <div class="source-desc">All four dimensions weighted equally in the composite. Users conducting sector-specific analysis may choose to weight differently   for example, upweighting EUDR exposure for a cocoa-focused procurement review.</div>
         </div>
       </div>
     </div>
@@ -500,63 +438,41 @@
     <div class="section-inner">
       <h2>What This Means for Companies and Stakeholders</h2>
       <p>
-        The risk scores in this dashboard are not abstract sustainability metrics. They reflect real, regulated, and increasingly
-        financially material risks for anyone involved in food supply chains — whether as a company sourcing ingredients,
-        an investor evaluating ESG performance, or a policy professional designing due diligence frameworks.
-      </p>
-      <p>
-        Three findings stand out from this analysis. First, ESG risk is <strong>concentrated</strong> — a small number of countries
-        and commodities account for a disproportionate share of total supply chain exposure. Brazil and Ivory Coast alone carry
-        critical-level risk across multiple dimensions simultaneously. Second, risk is <strong>multi-dimensional</strong> —
-        India's water stress profile is frequently underestimated because its carbon and EUDR exposure are lower.
-        A single composite score, used uncritically, can obscure these distinctions. Third, even the lowest-risk
-        country in this sample — Argentina — carries material EUDR compliance obligations for soy and beef.
-        There is no risk-free sourcing strategy; there is only better or worse-managed risk.
+        The risk scores in this dashboard reflect real, regulated, and financially material risks for anyone involved
+        in food supply chains   whether as a company sourcing ingredients, an investor evaluating ESG performance,
+        or a policy professional designing due diligence frameworks.
       </p>
 
       <div class="conclusion-grid">
         <div class="conclusion-card">
           <div class="icon">🏭</div>
           <h4>For food companies &amp; procurement teams</h4>
-          <p>
-            Companies sourcing from Brazil, Indonesia, or Ivory Coast must now demonstrate due diligence under the EUDR and German LkSG.
-            A country-level risk map like this is the starting point for supplier prioritisation — identifying which origins require
-            deeper audits, supplier engagement programmes, or alternative sourcing strategies. Companies unable to map their Tier 1
-            and Tier 2 supply chain origins are already exposed to non-compliance risk.
-          </p>
+          <p>Companies sourcing from Brazil, Indonesia, or Ivory Coast must demonstrate due diligence under the EUDR and German LkSG. A country-level risk map like this is the starting point for supplier prioritisation   identifying which origins require deeper audits, supplier engagement, or alternative sourcing. Companies unable to map their Tier 1 and Tier 2 supply chain origins are already exposed to non-compliance risk.</p>
         </div>
         <div class="conclusion-card">
           <div class="icon">📈</div>
           <h4>For investors &amp; ESG analysts</h4>
-          <p>
-            Supply chain ESG risk is increasingly material to financial performance. Companies with concentrated sourcing in high-risk
-            countries — particularly for EUDR-regulated commodities — face import disruption, regulatory penalties, and reputational
-            exposure. Investors using headline ESG ratings should look beyond aggregated scores to understand the geographic origin
-            of a portfolio company's raw material risk, especially as CSRD Scope 3 disclosure makes this data more visible and auditable.
-          </p>
+          <p>Supply chain ESG risk is increasingly material to financial performance. Companies with concentrated sourcing in high-risk countries   particularly for EUDR-regulated commodities   face import disruption, regulatory penalties, and reputational exposure. Investors using headline ESG ratings should look beyond aggregated scores to understand the geographic origin of raw material risk, especially as CSRD Scope 3 disclosure makes this more visible and auditable.</p>
         </div>
         <div class="conclusion-card">
           <div class="icon">🌍</div>
           <h4>For sustainability &amp; policy professionals</h4>
-          <p>
-            The variation in risk across countries reveals a structural tension: the countries producing the most essential food
-            commodities often have the least institutional capacity to meet the sustainability standards now required by importing
-            markets. Effective supply chain sustainability requires more than compliance frameworks — it demands investment in
-            supplier capacity building, transparent data infrastructure, and policy coherence between producing and consuming countries.
-          </p>
+          <p>The variation across countries reveals a structural tension: the countries producing the most essential food commodities often have the least institutional capacity to meet sustainability standards now required by importing markets. Effective supply chain sustainability requires investment in supplier capacity building, transparent data infrastructure, and policy coherence between producing and consuming countries.</p>
         </div>
       </div>
 
       <div class="final-box">
         The core finding of this analysis is direct: <span>supply chain ESG risk in food is concentrated, multi-dimensional, and now regulated.</span>
-        For any food company operating in the EU, understanding which sourcing countries carry which risks is no longer a sustainability
-        ambition — it is the minimum baseline for regulatory compliance, credible ESG reporting, and responsible procurement strategy.
-        The question is not whether to map this risk, but how granularly and how quickly.
+        Brazil dominates on carbon and deforestation. Ethiopia and Ivory Coast carry the highest social risk. India and Thailand are the water stress stories that are routinely underestimated. And no country in this sample   including Argentina, the lowest-risk origin   is entirely free of EUDR compliance obligations.
+        For any food company operating in the EU, understanding which sourcing countries carry which risks is no longer a sustainability ambition   it is the minimum baseline for regulatory compliance, credible ESG reporting, and responsible procurement strategy.
       </div>
 
       <div class="footer-note">
         Prepared as an independent portfolio analysis on food supply chain ESG risk ·
-        Data: FAO FAOSTAT, WRI Aqueduct 4.0, Walk Free Global Slavery Index 2023, EU Regulation 2023/1115
+        Carbon &amp; Deforestation: Our World in Data GHG by sector (2023) ·
+        Water Stress: WRI Aqueduct 4.0 (2023) ·
+        Labor Rights: Walk Free Global Slavery Index 2023 ·
+        Regulatory Exposure: EU Regulation 2023/1115
       </div>
     </div>
   </section>
@@ -567,90 +483,98 @@
 const countries = [
   {
     flag:'🇧🇷', name:'Brazil', commodities:'Soy, Beef, Coffee, Sugar',
-    carbon:9.2, water:4.1, labor:5.8, eudr:9.5,
-    insight:'<strong>Brazil</strong> is the highest composite-risk country in this analysis. It accounts for roughly 32% of global deforestation and is a dominant source of deforestation-linked agricultural emissions — driven primarily by beef and soy expansion into the Amazon and Cerrado biomes. It carries the highest EUDR exposure in the sample, with regulated commodities (beef, soy, coffee) all sourced at scale. Water stress is moderate given abundant river systems, but labour vulnerability and informal agricultural conditions remain elevated.',
+    carbon:10.0, water:1.5, labor:4.2, eudr:9.5,
+    rawData: { carbon:'1,498 Mt CO₂eq (Agri 582 + LULUCF 917)', water:'0.30 (Low <10%)', labor:'46.9% vulnerability', eudr:'Highest EUDR exposure: beef, soy, coffee' },
+    insight:'<strong>Brazil</strong> has the highest carbon &amp; deforestation score in this analysis   driven by 916 Mt of land-use change emissions, the largest in the sample. Deforestation for beef and soy expansion into the Amazon and Cerrado biomes is the dominant driver. However, Brazil\'s water stress is genuinely low (1.5)   the Amazon basin makes it water-abundant. This means companies focused only on water risk would systematically underestimate Brazil\'s ESG exposure. EUDR compliance is the most immediate regulatory priority.',
     notes:[
-      'FAO FAOSTAT: Brazil is the largest agricultural GHG emitter in this sample; beef & soy are the dominant deforestation drivers',
-      'WRI Aqueduct 4.0: moderate overall water stress, but Cerrado region faces increasing agricultural water pressure',
-      'Walk Free GSI 2023: moderate vulnerability; significant informal labour in agriculture and seasonal harvesting',
-      'EUDR: highest-risk country for beef, soy and coffee — all three are regulated commodities under EU Regulation 2023/1115'
+      'Our World in Data (2023): 582 Mt agriculture + 916 Mt LULUCF = 1,498 Mt total. Highest in sample.',
+      'WRI Aqueduct 4.0: score 0.30, "Low (<10%)"   Amazon basin provides abundant water supply',
+      'Walk Free GSI 2023: vulnerability 46.9%, prevalence 5.0 per 1,000. Moderate   informal agricultural labour',
+      'EU Reg 2023/1115: highest-risk origin for beef, soy and coffee   all three are regulated commodities'
     ]
   },
   {
     flag:'🇮🇩', name:'Indonesia', commodities:'Palm Oil, Cocoa, Coffee',
-    carbon:8.7, water:4.8, labor:6.4, eudr:8.9,
-    insight:'<strong>Indonesia</strong> is the world\'s largest palm oil producer and the second most deforested country globally. Peatland drainage — a unique feature of Indonesia and Malaysia — generates an additional 0.3–0.4 GtCO₂/year beyond forest clearing. Seasonal and migrant agricultural labour creates significant forced labour exposure. Its EUDR risk is the broadest in this sample: palm oil, cocoa, coffee, and wood are all regulated, making Indonesia the country with the widest multi-commodity regulatory exposure.',
+    carbon:4.6, water:1.9, labor:4.7, eudr:8.9,
+    rawData: { carbon:'622 Mt CO₂eq (Agri 154 + LULUCF 468)', water:'0.52 (Low <10%)', labor:'48.6% vulnerability', eudr:'High exposure: palm oil, cocoa, coffee, wood' },
+    insight:'<strong>Indonesia</strong> is the world\'s largest palm oil producer and has the second highest LULUCF emissions in this sample (468 Mt), driven by peatland drainage and forest clearing. Notably, its water stress score is low (1.9)   like Brazil, its tropical location provides abundant rainfall. Its EUDR exposure is the broadest in the sample: palm oil, cocoa, coffee, and wood are all regulated simultaneously. Labour vulnerability is moderate-high, concentrated in migrant and seasonal agricultural workers.',
     notes:[
-      'FAO / SEI research: second largest deforestation emitter globally; peatland drainage creates a unique and underestimated emission type',
-      'WRI Aqueduct 4.0: medium water stress overall; risks concentrated in Java and parts of Sumatra',
-      'Walk Free GSI 2023: elevated vulnerability driven by migrant and seasonal agricultural workers across palm oil and cocoa sectors',
-      'EUDR: high-risk across four regulated commodities simultaneously — the widest multi-commodity EUDR exposure in this sample'
+      'Our World in Data (2023): 154 Mt agriculture + 468 Mt LULUCF = 622 Mt. Peatland drainage is a unique emission type.',
+      'WRI Aqueduct 4.0: score 0.52, "Low (<10%)"   tropical rainfall means low national-level water stress',
+      'Walk Free GSI 2023: vulnerability 48.6%, prevalence 6.7 per 1,000. Migrant and seasonal workers at risk.',
+      'EU Reg 2023/1115: high-risk across four regulated commodities simultaneously   widest multi-commodity exposure'
     ]
   },
   {
     flag:'🇮🇳', name:'India', commodities:'Rice, Spices, Tea, Sugar',
-    carbon:6.1, water:9.3, labor:7.2, eudr:2.0,
-    insight:'<strong>India</strong> presents a distinctive risk profile: moderate carbon emissions but <strong>extreme water stress</strong>. WRI Aqueduct 4.0 ranks India among the most water-stressed countries globally, with northern states facing severe groundwater depletion. Walk Free estimates 11 million people in modern slavery conditions — the largest absolute figure of any country. However, India\'s primary export commodities (rice, tea, spices) are not EUDR-regulated, which limits regulatory exposure relative to the social and water risks.',
+    carbon:5.7, water:6.4, labor:6.8, eudr:2.0,
+    rawData: { carbon:'809 Mt agriculture (LULUCF -146 Mt = net sink)', water:'3.00 (Medium-High 20-40%)', labor:'56.0% vulnerability', eudr:'Low   rice, tea, spices not regulated' },
+    insight:'<strong>India</strong> presents a distinctive profile: high agricultural emissions (809 Mt   the largest farm-gate figure in this sample) but negative LULUCF (-146 Mt), meaning India\'s forests are a net carbon sink. Water stress is genuinely high (6.4)   WRI Aqueduct scores India at 3.0/5, "Medium-High", with northern agricultural states facing severe groundwater depletion. Labour vulnerability is the second-highest in the sample (56%). EUDR exposure is low because India\'s primary exports (rice, tea, spices) are not regulated commodities.',
     notes:[
-      'FAO: India is the 4th largest food-system GHG emitter globally; on-farm energy use is the dominant emission pathway',
-      'WRI Aqueduct 4.0: scores 4.5–5 (extremely high) in northern agricultural states; groundwater depletion is accelerating across the Indo-Gangetic Plain',
-      'Walk Free GSI 2023: highest absolute number of people in modern slavery conditions globally (estimated 11 million)',
-      'EUDR: low regulatory exposure — primary Indian food exports including rice, tea and spices are not in the regulated commodity list'
+      'Our World in Data (2023): 809 Mt agriculture emissions. LULUCF is -146 Mt (net sink)   treated as zero deforestation risk.',
+      'WRI Aqueduct 4.0: score 3.00, "Medium-High (20-40%)"   northern states face severe groundwater depletion',
+      'Walk Free GSI 2023: vulnerability 56.0%, prevalence 8.0 per 1,000. Second highest in sample.',
+      'EU Reg 2023/1115: low   rice, tea and spices are not included in the regulated commodity list'
     ]
   },
   {
     flag:'🇨🇮', name:'Ivory Coast', commodities:'Cocoa (dominant), Coffee',
-    carbon:6.8, water:3.2, labor:8.1, eudr:8.5,
-    insight:'<strong>Ivory Coast</strong> supplies approximately 40% of the world\'s cocoa and carries the highest labour risk score in this analysis. Child and forced labour in cocoa farming is a persistent, systemic issue — documented repeatedly by the ILO, the US Department of Labour, and corporate audits. Forest loss linked to cocoa expansion has removed over 80% of Ivory Coast\'s original forest cover. EUDR positions cocoa as one of its primary target commodities, making Ivory Coast a central compliance challenge for any European chocolate or confectionery company.',
+    carbon:1.0, water:1.0, labor:7.6, eudr:8.5,
+    rawData: { carbon:'38 Mt CO₂eq (Agri 7 + LULUCF 31)', water:'0.0 (Low <10%)', labor:'58.6% vulnerability', eudr:'Primary EUDR risk: cocoa' },
+    insight:'<strong>Ivory Coast</strong> has very low absolute carbon emissions (38 Mt) and near-zero water stress   it is a small, tropical economy. But it carries the second-highest labour vulnerability score (58.6%) and very high EUDR exposure for cocoa. Ivory Coast supplies approximately 40% of the world\'s cocoa, and child and forced labour in cocoa farming is a persistent, systemic issue. EUDR places cocoa as one of its primary target commodities. The risk here is almost entirely social and regulatory   not environmental in the traditional sense.',
     notes:[
-      'Deforestation data: cocoa expansion is responsible for the majority of Ivory Coast\'s historic forest loss — over 80% of original cover removed',
-      'WRI Aqueduct 4.0: relatively lower water stress than Asian peers; not the primary risk dimension for this country',
-      'Walk Free GSI 2023 + ILO: highest labour vulnerability score in the sample; child labour in cocoa farming is a well-documented systemic issue',
-      'EUDR: Ivory Coast is the primary high-risk origin for cocoa — the regulation\'s most commercially significant commodity for European food companies'
+      'Our World in Data (2023): 7 Mt agriculture + 31 Mt LULUCF = 38 Mt total. Low absolute emissions due to small economy size.',
+      'WRI Aqueduct 4.0: score 0.0, "Low (<10%)"   tropical location, low water demand relative to supply',
+      'Walk Free GSI 2023: vulnerability 58.6%, prevalence 7.3 per 1,000. Child labour in cocoa is a documented systemic issue.',
+      'EU Reg 2023/1115: primary high-risk origin for cocoa   the most commercially significant EUDR commodity for European food companies'
     ]
   },
   {
     flag:'🇹🇭', name:'Thailand', commodities:'Rice, Seafood, Sugar, Cassava',
-    carbon:5.2, water:5.6, labor:6.8, eudr:3.5,
-    insight:'<strong>Thailand</strong> is a major seafood exporter and the world\'s largest cassava exporter. Labour risk is concentrated in the fishing and seafood processing sectors, where forced labour and trafficking of migrant workers from Myanmar and Cambodia has been extensively documented by the ILO and international NGOs. Water stress is moderate-high and increasing due to irrigation demand for rice cultivation. EUDR exposure is relatively limited, as cassava and seafood are not regulated commodities under the current regulation.',
+    carbon:1.6, water:6.2, labor:4.1, eudr:3.5,
+    rawData: { carbon:'132 Mt CO₂eq (Agri 83 + LULUCF 49)', water:'2.88 (Medium-High 20-40%)', labor:'46.5% vulnerability', eudr:'Limited   cassava, seafood not regulated' },
+    insight:'<strong>Thailand</strong> has a moderate overall risk profile, but its water stress score (6.2) is the second highest in the sample   WRI Aqueduct scores Thailand at 2.88/5, "Medium-High". This is significant because Thailand is the world\'s largest cassava exporter and a major rice producer, both heavily irrigation-dependent. Labour risk is moderate, with the fishing and seafood processing sectors carrying elevated forced labour exposure. EUDR regulatory exposure is limited as cassava and seafood are not regulated commodities.',
     notes:[
-      'FAO: significant methane emissions from rice paddies; food waste disposal is the dominant emission pathway nationally',
-      'WRI Aqueduct 4.0: medium-high stress; central plains face seasonal water scarcity affecting rice cultivation',
-      'Walk Free GSI 2023: elevated vulnerability; seafood sector has been subject to formal ILO forced labour investigations',
-      'EUDR: limited exposure — cassava and seafood are not included in the current regulated commodity list'
+      'Our World in Data (2023): 83 Mt agriculture + 49 Mt LULUCF = 132 Mt. Rice paddies are a significant methane source.',
+      'WRI Aqueduct 4.0: score 2.88, "Medium-High (20-40%)"   central plains face seasonal water scarcity for irrigation',
+      'Walk Free GSI 2023: vulnerability 46.5%, prevalence 5.7 per 1,000. Seafood sector has documented forced labour exposure.',
+      'EU Reg 2023/1115: limited   cassava and seafood are not in the current regulated commodity list'
     ]
   },
   {
     flag:'🇪🇹', name:'Ethiopia', commodities:'Coffee, Sesame, Cut Flowers',
-    carbon:5.5, water:4.4, labor:8.6, eudr:4.8,
-    insight:'<strong>Ethiopia</strong> is the birthplace of arabica coffee and a growing agricultural exporter. It carries the highest labour vulnerability score in this analysis — driven by food insecurity, conflict, poverty, and weak institutional protections. The 2022–23 drought, described by the UN as the worst in four decades, amplified exploitation risks for migrant agricultural workers. Coffee exports face moderate EUDR compliance risk as deforestation pressures increase in forest-adjacent growing regions.',
+    carbon:1.6, water:2.4, labor:10.0, eudr:4.8,
+    rawData: { carbon:'144 Mt CO₂eq (Agri 136 + LULUCF 8)', water:'0.79 (Low <10%)', labor:'67.2% vulnerability', eudr:'Moderate   coffee faces forest-zone scrutiny' },
+    insight:'<strong>Ethiopia</strong> carries the highest labour vulnerability score in this analysis (67.2%   Walk Free GSI 2023), the maximum in the sample. This is driven by food insecurity, active conflict, extreme poverty, and weak institutional protections. The 2022–23 drought amplified exploitation risks for migrant agricultural workers. Carbon and water scores are low in absolute terms. EUDR exposure is moderate   Ethiopian coffee is increasingly scrutinised as sourcing zones overlap with forest-adjacent areas. The risk profile here is almost entirely social.',
     notes:[
-      'FAO: agricultural emissions growing alongside land-use change linked to coffee and sesame expansion into forested areas',
-      'WRI Aqueduct 4.0: medium stress overall; severe drought events create acute seasonal water risk that amplifies displacement',
-      'Walk Free GSI 2023: highest vulnerability score in this sample; food insecurity and active conflict significantly amplify exploitation risk',
-      'EUDR: moderate exposure — Ethiopian coffee is increasingly scrutinised for sourcing zones that overlap with or border forested areas'
+      'Our World in Data (2023): 136 Mt agriculture + 8 Mt LULUCF = 144 Mt. Emissions growing as agriculture expands.',
+      'WRI Aqueduct 4.0: score 0.79, "Low (<10%)"   moderate national-level stress, but severe drought events create acute seasonal risk',
+      'Walk Free GSI 2023: vulnerability 67.2%   highest in sample. Prevalence 6.3 per 1,000. Food insecurity and conflict are key drivers.',
+      'EU Reg 2023/1115: moderate   Ethiopian coffee increasingly scrutinised for sourcing zones that border forested areas'
     ]
   },
   {
     flag:'🇨🇳', name:'China', commodities:'Processed Inputs, Oilseeds, Aquaculture',
-    carbon:7.3, water:6.8, labor:7.9, eudr:5.2,
-    insight:'<strong>China</strong> is the world\'s largest food producer and a major commodity importer — embedding deforestation risk indirectly through large-scale soy imports from Brazil and palm oil from Indonesia. Domestic water stress is acute, with northern China facing severe groundwater depletion. Forced labour concerns — particularly related to Xinjiang — have directly influenced EU and German supply chain due diligence legislation, making China\'s inputs a compliance priority for any company sourcing processed food-adjacent ingredients.',
+    carbon:5.0, water:5.3, labor:3.8, eudr:5.2,
+    rawData: { carbon:'691 Mt agriculture (LULUCF -834 Mt = net sink)', water:'2.37 (Medium-High 20-40%)', labor:'45.5% vulnerability', eudr:'Indirect: imports and processes regulated commodities' },
+    insight:'<strong>China</strong> has a notable data feature: its LULUCF is -834 Mt CO₂, meaning its forests are a very large net carbon sink due to large-scale reforestation programmes. This analysis correctly treats this as zero deforestation risk, leaving only agricultural emissions (691 Mt) in the carbon score. Water stress is real and significant (5.3)   WRI Aqueduct scores China at 2.37/5, with northern agricultural regions facing severe groundwater depletion. Labour vulnerability is moderate. China\'s indirect EUDR exposure comes from importing and processing regulated commodities (soy, palm oil) at scale.',
     notes:[
-      'FAO: China is the largest food-system GHG emitter globally; household consumption is the dominant emission pathway nationally',
-      'WRI Aqueduct 4.0: northern China faces extremely high water stress; the Huang River basin is a critical agricultural water risk zone',
-      'Walk Free GSI 2023 + German LkSG: forced labour risk in specific regions has triggered legislative responses in the EU and Germany',
-      'EUDR: indirect exposure — China imports and processes regulated commodities (soy, palm oil) at scale before re-exporting processed food inputs'
+      'Our World in Data (2023): 691 Mt agriculture emissions. LULUCF is -834 Mt (large net sink)   treated as zero deforestation risk.',
+      'WRI Aqueduct 4.0: score 2.37, "Medium-High"   northern China faces severe groundwater depletion; Huang River basin critical',
+      'Walk Free GSI 2023: vulnerability 45.5%, prevalence 4.0 per 1,000. Moderate in national vulnerability terms.',
+      'EU Reg 2023/1115: indirect exposure   China imports and processes soy and palm oil at scale before re-exporting processed inputs'
     ]
   },
   {
     flag:'🇦🇷', name:'Argentina', commodities:'Soy, Beef, Sunflower Oil',
-    carbon:6.2, water:3.8, labor:3.1, eudr:6.0,
-    insight:'<strong>Argentina</strong> is the lowest composite-risk country in this analysis and serves as a useful benchmark. Labour conditions are comparatively stronger, water stress is lower, and institutional protections are more developed. However, Argentina is a major soy and beef exporter — both EUDR-regulated — and deforestation in the Chaco biome (the second largest forest in South America) is increasing as regulatory scrutiny shifts commercial pressure southward from the Amazon. Even the lowest-risk country in this sample carries material EUDR compliance obligations.',
+    carbon:1.9, water:4.3, labor:1.0, eudr:6.0,
+    rawData: { carbon:'179 Mt CO₂eq (Agri 133 + LULUCF 46)', water:'1.81 (Low-Medium 10-20%)', labor:'35.5% vulnerability', eudr:'Moderate: soy and beef are EUDR-regulated' },
+    insight:'<strong>Argentina</strong> is the lowest composite-risk country and acts as a useful benchmark. Its labour vulnerability score is the lowest in the sample (35.5%   Walk Free GSI 2023), and water stress is low-medium (1.81/5 on WRI Aqueduct). Carbon emissions are moderate. However, Argentina is a major soy and beef exporter   both EUDR-regulated   and deforestation in the Chaco biome is increasing as scrutiny shifts from the Amazon. This demonstrates that even the lowest-risk origin in this sample still carries material EUDR compliance obligations.',
     notes:[
-      'FAO: significant soy and beef emissions; Chaco biome deforestation is increasing as Amazon-focused regulatory pressure shifts sourcing patterns',
-      'WRI Aqueduct 4.0: lower overall water stress; Pampas region is relatively water-rich compared to other sourcing countries in this sample',
-      'Walk Free GSI 2023: lowest vulnerability score in this sample — stronger labour law and more developed institutional capacity',
-      'EUDR: moderate-high for soy and beef; Chaco deforestation is now under active EU scrutiny as an emerging high-risk sourcing zone'
+      'Our World in Data (2023): 133 Mt agriculture + 46 Mt LULUCF = 179 Mt. Chaco deforestation increasing as Amazon scrutiny intensifies.',
+      'WRI Aqueduct 4.0: score 1.81, "Low-Medium (10-20%)"   Pampas region is relatively water-rich',
+      'Walk Free GSI 2023: vulnerability 35.5%   lowest in sample. Prevalence 4.2 per 1,000. Stronger labour protections.',
+      'EU Reg 2023/1115: moderate-high for soy and beef. Chaco biome deforestation now under active EU scrutiny.'
     ]
   }
 ];
@@ -667,15 +591,16 @@ function rl(score) {
   if (score >= 4) return { label:'Medium',   bg:'#fffaed', color:'#a07800' };
   return              { label:'Low',      bg:'#f0faf4', color:'#1a7a47' };
 }
+function comp(c){ return (c.carbon+c.water+c.labor+c.eudr)/4; }
 
 function buildTable() {
   const tbody = document.getElementById('tableBody');
   const sorted = [...countries].sort((a,b)=>comp(b)-comp(a));
   sorted.forEach((c,i)=>{
-    const cv = comp(c); const r = rl(cv);
+    const cv=comp(c); const r=rl(cv);
     const tr = document.createElement('tr');
     if(i===0) tr.classList.add('active');
-    const dimCells = [c.carbon,c.water,c.labor,c.eudr].map(v=>{
+    const dimCells=[c.carbon,c.water,c.labor,c.eudr].map(v=>{
       const r2=rc(v);
       return `<td><span class="score-chip" style="background:${r2.bg};color:${r2.color}">${v.toFixed(1)}</span></td>`;
     }).join('');
@@ -694,43 +619,48 @@ function buildTable() {
   showDetail(sorted[0]);
 }
 
-function comp(c){ return (c.carbon+c.water+c.labor+c.eudr)/4; }
-
-function showDetail(c){
+function showDetail(c) {
   document.getElementById('detailFlag').textContent=c.flag;
   document.getElementById('detailName').textContent=c.name;
   const cv=comp(c); const r=rl(cv);
   document.getElementById('detailSub').innerHTML=
-    `${c.commodities} &nbsp;·&nbsp; <span style="color:${r.color};font-weight:600">${r.label} Risk — ${cv.toFixed(1)}/10</span>`;
+    `${c.commodities} &nbsp;·&nbsp; <span style="color:${r.color};font-weight:600">${r.label} Risk   ${cv.toFixed(1)}/10</span>`;
+
   const dims=[
-    {label:'🌳 Carbon & Deforestation',val:c.carbon,note:c.notes[0]},
-    {label:'💧 Water Stress',val:c.water,note:c.notes[1]},
-    {label:'⚠️ Labor Rights Risk',val:c.labor,note:c.notes[2]},
-    {label:'📋 EUDR Exposure',val:c.eudr,note:c.notes[3]},
+    {label:'🌳 Carbon & Deforestation', val:c.carbon, note:c.notes[0], raw:c.rawData.carbon, verified:true},
+    {label:'💧 Water Stress',           val:c.water,  note:c.notes[1], raw:c.rawData.water,  verified:true},
+    {label:'⚠️ Labor Rights Risk',      val:c.labor,  note:c.notes[2], raw:c.rawData.labor,  verified:true},
+    {label:'📋 EUDR Exposure',          val:c.eudr,   note:c.notes[3], raw:c.rawData.eudr,   verified:false},
   ];
+
   document.getElementById('dimBars').innerHTML=dims.map(d=>{
     const r2=rc(d.val);
+    const badge = d.verified
+      ? `<span style="font-size:0.68rem;color:#1a7a47;font-weight:700">✓ verified data</span>`
+      : `<span style="font-size:0.68rem;color:#a07800;font-weight:700">⚠ qualitative</span>`;
     return `<div>
       <div class="dim-bar-header">
-        <span class="dim-bar-label">${d.label}</span>
+        <span class="dim-bar-label">${d.label} ${badge}</span>
         <span class="dim-bar-val" style="color:${r2.color}">${d.val.toFixed(1)} / 10</span>
       </div>
       <div class="dim-bar-track"><div class="dim-bar-fill" style="width:${d.val*10}%;background:${r2.color}"></div></div>
-      <div class="dim-bar-note">${d.note}</div>
+      <div class="dim-bar-note"><strong>Raw value:</strong> ${d.raw}</div>
+      <div class="dim-bar-note" style="margin-top:2px">${d.note}</div>
     </div>`;
   }).join('');
+
   const ib=document.getElementById('insightBox');
   ib.style.display='block'; ib.innerHTML=c.insight;
 }
 
 function buildEUDR(){
   const items=[
-    {name:'🥩 Beef & Leather',countries:'Brazil (dominant), Argentina',level:5},
-    {name:'🌴 Palm Oil',countries:'Indonesia (dominant), Malaysia',level:5},
-    {name:'🫘 Soy',countries:'Brazil, Argentina',level:4},
-    {name:'🍫 Cocoa',countries:"Ivory Coast (dominant), Indonesia",level:5},
-    {name:'☕ Coffee',countries:'Brazil, Ethiopia, Indonesia',level:4},
-    {name:'🌲 Wood & Pulp',countries:'Brazil, Indonesia, China',level:3},
+    {name:'🥩 Beef & Leather', countries:'Brazil (dominant), Argentina', level:5},
+    {name:'🌴 Palm Oil', countries:'Indonesia (dominant), Malaysia', level:5},
+    {name:'🫘 Soy', countries:'Brazil, Argentina', level:4},
+    {name:'🍫 Cocoa', countries:"Ivory Coast (dominant), Indonesia", level:5},
+    {name:'☕ Coffee', countries:'Brazil, Ethiopia, Indonesia', level:4},
+    {name:'🌲 Wood & Pulp', countries:'Brazil, Indonesia, China', level:3},
   ];
   const pipColor={5:'#c0392b',4:'#c05a00',3:'#a07800'};
   document.getElementById('eudrRows').innerHTML=items.map(item=>{

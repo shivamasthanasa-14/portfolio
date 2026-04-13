@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Omnibus Package: How the EU Rewrote Its Sustainability Agenda in One Year</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid #e8e8e4;
+      background: #fafaf8;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: #1a1a1a; }
+
+    .article-header {
+      max-width: 720px;
+      margin: 4rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .article-tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #ddd;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-family: 'Georgia', serif;
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .article-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid #e8e8e4;
+      border-bottom: 1px solid #e8e8e4;
+      margin-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .article-meta .sep { color: #ccc; }
+
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      font-family: 'Georgia', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #1a1a1a;
+    }
+
+    .article-body p { margin-bottom: 1.4rem; }
+
+    .article-body h2 {
+      font-family: 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-body strong { font-weight: bold; }
+
+    .callout {
+      border-left: 3px solid #1a1a1a;
+      padding: 0.9rem 1.5rem;
+      margin: 2rem 0;
+      background: #f2f2ee;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 1.75rem 0;
+    }
+
+    .fw-card {
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      padding: 1.1rem 1rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f7f7f4;
+    }
+
+    .fw-card .fw-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+
+    .fw-card .fw-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .fw-card .fw-before {
+      font-size: 0.78rem;
+      color: #999;
+      margin-bottom: 4px;
+      line-height: 1.45;
+    }
+
+    .fw-card .fw-after {
+      font-size: 0.78rem;
+      color: #333;
+      line-height: 1.45;
+    }
+
+    .fw-card .fw-divider {
+      border: none;
+      border-top: 1px solid #e4e4e0;
+      margin: 8px 0;
+    }
+
+    .timeline {
+      margin: 1.75rem 0;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .timeline-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid #e8e8e4;
+    }
+
+    .timeline-row:last-child { border-bottom: none; }
+
+    .timeline-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #999;
+      min-width: 76px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .timeline-text {
+      font-size: 0.88rem;
+      color: #444;
+      line-height: 1.55;
+    }
+
+    .timeline-text strong { color: #1a1a1a; font-weight: 600; }
+
+    .changes-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .changes-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+
+    .changes-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #aaa;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+
+    .changes-list strong { font-weight: 600; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e8e8e4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      color: #777;
+    }
+
+    .closing-note {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .article-title { font-size: 1.8rem; }
+      .framework-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#projects">Work</a></li>
+    <li><a href="/#experience">Experience</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="article-header">
+  <div class="article-tag">Regulatory Frameworks</div>
+  <h1 class="article-title">The Omnibus package: how the EU rewrote its sustainability agenda in one year</h1>
+  <p class="article-subtitle">In February 2025, the European Commission proposed the most significant rollback of EU sustainability regulation since the Green Deal began. By March 2026, it was law. Understanding what changed, why it changed, and what it means requires looking across three frameworks at once.</p>
+  <div class="article-meta">
+    <span>Shivam Asthana</span>
+    <span class="sep">·</span>
+    <span>April 2026</span>
+    <span class="sep">·</span>
+    <span>7 min read</span>
+    <span class="sep">·</span>
+    <span>Omnibus · CSRD · CSDDD · EU Taxonomy</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+  <p>The EU's sustainability regulatory agenda was built on an interlocking set of frameworks. CSRD told companies what to disclose. CSDDD told them what to act on. The EU Taxonomy defined what counted as sustainable in the first place. Together, they were designed to make ESG obligations legally binding, standardised, and comprehensive across the single market.</p>
+
+  <p>Then came the Omnibus.</p>
+
+  <p>Published on 26 February 2025 and entering into force on 18 March 2026 as Directive (EU) 2026/470, the Omnibus I package amended all three frameworks simultaneously. It was framed as a simplification exercise, a response to concerns about administrative burden and European competitiveness. In practice, it was a political recalibration of how far the EU was willing to push mandatory sustainability obligations in the near term.</p>
+
+  <p>To understand Omnibus properly, you need to understand what it touched and why each change was made. This article brings those threads together.</p>
+
+  <h2>Why the Omnibus happened</h2>
+
+  <p>The context matters as much as the content. By late 2024, the EU sustainability regulatory stack had become a flashpoint in a wider debate about European competitiveness. The Draghi report on EU competitiveness, published in September 2024, flagged regulatory burden as a constraint on business investment. Business lobbies, particularly from manufacturing and mid-sized companies, argued that the original CSRD scope was disproportionate and that the CSDDD's due diligence obligations would create unmanageable liability exposure.</p>
+
+  <p>The incoming Commission, under Ursula von der Leyen's second mandate, committed explicitly to simplification as a political priority. The Omnibus package was the result. It was not a rejection of the Green Deal's objectives, but a significant downward adjustment of its near-term ambitions for mandatory corporate compliance.</p>
+
+  <div class="callout">
+    The Omnibus is not simply a technical amendment. It reflects a political judgment that the original regulatory scope was moving faster than European business could absorb. Understanding that context is essential for interpreting what the changes actually signal, and what they do not.
+  </div>
+
+  <h2>What changed across each framework</h2>
+
+  <p>The three frameworks were affected in different ways and to different degrees:</p>
+
+  <div class="framework-grid">
+    <div class="fw-card">
+      <div class="fw-label">Framework 01</div>
+      <div class="fw-name">CSRD</div>
+      <hr class="fw-divider">
+      <div class="fw-before">Before: 250 employees or 50M euros turnover. Around 50,000 companies in scope globally.</div>
+      <hr class="fw-divider">
+      <div class="fw-after">After: 1,000 employees and 450M euros turnover. Around 5,000 companies in scope. Listed SMEs fully removed.</div>
+    </div>
+    <div class="fw-card">
+      <div class="fw-label">Framework 02</div>
+      <div class="fw-name">CSDDD</div>
+      <hr class="fw-divider">
+      <div class="fw-before">Before: 1,000 employees and 450M euros turnover. Climate transition plan required.</div>
+      <hr class="fw-divider">
+      <div class="fw-after">After: 5,000 employees and 1.5B euros turnover. Transition plan removed. Application delayed to July 2029.</div>
+    </div>
+    <div class="fw-card">
+      <div class="fw-label">Framework 03</div>
+      <div class="fw-name">EU Taxonomy</div>
+      <hr class="fw-divider">
+      <div class="fw-before">Before: All activities assessed regardless of size. Complex DNSH criteria applied uniformly.</div>
+      <hr class="fw-divider">
+      <div class="fw-after">After: 10% materiality threshold introduced. Simplified templates. DNSH criteria revised for usability.</div>
+    </div>
+  </div>
+
+  <h2>The full legislative timeline</h2>
+
+  <p>The Omnibus moved faster than most EU legislation. Understanding the sequence helps explain why the final text looks the way it does:</p>
+
+  <div class="timeline">
+    <div class="timeline-row">
+      <div class="timeline-date">Feb 2025</div>
+      <div class="timeline-text"><strong>Omnibus package published.</strong> Commission proposes simultaneous amendments to CSRD, CSDDD, EU Taxonomy. The proposal immediately attracts political attention for the scale of its rollbacks.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-date">Apr 2025</div>
+      <div class="timeline-text"><strong>Stop-the-Clock directive enters force.</strong> Wave 2 and Wave 3 CSRD reporting delayed by two years. CSDDD compliance delayed by one year. Buys time while substantive negotiations continue.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-date">Jul 2025</div>
+      <div class="timeline-text"><strong>EU Taxonomy delegated act adopted.</strong> Commission adopts simplified Taxonomy reporting rules separately. EFRAG publishes revised ESRS exposure drafts with over 60% of data points removed.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-date">Dec 2025</div>
+      <div class="timeline-text"><strong>Provisional agreement reached.</strong> Parliament and Council agree on final Omnibus I text. Parliament formally adopts on 16 December. EFRAG submits simplified ESRS technical advice to the Commission.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-date">Feb 2026</div>
+      <div class="timeline-text"><strong>Omnibus I formally adopted and published.</strong> Directive (EU) 2026/470 published in the Official Journal on 26 February 2026. Council adoption on 24 February.</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-date">Mar 2026</div>
+      <div class="timeline-text"><strong>Omnibus I enters into force.</strong> 18 March 2026. Member states have 12 months to transpose CSRD provisions. CSDDD transposition deadline is July 2028, with application from July 2029.</div>
+    </div>
+  </div>
+
+  <h2>The CSDDD changes deserve particular attention</h2>
+
+  <p>Of the three frameworks, the changes to the CSDDD were arguably the most significant in character, not just in scope. The original CSDDD required large companies to identify, assess and address actual and potential human rights and environmental harms across their entire value chain, and established civil liability at EU level for failures to do so.</p>
+
+  <p>The Omnibus I changes went considerably further than a threshold adjustment:</p>
+
+  <ul class="changes-list">
+    <li><strong>Scope reduction:</strong> The threshold jumped from 1,000 employees and 450 million euros to 5,000 employees and 1.5 billion euros in net worldwide turnover. This represents roughly a 70% reduction in the number of companies in scope compared to the original directive.</li>
+    <li><strong>Climate transition plans removed:</strong> The obligation to adopt and implement a climate transition plan aligned with the Paris Agreement has been deleted from the CSDDD entirely. Companies subject to CSRD are still required to report on their transition plan if they have one, but the legal obligation to have one is gone.</li>
+    <li><strong>Civil liability softened:</strong> The EU-wide civil liability regime, which would have allowed affected parties to sue companies in member state courts for due diligence failures, has been removed. Member states retain the ability to establish civil liability under national law, but the harmonised EU floor is gone.</li>
+    <li><strong>Penalties reduced:</strong> The ceiling for financial penalties was reduced from a minimum of 5% of global net turnover to a cap of 3% of global net turnover.</li>
+    <li><strong>Application delayed:</strong> The application date for in-scope companies was pushed back to July 2029, two years later than the original timeline after Stop-the-Clock.</li>
+  </ul>
+
+  <h2>What the Omnibus did not change</h2>
+
+  <p>It is equally important to be precise about what the Omnibus left intact, because the framing of a wholesale rollback is too simple.</p>
+
+  <p>CSRD still exists and still applies to large companies above the new thresholds. The double materiality principle is preserved. The ESRS structure survives, in simplified form. For the approximately 5,000 companies still in scope, mandatory sustainability reporting under ESRS remains a legal requirement from 2027 onward.</p>
+
+  <p>The CSDDD's core risk-based due diligence framework also survives. Companies in scope are still required to identify and address human rights and environmental harms. What changed is the scope, the liability architecture, and the timeline, not the underlying obligation to conduct due diligence.</p>
+
+  <p>The EU Taxonomy remains operational. The six environmental objectives are unchanged. The four conditions for alignment, including Do No Significant Harm, still apply. What changed is the reporting mechanics and the threshold below which activities need not be assessed.</p>
+
+  <div class="callout">
+    Omnibus I narrowed the regulations. It did not end them. The direction of travel in EU sustainability regulation has slowed, not reversed. For large companies, the obligations remain substantive. For mid-sized companies now outside the mandatory scope, the question is not whether to engage with these frameworks but whether to do so voluntarily, and on what timeline.
+  </div>
+
+  <h2>The strategic reading</h2>
+
+  <p>For anyone working in sustainability, strategy, or finance, the Omnibus raises a question that goes beyond compliance: what does it mean when a major regulatory agenda gets recalibrated mid-implementation?</p>
+
+  <p>One reading is that the Omnibus represents political weakness, a capitulation to business lobbying that undermines the credibility of EU sustainability commitments. Another reading is that it represents regulatory maturity, an acknowledgment that ambition without operability produces compliance theater rather than genuine change.</p>
+
+  <p>Both readings have some validity. The more useful question for practitioners is what this means for how companies should position themselves now. Companies that used the original CSRD and CSDDD timelines as a reason to begin building genuine data infrastructure, supplier engagement capability, and emissions accounting discipline are better positioned than those that treated compliance as a box to tick. That advantage does not disappear because the mandatory deadline moved.</p>
+
+  <p>Capital markets have not pulled back from ESG expectations in the way that regulators have pulled back from ESG mandates. Investor pressure, lender requirements, and supply chain expectations from large buyers continue to push in the same direction the regulation was pointing. The Omnibus changed the legal floor. It did not change the ceiling that market expectations create.</p>
+
+  <div class="callout">
+    The Omnibus is best understood not as the end of EU sustainability regulation but as a reset of the speed at which it is moving. The frameworks are simpler, the scope is narrower, and the timelines are longer. The underlying logic, that large companies must understand and account for their environmental and social impacts, remains intact and is not going away.
+  </div>
+
+  <div class="closing-note">
+    Prepared as an independent portfolio article synthesising EU sustainability regulatory developments. Sources include Directive (EU) 2026/470 (Omnibus I), White and Case analysis (March 2026), Clifford Chance briefing (February 2026), Accountancy Europe explainer, and PwC Viewpoint (February 2026).
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">Omnibus</span>
+    <span class="tag">CSRD</span>
+    <span class="tag">CSDDD</span>
+    <span class="tag">EU Taxonomy</span>
+    <span class="tag">EU regulation</span>
+    <span class="tag">Sustainability reporting</span>
+    <span class="tag">Green Deal</span>
+    <span class="tag">ESG strategy</span>
+  </div>
+
+</article>
+
+<footer>
+  © 2026 Shivam Asthana · Sustainability & Strategy
+</footer>
+
+</body>
+</html>

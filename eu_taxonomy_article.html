@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The EU Taxonomy: What Makes an Economic Activity Sustainable?</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid #e8e8e4;
+      background: #fafaf8;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: #1a1a1a; }
+
+    .article-header {
+      max-width: 720px;
+      margin: 4rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .article-tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #ddd;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-family: 'Georgia', serif;
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .article-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid #e8e8e4;
+      border-bottom: 1px solid #e8e8e4;
+      margin-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .article-meta .sep { color: #ccc; }
+
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      font-family: 'Georgia', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #1a1a1a;
+    }
+
+    .article-body p { margin-bottom: 1.4rem; }
+
+    .article-body h2 {
+      font-family: 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-body strong { font-weight: bold; }
+
+    .callout {
+      border-left: 3px solid #1a1a1a;
+      padding: 0.9rem 1.5rem;
+      margin: 2rem 0;
+      background: #f2f2ee;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .objectives-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 1.75rem 0;
+    }
+
+    .obj-card {
+      background: #f7f7f4;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .obj-num {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #aaa;
+      min-width: 18px;
+      padding-top: 2px;
+    }
+
+    .obj-text {
+      font-size: 0.88rem;
+      color: #333;
+      line-height: 1.45;
+    }
+
+    .criteria-block {
+      margin: 1.75rem 0;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .criteria-header {
+      background: #f2f2ee;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      border-bottom: 1px solid #e4e4e0;
+    }
+
+    .criteria-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid #e8e8e4;
+    }
+
+    .criteria-row:last-child { border-bottom: none; }
+
+    .criteria-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      min-width: 48px;
+      padding-top: 1px;
+    }
+
+    .criteria-desc {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.55;
+    }
+
+    .changes-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .changes-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+
+    .changes-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #aaa;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+
+    .changes-list strong { font-weight: 600; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e8e8e4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      color: #777;
+    }
+
+    .closing-note {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .article-title { font-size: 1.8rem; }
+      .objectives-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#projects">Work</a></li>
+    <li><a href="/#experience">Experience</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="article-header">
+  <div class="article-tag">Regulatory Frameworks</div>
+  <h1 class="article-title">The EU Taxonomy: what makes an economic activity sustainable?</h1>
+  <p class="article-subtitle">The EU Taxonomy is the classification system the European Union uses to define which economic activities qualify as environmentally sustainable. It is not a reporting standard. It is not a disclosure framework. It is something more foundational: a shared definition of what green actually means.</p>
+  <div class="article-meta">
+    <span>Shivam Asthana</span>
+    <span class="sep">·</span>
+    <span>April 2026</span>
+    <span class="sep">·</span>
+    <span>6 min read</span>
+    <span class="sep">·</span>
+    <span>EU Taxonomy · Sustainable Finance · Green Classification</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+  <p>When a company says an investment is green, or a bank claims its lending portfolio is aligned with the Paris Agreement, those statements only carry weight if there is a common definition of what green means. Before the EU Taxonomy existed, there was no such definition in European law. Companies and investors used different criteria, different thresholds, and different interpretations. The result was a fragmented, hard-to-compare landscape where greenwashing was structurally easy.</p>
+
+  <p>The EU Taxonomy Regulation, established in 2020 and entering force progressively from 2022, was built to solve that problem. It creates a single, legally defined classification system for environmentally sustainable economic activities. An activity is either taxonomy-aligned or it is not. There is no ambiguity in principle, even if the application is technically demanding.</p>
+
+  <h2>The six environmental objectives</h2>
+
+  <p>The Taxonomy is organised around six environmental objectives. For an economic activity to qualify as sustainable under the regulation, it must contribute substantially to at least one of these objectives while doing no significant harm to the others:</p>
+
+  <div class="objectives-grid">
+    <div class="obj-card">
+      <div class="obj-num">01</div>
+      <div class="obj-text">Climate change mitigation</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">02</div>
+      <div class="obj-text">Climate change adaptation</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">03</div>
+      <div class="obj-text">Sustainable use and protection of water and marine resources</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">04</div>
+      <div class="obj-text">Transition to a circular economy</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">05</div>
+      <div class="obj-text">Pollution prevention and control</div>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">06</div>
+      <div class="obj-text">Protection and restoration of biodiversity and ecosystems</div>
+    </div>
+  </div>
+
+  <p>The first two objectives went live in 2022. The remaining four followed in 2024. From 2026, companies subject to CSRD must report alignment across all six objectives, not just climate.</p>
+
+  <h2>The four conditions every activity must meet</h2>
+
+  <p>To be classified as taxonomy-aligned, an economic activity must satisfy four conditions simultaneously. These are not soft criteria. They are technically defined, quantitatively assessed, and reported against specific key performance indicators:</p>
+
+  <div class="criteria-block">
+    <div class="criteria-header">The four conditions for taxonomy alignment</div>
+    <div class="criteria-row">
+      <div class="criteria-label">SCA</div>
+      <div class="criteria-desc"><strong>Substantial Contribution to at least one objective.</strong> The activity must meet specific technical screening criteria showing it meaningfully advances one of the six environmental objectives. These thresholds are set per sector and activity type.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">DNSH</div>
+      <div class="criteria-desc"><strong>Do No Significant Harm to the other five objectives.</strong> An activity cannot improve on one objective while causing harm elsewhere. A wind farm that damages a protected marine ecosystem would fail this test, even if it contributes to climate mitigation.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">MSS</div>
+      <div class="criteria-desc"><strong>Minimum Social Safeguards.</strong> The company must operate in line with OECD guidelines on responsible business conduct and the UN Guiding Principles on Business and Human Rights. Environmental alignment without social accountability is not enough.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">TSC</div>
+      <div class="criteria-desc"><strong>Technical Screening Criteria compliance.</strong> The Commission publishes sector-specific thresholds and criteria through delegated acts. These are the operational heart of the Taxonomy, and they are regularly updated as science and technology evolve.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    The DNSH condition is where most practical complexity sits. An activity can contribute substantially to climate mitigation while still failing taxonomy alignment if it harms water resources, biodiversity, or circular economy principles. This cross-cutting test is what makes the Taxonomy genuinely demanding to apply.
+  </div>
+
+  <h2>Eligible versus aligned: a distinction that matters</h2>
+
+  <p>One of the most important distinctions in Taxonomy reporting is between eligibility and alignment, and it is frequently misunderstood in practice.</p>
+
+  <p><strong>Taxonomy-eligible</strong> means an activity is listed in the Taxonomy framework as having the potential to contribute to an environmental objective. It says nothing about whether the activity actually meets the criteria.</p>
+
+  <p><strong>Taxonomy-aligned</strong> means the activity is eligible and has been assessed against the technical screening criteria, confirmed to make a substantial contribution, and verified to do no significant harm. Aligned is a much higher bar than eligible.</p>
+
+  <p>Companies report three key performance indicators against these definitions: the share of revenue, capital expenditure, and operating expenditure that comes from taxonomy-eligible and taxonomy-aligned activities. The gap between eligible and aligned figures is often large, and it is a meaningful signal of how far a company's activities genuinely meet the standard.</p>
+
+  <h2>What the 2025 and 2026 simplifications changed</h2>
+
+  <p>The Taxonomy has faced sustained criticism since its introduction. The technical screening criteria were widely described as overly complex, inconsistent across sectors, and operationally difficult to apply, particularly for companies whose core business is not directly listed in the Taxonomy but who still face reporting obligations through ancillary activities like owning their own buildings.</p>
+
+  <p>As part of the broader Omnibus simplification agenda, two significant changes came into force in early 2026:</p>
+
+  <ul class="changes-list">
+    <li><strong>Materiality threshold introduced:</strong> A 10% de minimis rule now exempts companies from assessing economic activities that individually account for less than 10% of their relevant key performance indicator. A company that owns its headquarters no longer needs to assess that building against Taxonomy criteria if real estate represents less than 10% of its revenue, capital expenditure, or operating expenditure. This removes a significant compliance burden for companies whose main business has nothing to do with the activities listed in the Taxonomy.</li>
+    <li><strong>Simplified reporting templates:</strong> The mandated disclosure templates were shortened and restructured. Zero-value entries no longer need to be reported, reducing the volume of data companies must compile and present without changing the substance of what is being measured.</li>
+    <li><strong>DNSH criteria revised:</strong> Several of the Do No Significant Harm criteria, particularly around pollution prevention, were simplified and clarified. The Commission committed to a further systematic review of all technical screening criteria to improve usability and legal clarity.</li>
+  </ul>
+
+  <p>In March 2026, the Commission published draft amendments to the Climate and Environmental Delegated Acts proposing further revisions to the technical screening criteria themselves, with a public feedback period running through April 2026. This is an ongoing process, not a settled one.</p>
+
+  <h2>Why the Taxonomy matters beyond compliance</h2>
+
+  <p>The Taxonomy is sometimes treated as a reporting burden to be managed and minimised. That framing misses the strategic dimension.</p>
+
+  <p>For companies, taxonomy alignment is increasingly a signal to capital markets. Investors and lenders use taxonomy KPIs to assess whether a business is genuinely positioned for the low-carbon transition or simply disclosing in the right format. A high gap between eligible and aligned revenue is a strategic signal, not just a compliance metric.</p>
+
+  <p>For financial institutions, the Green Asset Ratio, calculated using Taxonomy alignment data from corporate counterparties, is becoming a standard measure of portfolio sustainability. Banks and asset managers that cannot demonstrate alignment face growing pressure from both regulators and institutional investors.</p>
+
+  <div class="callout">
+    The Taxonomy is the definitional layer of EU sustainable finance. CSRD tells companies what to disclose. The GHG Protocol tells them how to count emissions. The Taxonomy tells capital markets which activities are actually sustainable. Understanding all three, and how they connect, is what separates technical knowledge from strategic insight.
+  </div>
+
+  <p>The framework will continue to evolve. The technical screening criteria for all six objectives are under active review. New sectors are being added. The interplay between Taxonomy alignment and CSRD double materiality assessments is becoming closer. For anyone working in sustainability, finance, or strategy in the EU context, the Taxonomy is not a niche technical topic. It is core infrastructure for how investment decisions will increasingly be made.</p>
+
+  <div class="closing-note">
+    Prepared as an independent portfolio article on EU sustainable finance frameworks. Sources include EU Taxonomy Regulation (EU) 2020/852, Commission Delegated Regulation (EU) 2026/73, Herbert Smith Freehills Kramer analysis (March 2026), PwC Viewpoint, and Jones Day regulatory briefings.
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">EU Taxonomy</span>
+    <span class="tag">Sustainable finance</span>
+    <span class="tag">DNSH</span>
+    <span class="tag">Green asset ratio</span>
+    <span class="tag">CSRD</span>
+    <span class="tag">Taxonomy alignment</span>
+    <span class="tag">Omnibus</span>
+    <span class="tag">ESG frameworks</span>
+  </div>
+
+</article>
+
+<footer>
+  © 2026 Shivam Asthana · Sustainability & Strategy
+</footer>
+
+</body>
+</html>

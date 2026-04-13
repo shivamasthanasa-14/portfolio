@@ -324,10 +324,33 @@
     }
 
     .project-type-tabs {
+      margin-bottom: 48px;
+    }
+    .tabs-primary {
       display: flex;
       gap: 8px;
-      margin-bottom: 48px;
       flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .tabs-secondary {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-left: 4px;
+    }
+    .tab-secondary {
+      font-size: 0.78rem !important;
+      padding: 5px 14px !important;
+      opacity: 0.75;
+    }
+    .tab-secondary.active, .tab-secondary:hover {
+      opacity: 1;
+    }
+    .tabs-secondary::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 0;
     }
 
     .tab {
@@ -655,6 +678,7 @@
       margin-top: 8px;
     }
 
+
     /* ── SKILLS ── */
     #skills { background: var(--forest); }
 
@@ -907,9 +931,17 @@
     <div class="section-divider reveal"></div>
 
     <div class="project-type-tabs reveal">
-      <button class="tab active" data-filter="all">All</button>
-      <button class="tab" data-filter="data">Data Analysis</button>
-      <button class="tab" data-filter="Insights">Insights Analysis</button>
+      <div class="tabs-primary">
+        <button class="tab tab-primary active" data-filter="all">All</button>
+        <button class="tab tab-primary" data-filter="data">Data Analysis</button>
+        <button class="tab tab-primary" data-filter="articles">Articles</button>
+      </div>
+      <div class="tabs-secondary">
+        <button class="tab tab-secondary" data-filter="frameworks">Frameworks</button>
+        <button class="tab tab-secondary" data-filter="esg-finance">ESG &amp; Finance</button>
+        <button class="tab tab-secondary" data-filter="supply-chain">Supply Chain</button>
+        <button class="tab tab-secondary" data-filter="climate">Climate</button>
+      </div>
     </div>
 
     <div class="projects-grid" id="projectsGrid">
@@ -986,14 +1018,14 @@
   </div>
 </div>
 
-      <!-- PROJECT 4 -->
-      <div class="project-card reveal" data-category="data">
+      <!-- PROJECT 4 — FOOD SUPPLY CHAIN -->
+      <div class="project-card reveal" data-category="supply-chain">
   <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1f5fbf 0%, #4d84d6 100%);">
     <div style="text-align:center; z-index:1;">
       <span class="project-banner-icon"></span>
-      <div class="project-banner-text">Supply Chain x ESG </div>
+      <div class="project-banner-text">Supply Chain × ESG</div>
     </div>
-    <span class="project-type-badge">Data Analysis</span>
+    <span class="project-type-badge">Supply Chain</span>
   </div>
   <div class="project-body">
     <h3>Food Supply Chain ESG Risk Dashboard</h3>
@@ -1008,14 +1040,14 @@
     </div>
   </div>
 </div>
-      <!-- PROJECT 4 -->
-      <div class="project-card reveal" data-category="Insights">
+      <!-- ESG Ratings -->
+      <div class="project-card reveal" data-category="esg-finance" data-type="articles">
   <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1f3c5a 0%, #355c85 100%);">
     <div style="text-align:center; z-index:1;">
       <span class="project-banner-icon"></span>
       <div class="project-banner-text">ESG Ratings</div>
     </div>
-    <span class="project-type-badge">Insights </span>
+    <span class="project-type-badge">ESG &amp; Finance</span>
   </div>
   <div class="project-body">
     <h3>Why ESG Ratings Don’t Measure the Same Thing</h3>
@@ -1032,14 +1064,14 @@
   </div>
 </div>
 
-      <!-- PROJECT 5 -->
-      <div class="project-card reveal" data-category="Insights">
+      <!-- Scope 3 -->
+      <div class="project-card reveal" data-category="climate" data-type="articles">
   <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #244b63 0%, #3f6f8f 100%);">
     <div style="text-align:center; z-index:1;">
       <span class="project-banner-icon"></span>
       <div class="project-banner-text">Scope 3</div>
     </div>
-    <span class="project-type-badge">Insights</span>
+    <span class="project-type-badge">Climate</span>
   </div>
   <div class="project-body">
     <h3>Scope 3 Emissions: Why Most Corporate Carbon Is Still Invisible</h3>
@@ -1056,9 +1088,102 @@
   </div>
 </div>
 
-                </div>
-        </div>
-      </div>
+
+      <!-- CSRD & ESRS article -->
+      <div class="project-card reveal" data-category="frameworks" data-type="articles">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1a3a2a 0%, #2d6045 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">CSRD &amp; ESRS</div>
+    </div>
+    <span class="project-type-badge">Frameworks</span>
+  </div>
+  <div class="project-body">
+    <h3>CSRD &amp; ESRS: What the Framework Actually Requires</h3>
+    <p>The CSRD is the EU's most ambitious sustainability disclosure law. After political pressure and the Omnibus package, it looks significantly different from what companies were originally preparing for.</p>
+    <div class="project-tags">
+      <span class="tag">CSRD</span>
+      <span class="tag">ESRS</span>
+      <span class="tag">Double Materiality</span>
+      <span class="tag">EU Regulation</span>
+    </div>
+    <div class="project-actions">
+      <a href="csrd_esrs_article.html" class="btn-sm btn-sm-primary">Read Article →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- Omnibus article -->
+      <div class="project-card reveal" data-category="frameworks" data-type="articles">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #3a2a1a 0%, #6b4a20 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">Omnibus Package</div>
+    </div>
+    <span class="project-type-badge">Frameworks</span>
+  </div>
+  <div class="project-body">
+    <h3>The Omnibus Package: What Changed and What Survived</h3>
+    <p>The EU's sweeping simplification of sustainability reporting — what the Omnibus package actually did to CSRD, CSDDD, and the EU Taxonomy.</p>
+    <div class="project-tags">
+      <span class="tag">Omnibus</span>
+      <span class="tag">CSRD</span>
+      <span class="tag">CSDDD</span>
+      <span class="tag">EU Policy</span>
+    </div>
+    <div class="project-actions">
+      <a href="omnibus_article.html" class="btn-sm btn-sm-primary">Read Article →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- EU Taxonomy article -->
+      <div class="project-card reveal" data-category="frameworks" data-type="articles">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1a2e3a 0%, #2b5266 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">EU Taxonomy</div>
+    </div>
+    <span class="project-type-badge">Frameworks</span>
+  </div>
+  <div class="project-body">
+    <h3>EU Taxonomy: How Green Finance Gets Defined</h3>
+    <p>How the EU Taxonomy classification system works, what activities qualify, and why the technical screening criteria matter for capital allocation decisions.</p>
+    <div class="project-tags">
+      <span class="tag">EU Taxonomy</span>
+      <span class="tag">Green Finance</span>
+      <span class="tag">DNSH</span>
+      <span class="tag">Sustainable Finance</span>
+    </div>
+    <div class="project-actions">
+      <a href="eu_taxonomy_article.html" class="btn-sm btn-sm-primary">Read Article →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- GHG Protocol article -->
+      <div class="project-card reveal" data-category="frameworks" data-type="articles">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1a2b1a 0%, #2e5c2e 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon"></span>
+      <div class="project-banner-text">GHG Protocol</div>
+    </div>
+    <span class="project-type-badge">Frameworks</span>
+  </div>
+  <div class="project-body">
+    <h3>GHG Protocol: The Accounting Standard Behind Every Carbon Number</h3>
+    <p>How the GHG Protocol works as the foundation of corporate emissions accounting — and why getting the methodology right matters more than the final number.</p>
+    <div class="project-tags">
+      <span class="tag">GHG Protocol</span>
+      <span class="tag">Scope 1-3</span>
+      <span class="tag">Emissions Accounting</span>
+      <span class="tag">Carbon</span>
+    </div>
+    <div class="project-actions">
+      <a href="ghg_protocol_article.html" class="btn-sm btn-sm-primary">Read Article →</a>
+    </div>
+  </div>
+</div>
 
     </div><!-- /projects-grid -->
 
@@ -1157,6 +1282,8 @@
         <p class="edu-school">University of Mannheim</p>
         <p class="edu-date">September 2024 – December 2025</p>
         <p class="edu-focus">Sustainability Strategy, Data Analytics, and Corporate Transformation</p>
+
+
       </div>
     </div>
   </div>
@@ -1221,9 +1348,9 @@
       <div class="section-divider"></div>
       <p>I am actively looking for roles in sustainability, ESG consulting, and strategy. If you are working on something at the intersection of business and the environment — I would love to hear from you.</p>
       <div class="contact-links">
-       <a href="mailto:shivamasthana.sa@gmail.com" class="contact-link">
+       <a href="/cdn-cgi/l/email-protection#b2c1dadbc4d3dfd3c1c6dad3dcd39cc1d3f2d5dfd3dbde9cd1dddf" class="contact-link">
   <span class="contact-link-icon">✉️</span>
-  shivamasthana.sa@gmail.com
+  <span class="__cf_email__" data-cfemail="8efde6e7f8efe3effdfae6efe0efa0fdefcee9e3efe7e2a0ede1e3">[email&#160;protected]</span>
 	</a>
         </a>
         <a href="https://www.linkedin.com/in/shivam-asthana-/" class="contact-link" target="_blank">
@@ -1246,7 +1373,7 @@
   <p>© 2026 Shivam Asthana · Built with intent · <span>Sustainability & Strategy</span></p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Scroll reveal ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -1275,8 +1402,9 @@
     return Array.from(grid.querySelectorAll('.project-card')).filter(card => {
       if (activeFilter === 'all') return true;
       if (activeFilter === 'data') return card.dataset.category === 'data';
-      if (activeFilter === 'Insights') return card.dataset.category === 'Insights';
-      return true;
+      if (activeFilter === 'articles') return card.dataset.type === 'articles';
+      // Sub-category filters
+      return card.dataset.category === activeFilter;
     });
   }
 
@@ -1338,9 +1466,18 @@
   // ── Tab filtering ──
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      const filter = tab.dataset.filter;
+
+      // Update active state — primary tabs clear all, secondary tabs only clear secondary
+      if (tab.classList.contains('tab-primary')) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      } else {
+        document.querySelectorAll('.tab-secondary').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-primary').forEach(t => t.classList.remove('active'));
+      }
       tab.classList.add('active');
-      activeFilter = tab.dataset.filter;
+
+      activeFilter = filter;
       renderPage(1);
     });
   });
