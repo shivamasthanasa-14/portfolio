@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Europe's Building Problem: Energy Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #1a1a18; --ink-soft: #3d3d38; --ink-muted: #6b6b62;
+      --rule: #d8d5ce; --rule-light: #eeebe4;
+      --paper: #faf9f6; --paper-warm: #f3f0e8;
+      --accent: #2d5a3d; --accent-light: #e8f0eb; --accent-mid: #4a7c5f;
+      --warn: #8b4513; --warn-light: #f5ede6;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --display: 'Playfair Display', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.75; font-weight: 300; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .nav-left { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-muted); letter-spacing: 0.05em; }
+    .nav-left a { color: inherit; text-decoration: none; }
+    .nav-left a:hover { color: var(--accent); }
+    .nav-right { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+
+    .hero { margin-top: 56px; padding: 5rem 2rem 4rem; max-width: 860px; margin-left: auto; margin-right: auto; border-bottom: 1px solid var(--rule); }
+    .hero-label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .hero-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+    h1 { font-family: var(--display); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15; color: var(--ink); margin-bottom: 1.25rem; }
+    h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { font-size: 1.1rem; font-weight: 300; color: var(--ink-soft); max-width: 640px; margin-bottom: 2.5rem; line-height: 1.65; }
+    .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.25rem; border-top: 1px solid var(--rule); padding-top: 1.75rem; }
+    .meta-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 0.3rem; }
+    .meta-value { font-size: 0.92rem; font-weight: 400; color: var(--ink-soft); }
+
+    .content { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+    .section-intro { padding: 4rem 0 1rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
+    .section-tag { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted); margin-bottom: 0.75rem; }
+    h2 { font-family: var(--display); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 600; color: var(--ink); }
+    p { margin-bottom: 1.25rem; color: var(--ink-soft); }
+
+    .section-divider { display: flex; align-items: center; gap: 1rem; margin: 4rem 0 0; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); }
+    .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+    .learnings-grid { display: flex; flex-direction: column; gap: 1.25rem; margin: 2rem 0 3rem; }
+    .learning { display: flex; gap: 1.5rem; align-items: flex-start; background: var(--paper-warm); border: 1px solid var(--rule-light); padding: 1.5rem 1.75rem; border-radius: 2px; }
+    .learning-num { font-family: var(--mono); font-size: 1.5rem; font-weight: 500; color: var(--rule); line-height: 1; flex-shrink: 0; padding-top: 2px; }
+    .learning-content strong { display: block; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem; font-size: 1rem; }
+    .learning-content p { font-size: 0.94rem; margin: 0; color: var(--ink-soft); }
+
+    .chart-block { margin: 2.5rem 0 3.5rem; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+    .chart-header { background: var(--paper-warm); border-bottom: 1px solid var(--rule); padding: 1rem 1.5rem; display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .chart-title { font-family: var(--mono); font-size: 0.8rem; font-weight: 500; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+    .chart-period { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); }
+    .chart-body { padding: 1.5rem; background: #fff; }
+    .chart-body canvas { max-height: 380px; }
+    .chart-note { padding: 0.9rem 1.5rem; border-top: 1px solid var(--rule-light); background: var(--paper-warm); font-size: 0.82rem; color: var(--ink-muted); font-style: italic; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 2rem 0 3rem; border-radius: 2px; overflow: hidden; }
+    @media (max-width: 600px) { .stat-row { grid-template-columns: 1fr; } }
+    .stat-cell { background: var(--paper-warm); padding: 1.5rem 1.25rem; text-align: center; }
+    .stat-num { font-family: var(--display); font-size: 2.2rem; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+    .stat-num.warn { color: var(--warn); }
+    .stat-label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+
+    .obs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 3rem; }
+    @media (max-width: 600px) { .obs-grid { grid-template-columns: 1fr; } }
+    .obs-card { background: #fff; border: 1px solid var(--rule); padding: 1.4rem 1.5rem; border-radius: 2px; }
+    .obs-card.wide { grid-column: 1 / -1; }
+    .obs-card.warn { border-left: 3px solid var(--warn); }
+    .obs-card.accent { border-left: 3px solid var(--accent); }
+    .obs-card-label { font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 0.5rem; }
+    .obs-card-title { font-weight: 600; font-size: 0.98rem; color: var(--ink); margin-bottom: 0.5rem; }
+    .obs-card p { font-size: 0.88rem; margin: 0; color: var(--ink-soft); line-height: 1.55; }
+
+    .impl-list { display: flex; flex-direction: column; margin: 1.5rem 0 3rem; border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; }
+    .impl-item { display: flex; border-bottom: 1px solid var(--rule); background: #fff; }
+    .impl-item:last-child { border-bottom: none; }
+    .impl-num { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; color: var(--paper); background: var(--accent); display: flex; align-items: center; justify-content: center; min-width: 48px; padding: 0 0.75rem; flex-shrink: 0; }
+    .impl-body { padding: 1.25rem 1.5rem; }
+    .impl-title { font-weight: 600; font-size: 0.97rem; color: var(--ink); margin-bottom: 0.35rem; }
+    .impl-body p { font-size: 0.88rem; margin: 0; color: var(--ink-soft); line-height: 1.6; }
+
+    .pull-quote { border-left: 3px solid var(--accent); margin: 2rem 0; padding: 0.5rem 0 0.5rem 1.5rem; font-family: var(--display); font-size: 1.15rem; font-style: italic; color: var(--ink-soft); line-height: 1.5; }
+
+    .method-block { background: var(--paper-warm); border: 1px solid var(--rule); padding: 2rem; border-radius: 2px; margin: 2rem 0 4rem; }
+    .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 600px) { .method-grid { grid-template-columns: 1fr; } }
+    .method-col-title { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 0.5rem; margin-top: 1.25rem; }
+    .method-col-title:first-child { margin-top: 0; }
+    .method-col p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 0; }
+
+    footer { border-top: 1px solid var(--rule); padding: 2rem; text-align: center; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.06em; }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left"><a href="https://shivamasthana.pages.dev/">← Portfolio</a> &nbsp;·&nbsp; Sustainability Analysis</div>
+  <div class="nav-right">Real Estate · Energy · EU-27</div>
+</nav>
+
+<header class="hero">
+  <div class="hero-label">Data Analysis · Environment</div>
+  <h1>Europe's <em>Building Problem</em></h1>
+  <p class="hero-sub">Buildings account for the largest share of final energy consumption in the EU. Yet total energy use has fallen only 7.5% since 2015, cooling demand has surged 60%, and per-capita heating use varies 14-fold across member states. This analysis examines what the data says about the pace and shape of building sector decarbonisation across the EU-27.</p>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="meta-label">Coverage</div><div class="meta-value">EU-27 Member States</div></div>
+    <div class="meta-item"><div class="meta-label">Period</div><div class="meta-value">2015 – 2023</div></div>
+    <div class="meta-item"><div class="meta-label">Unit</div><div class="meta-value">ktoe · TJ · GJ per capita</div></div>
+    <div class="meta-value">Eurostat — Energy Balances, Household End-Use & Population</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="section-intro">
+    <div class="section-tag">Purpose of this Analysis</div>
+    <h2>Why I Conducted This</h2>
+  </div>
+  <p>Buildings are consistently cited as one of the EU's largest sources of energy consumption and emissions, yet they receive less analytical attention than heavy industry or transport in most sustainability work. I wanted to understand two things with actual data: first, is total building sector energy consumption declining in a meaningful way, and second, does the per-capita picture reveal anything about where inefficiency is structurally concentrated?</p>
+  <p>The analysis uses three Eurostat datasets: final energy consumption by sector, disaggregated household end-use (space heating and cooling specifically), and population. Together they build a cross-country picture grounded in reported figures. The cooling data turned out to be the most striking finding: a 60% increase in residential cooling demand between 2015 and 2023, running directly counter to the headline downward trend in heating.</p>
+  <p>This matters beyond energy efficiency. Under CSRD and the EU Taxonomy, real estate companies must now report and align on energy performance. The data here shows the scale of what that alignment task actually involves across different member states, and how unevenly distributed the challenge is.</p>
+
+  <div class="section-divider">Key Findings</div>
+  <div class="section-intro" style="padding-top:2.5rem">
+    <div class="section-tag">Key Learnings</div>
+    <h2>What the Data Shows</h2>
+  </div>
+
+  <div class="learnings-grid">
+    <div class="learning">
+      <div class="learning-num">1</div>
+      <div class="learning-content">
+        <strong>Total EU-27 buildings energy fell 7.5% between 2015 and 2023, but a 2021 spike reveals how weather-sensitive the trend is.</strong>
+        <p>Combined household and commercial energy consumption dropped from 373,793 ktoe in 2015 to 345,857 ktoe in 2023. But a rebound in 2021, when a colder winter pushed residential heating up 7.6% in a single year, reversed several years of apparent progress. Much of the headline decline is driven by mild winters and fuel switching, not structural improvements to the building stock itself.</p>
+      </div>
+    </div>
+    <div class="learning">
+      <div class="learning-num">2</div>
+      <div class="learning-content">
+        <strong>Per-capita residential heating energy varies 14-fold across the EU-27, and climate alone does not explain it.</strong>
+        <p>Finland sits at 27.0 GJ per person; Malta at 1.9 GJ. Climate explains part of this gap. But the divergence within similar climate zones is equally striking: Germany at 17.5 GJ versus the Netherlands at 10.5 GJ, both in Northwestern Europe with comparable winters. That gap points to differences in building stock age and insulation quality, not just geography.</p>
+      </div>
+    </div>
+    <div class="learning">
+      <div class="learning-num">3</div>
+      <div class="learning-content">
+        <strong>EU-27 residential cooling demand rose 60% between 2015 and 2023, moving in the opposite direction to heating.</strong>
+        <p>Space cooling went from 37,956 TJ in 2015 to 60,759 TJ in 2023. This is a sustained multi-year increase that accelerated after 2020. While cooling remains far smaller than heating in absolute terms, its trajectory is the structurally significant story: as hotter summers compound the demand, buildings not designed for summer heat face a new energy burden on top of the existing renovation challenge.</p>
+      </div>
+    </div>
+    <div class="learning">
+      <div class="learning-num">4</div>
+      <div class="learning-content">
+        <strong>The renovation and reporting challenge is not evenly distributed, and policy frameworks are now making that unevenness financially material.</strong>
+        <p>High per-capita heating markets such as Germany, Austria, Belgium, Estonia, and Czechia face the largest exposure to incoming EPBD minimum energy performance standards and EU Taxonomy alignment requirements. Southern European markets face a different but equally urgent challenge: a cooling demand surge in building stock that was not designed for it. CSRD reporting will make both of these gaps visible at the portfolio level for the first time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART 1 -->
+  <div class="section-divider">Analysis 1</div>
+  <div class="section-intro" style="padding-top:2.5rem">
+    <div class="section-tag">EU-27 Buildings Energy · 2015–2023</div>
+    <h2>Total Consumption: A Declining but Volatile Trend</h2>
+  </div>
+  <p>The chart below shows EU-27 final energy consumption in buildings: households and commercial/public services separately, across 2015 to 2023, in thousand tonnes of oil equivalent (ktoe). Both series come directly from Eurostat's energy balance dataset (nrg_bal_c).</p>
+
+  <div class="chart-block">
+    <div class="chart-header">
+      <span class="chart-title">EU-27 Final Energy Consumption in Buildings</span>
+      <span class="chart-period">ktoe · Households + Commercial & Public Services · 2015–2023</span>
+    </div>
+    <div class="chart-body"><canvas id="chart1"></canvas></div>
+    <div class="chart-note">Data source: Eurostat Complete Energy Balances (dataset code: nrg_bal_c), filtered to two building sectors: household energy use and commercial and public services energy use. The unit "ktoe" stands for thousand tonnes of oil equivalent, a standard way of comparing energy consumption across different fuel types (gas, electricity, oil, etc.) using a common scale. EU-27 aggregate. Downloaded April 2026.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-num">−7.5%</div>
+      <div class="stat-label">Total buildings energy 2015 → 2023</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num warn">+7.6%</div>
+      <div class="stat-label">Single-year residential heating spike, 2021</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">~66%</div>
+      <div class="stat-label">Share of buildings energy from households</div>
+    </div>
+  </div>
+
+  <div class="obs-grid">
+    <div class="obs-card accent">
+      <div class="obs-card-label">What's driving the decline</div>
+      <div class="obs-card-title">Weather and fuel mix, not renovation</div>
+      <p>The steepest drop (2022–2023) coincides with the energy price shock and a mild 2023 winter. Both are temporary drivers. Without physical improvements to the building stock, the trend is highly reversible the moment conditions change.</p>
+    </div>
+    <div class="obs-card warn">
+      <div class="obs-card-label">Risk signal</div>
+      <div class="obs-card-title">2021 erases several years of apparent progress</div>
+      <p>One colder-than-average winter pushed EU-27 household energy back to 2017 levels. Buildings that have genuinely improved their thermal envelope would not show this sensitivity. The spike is a proxy for how little structural renovation has actually occurred.</p>
+    </div>
+    <div class="obs-card wide">
+      <div class="obs-card-label">Households vs. commercial</div>
+      <div class="obs-card-title">Commercial buildings show a slightly steeper relative decline</div>
+      <p>Commercial and public services energy fell 7.9% over the period versus 7.3% for households. This likely reflects structural changes in office utilisation post-COVID and more active energy management in larger professionally managed assets, where energy costs are a more visible line item. Households are structurally harder to reach: renovation decisions are fragmented across millions of individual property owners, each facing different financing constraints, tenure arrangements, and incentive structures. This fragmentation is precisely what makes the renovation wave target of 3% annual deep renovation so difficult to operationalise in practice.</p>
+    </div>
+  </div>
+
+  <!-- CHART 2 -->
+  <div class="section-divider">Analysis 2</div>
+  <div class="section-intro" style="padding-top:2.5rem">
+    <div class="section-tag">Per-Capita Residential Heating · 2023</div>
+    <h2>The Heating Gap: Where Building Stock Inefficiency Shows Up</h2>
+  </div>
+  <p>Per-capita residential space heating energy (GJ per person) controls for country size and gives a more meaningful cross-country comparison than absolute consumption. The values below are derived from Eurostat's disaggregated household energy dataset (nrg_d_hhq, space heating in TJ) divided by population (demo_pjan), both for 2023. Orange bars indicate countries above 12 GJ per capita; red bars above 17 GJ.</p>
+
+  <div class="chart-block">
+    <div class="chart-header">
+      <span class="chart-title">Residential Space Heating Energy Per Capita</span>
+      <span class="chart-period">GJ per person · EU-27 · 2023</span>
+    </div>
+    <div class="chart-body"><canvas id="chart2"></canvas></div>
+    <div class="chart-note">Data sources: Eurostat Disaggregated Household Energy dataset (nrg_d_hhq) for residential space heating figures, and Eurostat Population dataset (demo_pjan) for country population figures, both for 2023. The unit "GJ per capita" means gigajoules of heating energy used per person per year. It is calculated by dividing a country's total residential heating energy (converted from terajoules to gigajoules) by its population. This controls for country size, so large and small countries can be compared fairly. Countries with missing 2023 heating data are excluded. Downloaded April 2026.</div>
+  </div>
+
+  <div class="pull-quote">"The 7 GJ per capita gap between Germany and the Netherlands, similar climates and similar latitudes, is not a weather story. It is a building stock story."</div>
+
+  <div class="obs-grid">
+    <div class="obs-card accent">
+      <div class="obs-card-label">Within similar climates</div>
+      <div class="obs-card-title">Germany (17.5 GJ) vs. Netherlands (10.5 GJ)</div>
+      <p>Both countries share broadly similar winter conditions. The gap likely reflects Germany's larger share of pre-1980 building stock and slower deep renovation rates compared to the Netherlands, which has pursued more active insulation and district heating programmes.</p>
+    </div>
+    <div class="obs-card warn">
+      <div class="obs-card-label">Central & Eastern Europe</div>
+      <div class="obs-card-title">Estonia (20.4), Luxembourg (23.0), Finland (27.0)</div>
+      <p>Nordic and Baltic countries face genuine climatic demand, but also older building stock. Much of Central and Eastern Europe's residential stock dates from the Soviet era, with poor insulation standards. High heating demand here combines climate exposure with a structural renovation backlog that is large relative to national GDP.</p>
+    </div>
+    <div class="obs-card wide">
+      <div class="obs-card-label">Southern Europe</div>
+      <div class="obs-card-title">Low heating figures, but a fast-growing cooling problem</div>
+      <p>Spain (4.7 GJ), Portugal (3.9 GJ), Greece (8.0 GJ), and Bulgaria (6.0 GJ) show low per-capita heating demand, primarily reflecting warmer climates rather than efficient buildings. But these are precisely the markets where cooling demand is rising fastest and where building stock was designed around heating, not summer heat management. The policy implication is structurally different to Northern Europe: less about adding insulation for winter, more about redesigning how buildings handle a climate that is shifting faster than their thermal envelopes were built to accommodate.</p>
+    </div>
+  </div>
+
+  <!-- CHART 3 -->
+  <div class="section-divider">Analysis 3</div>
+  <div class="section-intro" style="padding-top:2.5rem">
+    <div class="section-tag">Heating vs. Cooling Demand · EU-27 · 2015–2023</div>
+    <h2>Cooling Is Rising Fast, Running Counter to the Heating Trend</h2>
+  </div>
+  <p>While total building energy and space heating have broadly declined, residential cooling demand has moved in the opposite direction. The chart below shows EU-27 residential space heating (PJ, left axis) and residential space cooling (TJ, right axis) across the same period. Note the scale: heating is still orders of magnitude larger than cooling in absolute terms, but the cooling trajectory is the structurally significant story for the next decade.</p>
+
+  <div class="chart-block">
+    <div class="chart-header">
+      <span class="chart-title">EU-27 Residential Heating vs. Cooling Demand</span>
+      <span class="chart-period">Heating in PJ (bars, left axis) · Cooling in TJ (line, right axis) · 2015–2023</span>
+    </div>
+    <div class="chart-body"><canvas id="chart3"></canvas></div>
+    <div class="chart-note">Data source: Eurostat Disaggregated Household Energy dataset (nrg_d_hhq), EU-27 aggregate, residential buildings only. The bars show space heating energy in petajoules (PJ), where one petajoule equals 1,000 terajoules. The line shows space cooling energy in terajoules (TJ). The two different units are used because heating and cooling operate on very different scales: heating is roughly 100 times larger than cooling in absolute terms, so putting them on the same axis would make the cooling line invisible. The dual axis makes both trends readable at once. Downloaded April 2026.</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-num warn">+60%</div>
+      <div class="stat-label">EU-27 residential cooling demand 2015 → 2023</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">−5.8%</div>
+      <div class="stat-label">EU-27 residential heating demand 2015 → 2023</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num warn">2021</div>
+      <div class="stat-label">Year cooling first exceeded 60,000 TJ and stayed there</div>
+    </div>
+  </div>
+
+  <div class="obs-grid">
+    <div class="obs-card warn">
+      <div class="obs-card-label">The compounding risk</div>
+      <div class="obs-card-title">Cooling growth partially offsets heating efficiency gains</div>
+      <p>Every TJ saved through better insulation risks being offset by rising air conditioning demand in summer. Buildings designed only for heating efficiency may perform well in winter but drive electricity consumption up in summer. Net progress is smaller than the headline heating number suggests.</p>
+    </div>
+    <div class="obs-card accent">
+      <div class="obs-card-label">Where it is concentrated</div>
+      <div class="obs-card-title">Southern and Central Europe driving the increase</div>
+      <p>Italy, Spain, Greece, and France account for the majority of EU-27 cooling demand growth. These are markets where building stock was historically designed around heating, not cooling. This creates a structural mismatch between the thermal performance of existing buildings and the climate they now face.</p>
+    </div>
+    <div class="obs-card wide">
+      <div class="obs-card-label">Policy implication</div>
+      <div class="obs-card-title">Renovation policy designed around heating is increasingly incomplete</div>
+      <p>Most EU building renovation frameworks, including the Renovation Wave and the revised EPBD, were designed with heating efficiency as the primary objective: better insulation, better windows, better heating systems. The cooling data shows this framing is becoming insufficient. A building that performs well in winter but becomes unliveable in summer without air conditioning has not solved the decarbonisation problem. It has shifted it to electricity demand. For Southern European markets in particular, deep renovation strategies need to incorporate passive cooling design as a primary objective: appropriate shading, thermal mass, orientation, and natural ventilation. This also carries implications for EU Taxonomy technical screening criteria, which remain primarily calibrated around heating energy performance and will need to evolve to capture cooling-related efficiency as a core criterion.</p>
+    </div>
+  </div>
+
+  <!-- IMPLICATIONS -->
+  <div class="section-divider">Business Implications</div>
+  <div class="section-intro" style="padding-top:2.5rem">
+    <div class="section-tag">What This Means in Practice</div>
+    <h2>How to Apply This Analysis</h2>
+  </div>
+  <p>The three data patterns above: volatile total consumption, wide per-capita heating divergence, and rising cooling demand, translate into four concrete implications for real estate companies, investors, and ESG practitioners working in the EU built environment.</p>
+
+  <div class="impl-list">
+    <div class="impl-item">
+      <div class="impl-num">01</div>
+      <div class="impl-body">
+        <div class="impl-title">Reported Energy Trends Need Weather Normalisation Before Drawing Conclusions About Progress</div>
+        <p>The 7.5% decline in EU-27 buildings energy since 2015 is real but fragile. The 2021 rebound demonstrates that a significant portion of apparent improvement is weather-driven, not structural. For real estate portfolio managers and ESG analysts, this means that raw energy consumption figures cannot be taken at face value as evidence of decarbonisation progress. CSRD reporting under ESRS E1 will increasingly require the distinction between weather-driven and structural improvement to be made explicit, a data discipline that most organisations have not yet operationalised.</p>
+      </div>
+    </div>
+    <div class="impl-item">
+      <div class="impl-num">02</div>
+      <div class="impl-body">
+        <div class="impl-title">Per-Capita Heating Divergence Maps Directly Onto Regulatory Transition Risk</div>
+        <p>Markets with the highest per-capita heating demand, including Germany, Austria, Belgium, Estonia, and Czechia, are precisely the markets where incoming EPBD minimum energy performance standards will have the most disruptive impact. Buildings in the lowest EPC categories in these markets face a direct pathway to reduced lettability and mortgageability. Real estate investors with concentrated exposure to these geographies who have not yet mapped their portfolio's EPC distribution are carrying unquantified regulatory transition risk that is now on a defined legislative timeline.</p>
+      </div>
+    </div>
+    <div class="impl-item">
+      <div class="impl-num">03</div>
+      <div class="impl-body">
+        <div class="impl-title">Rising Cooling Demand Is an Underpriced Physical Risk in Southern European Portfolios</div>
+        <p>The 60% growth in EU-27 residential cooling demand since 2015 is concentrated in Southern and Central European markets. Buildings in these markets that lack passive cooling design face rising air conditioning loads that erode any efficiency gains made on heating. This translates into a forward-looking energy cost and comfort risk that is not yet fully reflected in asset valuations or EPC ratings, both of which remain primarily calibrated around heating performance. For real estate strategy, positioning assets in Southern Europe requires factoring in cooling-related capital expenditure that was not part of the renovation calculus five years ago.</p>
+      </div>
+    </div>
+    <div class="impl-item">
+      <div class="impl-num">04</div>
+      <div class="impl-body">
+        <div class="impl-title">CSRD and EU Taxonomy Alignment Requires Building-Level Data That Most Portfolios Do Not Yet Have</div>
+        <p>The Eurostat data used in this analysis is country-level aggregate, useful for understanding sector-wide patterns but insufficient for portfolio-level compliance. Under CSRD (ESRS E1) and EU Taxonomy technical screening criteria, companies need building-level data: EPC ratings, actual consumption per m², heating system type, and renovation history. Most real estate portfolios, particularly those with older stock in German, French, or Central European markets, lack this data at the asset level. Closing this data gap is now an operational compliance requirement, not an optional ESG initiative, and it represents one of the most significant near-term data infrastructure challenges in European real estate.</p>
+      </div>
+    </div>
+  </div>
+
+<div class="section-divider">What This Means for the Industry</div>
+
+<div class="obs-grid" style="margin-top: 2rem;">
+
+  <div class="obs-card accent">
+    <div class="obs-card-label">For real estate investors & fund managers</div>
+    <div class="obs-card-title">Geographic exposure is decarbonization cost</div>
+    <p>Where your assets are located shapes your decarbonization cost more than most portfolio reviews acknowledge. A building in Finland consumes 14 times more energy for heating than a comparable one in Malta — and that gap translates directly into retrofit investment requirements, energy cost exposure, and EU Taxonomy compliance obligations. Two funds with similar asset sizes but different geographic concentrations face fundamentally different financial burdens on the path to alignment. Investors who haven't mapped their portfolio against country-level energy intensity are likely working with an incomplete picture of where their largest costs are coming from.</p>
+  </div>
+
+  <div class="obs-card accent">
+    <div class="obs-card-label">For developers & project teams</div>
+    <div class="obs-card-title">Buildings designed before 2020 are already behind</div>
+    <p>Cooling demand across EU buildings has risen 60% since 2015 — a shift that most building assessments designed before 2020 did not account for. A building that met energy performance benchmarks at the time of design may already be underperforming against current consumption patterns, particularly in Southern and Central Europe where cooling growth has been sharpest. For developers planning new projects or major retrofits, this means energy modelling needs to reflect where demand is actually going, not where it was when the standards were written.</p>
+  </div>
+
+  <div class="obs-card accent wide">
+    <div class="obs-card-label">For sustainability directors & ESG teams</div>
+    <div class="obs-card-title">Country-level variation will become impossible to ignore</div>
+    <p>CSRD and EU Taxonomy reporting will make country-level energy performance visible to investors and regulators in a way it has never been before. Companies with real estate exposure across multiple member states will need to explain not just their aggregate energy consumption, but why it looks the way it does — and what they are doing about the markets where performance is weakest. The 14-fold variation in per-capita heating intensity across the EU means that explanation will be very different depending on where assets sit. Companies that understand this geography now will be better positioned when the questions start coming.</p>
+  </div>
+
+</div>
+
+  <!-- METHODOLOGY -->
+  <div class="section-divider">Methodology</div>
+  <div class="section-intro" style="padding-top:2.5rem">
+    <div class="section-tag">Data & Approach</div>
+    <h2>Methodology</h2>
+  </div>
+
+  <div class="method-block">
+    <div class="method-grid">
+      <div class="method-col">
+        <div class="method-col-title">Dataset 1: Buildings Energy (nrg_bal_c)</div>
+        <p>Eurostat Complete Energy Balances, filtered to household energy use and commercial and public services energy use. Unit: ktoe. EU-27 aggregate and individual member states, 2015–2023. Downloaded April 2026.</p>
+        <div class="method-col-title">Dataset 2: Household End-Use (nrg_d_hhq)</div>
+        <p>Eurostat Disaggregated Final Energy Consumption in Households, filtered to space heating and space cooling. Unit: terajoules (TJ). EU-27 and member states, 2014–2023. Several member states report zero for some years due to incomplete national reporting; these are excluded from per-capita calculations. Downloaded April 2026.</p>
+      </div>
+      <div class="method-col">
+        <div class="method-col-title">Dataset 3: Population (demo_pjan)</div>
+        <p>Eurostat Population on 1 January, total population, all ages, both sexes. Unit: persons. EU-27 member states, 2016–2025. 2023 figures used for per-capita heating calculations to match the heating data year. Downloaded April 2026.</p>
+        <div class="method-col-title">Per-Capita Calculation</div>
+        <p>GJ per capita = (space heating in TJ × 1,000) divided by population. The multiplication by 1,000 converts terajoules to gigajoules. Countries where the 2023 heating figure is zero or missing are excluded from the country comparison chart.</p>
+        <div class="method-col-title">Limitations</div>
+        <p>This analysis covers energy consumption, not CO₂ emissions. Converting to emissions requires country-specific emission factors by fuel type, which vary significantly and are outside the scope of this dataset. Cooling data likely undercounts actual demand in countries with incomplete Eurostat reporting. All figures reflect reported national statistics and are subject to Eurostat revision cycles.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built Environment · Energy Analysis · EU-27 · Eurostat Data · 2023</div>
+  <div style="margin-top:0.4rem">Sustainability Analysis · <a href="https://shivamasthana.pages.dev/">Portfolio by Shivam Asthana</a></div>
+</footer>
+
+<script>
+  Chart.defaults.font.family = "'DM Mono', monospace";
+  Chart.defaults.color = '#6b6b62';
+  Chart.defaults.plugins.legend.labels.boxWidth = 10;
+  Chart.defaults.plugins.legend.labels.padding = 16;
+
+  const grid = '#eeebe4';
+  const green = '#2d5a3d';
+  const greenMid = '#4a7c5f';
+  const warn = '#8b4513';
+  const warnLight = 'rgba(139,69,19,0.12)';
+  const orange = '#b07030';
+
+  // CHART 1
+  new Chart(document.getElementById('chart1'), {
+    type: 'bar',
+    data: {
+      labels: [2015,2016,2017,2018,2019,2020,2021,2022,2023],
+      datasets: [
+        {
+          label: 'Households',
+          data: [246412,252786,253568,251404,248877,249259,262365,241806,228518],
+          backgroundColor: green + '25',
+          borderColor: green,
+          borderWidth: 1.5,
+          borderRadius: 2,
+          stack: 'a'
+        },
+        {
+          label: 'Commercial & Public Services',
+          data: [127381,128871,132420,130441,127068,119819,128733,119909,117339],
+          backgroundColor: greenMid + '35',
+          borderColor: greenMid,
+          borderWidth: 1.5,
+          borderRadius: 2,
+          stack: 'a'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', align: 'end' },
+        tooltip: {
+          backgroundColor: '#fff', borderColor: '#d8d5ce', borderWidth: 1,
+          titleColor: '#1a1a18', bodyColor: '#6b6b62',
+          callbacks: { label: c => `${c.dataset.label}: ${c.parsed.y.toLocaleString()} ktoe` }
+        }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, grid: { color: grid }, title: { display: true, text: 'ktoe', color: '#6b6b62', font: { size: 11 } } }
+      }
+    }
+  });
+
+  // CHART 2
+  const heatColors = [1.9,3.9,4.7,5.0,6.0,8.0,10.2,10.5,11.1,11.3,12.3,13.0,14.1,14.8,15.2,15.2,16.2,16.2,16.3,16.7,17.0,17.5,17.6,20.0,20.4,23.0,27.0].map(v =>
+    v >= 17 ? warn : v >= 12 ? orange : green
+  );
+  new Chart(document.getElementById('chart2'), {
+    type: 'bar',
+    data: {
+      labels: ['Malta','Portugal','Spain','Cyprus','Bulgaria','Greece','Romania','Netherlands','Slovakia','Ireland','Slovenia','Italy','Poland','France','Lithuania','Latvia','Sweden','Hungary','Croatia','Czechia','Denmark','Germany','Belgium','Austria','Estonia','Luxembourg','Finland'],
+      datasets: [{
+        label: 'GJ per capita',
+        data: [1.9,3.9,4.7,5.0,6.0,8.0,10.2,10.5,11.1,11.3,12.3,13.0,14.1,14.8,15.2,15.2,16.2,16.2,16.3,16.7,17.0,17.5,17.6,20.0,20.4,23.0,27.0],
+        backgroundColor: heatColors.map(c => c + '28'),
+        borderColor: heatColors,
+        borderWidth: 1.5,
+        borderRadius: 2
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff', borderColor: '#d8d5ce', borderWidth: 1,
+          titleColor: '#1a1a18', bodyColor: '#6b6b62',
+          callbacks: { label: c => `${c.parsed.x} GJ per capita` }
+        }
+      },
+      scales: {
+        x: { grid: { color: grid }, title: { display: true, text: 'GJ per capita', color: '#6b6b62', font: { size: 11 } }, min: 0 },
+        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+      }
+    }
+  });
+
+  // CHART 3
+  new Chart(document.getElementById('chart3'), {
+    type: 'bar',
+    data: {
+      labels: [2015,2016,2017,2018,2019,2020,2021,2022,2023],
+      datasets: [
+        {
+          label: 'Space Heating (PJ)',
+          data: [6369,6831,6839,6723,6680,6603,7104,6402,6001],
+          backgroundColor: green + '22',
+          borderColor: green,
+          borderWidth: 1.5,
+          borderRadius: 2,
+          yAxisID: 'y',
+          order: 2
+        },
+        {
+          label: 'Space Cooling (TJ)',
+          data: [37956,37143,42670,40474,46490,45305,60443,62373,60759],
+          type: 'line',
+          borderColor: warn,
+          backgroundColor: warnLight,
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: warn,
+          fill: false,
+          tension: 0.3,
+          yAxisID: 'y2',
+          order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', align: 'end' },
+        tooltip: {
+          backgroundColor: '#fff', borderColor: '#d8d5ce', borderWidth: 1,
+          titleColor: '#1a1a18', bodyColor: '#6b6b62'
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { position: 'left', grid: { color: grid }, title: { display: true, text: 'Heating (PJ)', color: green, font: { size: 11 } } },
+        y2: { position: 'right', grid: { display: false }, title: { display: true, text: 'Cooling (TJ)', color: warn, font: { size: 11 } } }
+      }
+    }
+  });
+</script>
+</body>
+</html>

@@ -1185,6 +1185,55 @@
   </div>
 </div>
 
+
+      <!-- EMBODIED CARBON ANALYSIS -->
+      <div class="project-card reveal" data-category="data" data-subcategory="climate esg-finance">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #2c3e2d 0%, #4a6741 60%, #6b8f5e 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon">🏗️</span>
+      <div class="project-banner-text">Embodied Carbon</div>
+    </div>
+    <span class="project-type-badge">Data Analysis</span>
+  </div>
+  <div class="project-body">
+    <h3>The Carbon Hidden in Construction</h3>
+    <p>How material choices shape a building's lifetime footprint — and what it means for EU Taxonomy eligibility. Quantifying embodied carbon across key construction materials for a 5,000 m² mixed-use building.</p>
+    <div class="project-tags">
+      <span class="tag">Climate</span>
+      <span class="tag">ESG &amp; Finance</span>
+      <span class="tag">EU Taxonomy</span>
+      <span class="tag">Built Environment</span>
+    </div>
+    <div class="project-actions">
+      <a href="embodied_carbon_analysis.html" class="btn-sm btn-sm-primary">View Analysis →</a>
+    </div>
+  </div>
+</div>
+
+      <!-- EUROPE REAL ESTATE EMISSIONS -->
+      <div class="project-card reveal" data-category="data" data-subcategory="climate esg-finance">
+  <div class="project-banner" style="position:relative; background: linear-gradient(135deg, #1e3a4a 0%, #2d6055 60%, #3d8070 100%);">
+    <div style="text-align:center; z-index:1;">
+      <span class="project-banner-icon">🏢</span>
+      <div class="project-banner-text">Real Estate Emissions</div>
+    </div>
+    <span class="project-type-badge">Data Analysis</span>
+  </div>
+  <div class="project-body">
+    <h3>Europe's Building Problem</h3>
+    <p>Energy and emissions analysis of Europe's real estate sector — mapping where buildings stand against decarbonisation targets and what the retrofit challenge looks like across different markets.</p>
+    <div class="project-tags">
+      <span class="tag">Climate</span>
+      <span class="tag">ESG &amp; Finance</span>
+      <span class="tag">Real Estate</span>
+      <span class="tag">Energy Data</span>
+    </div>
+    <div class="project-actions">
+      <a href="europe_real_estate_emissions.html" class="btn-sm btn-sm-primary">View Analysis →</a>
+    </div>
+  </div>
+</div>
+
     </div><!-- /projects-grid -->
 
     <!-- PAGINATION -->
@@ -1403,8 +1452,9 @@
       if (activeFilter === 'all') return true;
       if (activeFilter === 'data') return card.dataset.category === 'data';
       if (activeFilter === 'articles') return card.dataset.type === 'articles';
-      // Sub-category filters
-      return card.dataset.category === activeFilter;
+      // Sub-category filters — check both data-category and data-subcategory
+      const sub = card.dataset.subcategory || '';
+      return card.dataset.category === activeFilter || sub.includes(activeFilter);
     });
   }
 
