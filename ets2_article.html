@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETS 2: Will €45 Be Enough?</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid #e8e8e4;
+      background: #fafaf8;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: #1a1a1a; }
+
+    .article-header {
+      max-width: 720px;
+      margin: 4rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .article-tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #ddd;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-family: 'Georgia', serif;
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .article-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid #e8e8e4;
+      border-bottom: 1px solid #e8e8e4;
+      margin-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .article-meta .sep { color: #ccc; }
+
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      font-family: 'Georgia', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #1a1a1a;
+    }
+
+    .article-body p { margin-bottom: 1.4rem; }
+
+    .article-body h2 {
+      font-family: 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-body strong { font-weight: bold; }
+
+    .callout {
+      border-left: 3px solid #1a1a1a;
+      padding: 0.9rem 1.5rem;
+      margin: 2rem 0;
+      background: #f2f2ee;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    .sectors-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 1.75rem 0;
+    }
+
+    .sector-card {
+      background: #f7f7f4;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .sector-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 0.4rem;
+    }
+
+    .sector-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.35rem;
+    }
+
+    .sector-text {
+      font-size: 0.84rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .criteria-block {
+      margin: 1.75rem 0;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .criteria-header {
+      background: #f2f2ee;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      border-bottom: 1px solid #e4e4e0;
+    }
+
+    .criteria-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid #e8e8e4;
+    }
+
+    .criteria-row:last-child { border-bottom: none; }
+
+    .criteria-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      min-width: 80px;
+      padding-top: 1px;
+    }
+
+    .criteria-desc {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.55;
+    }
+
+    .changes-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .changes-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+
+    .changes-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #aaa;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+
+    .changes-list strong { font-weight: 600; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e8e8e4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      color: #777;
+    }
+
+    .closing-note {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .article-title { font-size: 1.8rem; }
+      .sectors-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#projects">Work</a></li>
+    <li><a href="/#experience">Experience</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="article-header">
+  <div class="article-tag">Carbon Markets</div>
+  <h1 class="article-title">ETS 2: will &euro;45 be enough?</h1>
+  <p class="article-subtitle">The EU's carbon market for buildings and road transport launches in 2028. The price floor is set. The question is whether it will actually move anyone and whether the political will exists to let it.</p>
+  <div class="article-meta">
+    <span>Shivam Asthana</span>
+    <span class="sep">&middot;</span>
+    <span>April 2026</span>
+    <span class="sep">&middot;</span>
+    <span>7 min read</span>
+    <span class="sep">&middot;</span>
+    <span>EU ETS &middot; Carbon Pricing &middot; Buildings &middot; Road Transport</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+  <p>The EU Emissions Trading System has covered large industrial emitters and power generators since 2005. It has worked. Emissions in covered sectors have fallen significantly, and the price signal, once stuck in single digits, rose to over &euro;80 per tonne following the Phase 4 reforms of 2021. But the two sectors most resistant to decarbonisation, buildings and road transport, were left outside it. ETS 2 closes that gap.</p>
+
+  <p>Together, the original ETS and ETS 2 will bring roughly three quarters of European greenhouse gas emissions under a cap-and-trade regime. The question is not whether the instrument is well-designed. It is whether the price it will initially deliver is capable of doing what it is supposed to do.</p>
+
+  <h2>What ETS 2 is and how it differs from ETS 1</h2>
+
+  <p>ETS 2 is a separate cap-and-trade system covering CO&#x2082; emissions from fuel combustion in buildings, road transport, and certain small industries currently outside ETS 1. Its structure differs from the original system in one critical way: regulated entities are upstream fuel suppliers (petrol stations, gas distributors, heating oil suppliers) rather than the direct emitters themselves.</p>
+
+  <div class="criteria-block">
+    <div class="criteria-header">ETS 1 vs ETS 2: key structural differences</div>
+    <div class="criteria-row">
+      <div class="criteria-label">Who pays</div>
+      <div class="criteria-desc">ETS 1 obligates direct emitters: power plants, steel mills, cement producers. ETS 2 obligates upstream fuel suppliers, who pass the cost downstream through higher fuel prices. Households and drivers feel the signal indirectly, through their bills.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">Allocation</div>
+      <div class="criteria-desc">ETS 1 still includes elements of free allocation to energy-intensive industries. ETS 2 starts with 100% auctioning of allowances from day one, with no free allocation.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">Price cap</div>
+      <div class="criteria-desc">ETS 1 has no price ceiling. ETS 2 includes a Market Stability Reserve that releases additional allowances if the price exceeds &euro;45 per tonne (in 2020 prices), functioning in its early years closer to a carbon tax with a ceiling than a true cap-and-trade market.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">Market maturity</div>
+      <div class="criteria-desc">ETS 1 is a deep, liquid market with 20 years of price history and active secondary trading. ETS 2 will begin without these features. Futures trading has started (ICE launched ETS 2 contracts in May 2025, EEX followed in July) but liquidity remains thin.</div>
+    </div>
+  </div>
+
+  <p>The timeline has also shifted. ETS 2 was originally due to become fully operational in 2027. Following an all-night negotiation at the EU Environment Council in November 2025, driven by pressure from Poland and other central and eastern European countries, the start date was formally postponed to 2028. The first allowance surrender now falls due in May 2029, covering 2028 emissions.</p>
+
+  <h2>The &euro;45 price floor: what it actually means</h2>
+
+  <p>During the first three years ETS 2 is operational, if the price of allowances exceeds &euro;45 (in 2020 prices, adjusted for inflation), additional allowances will be released from the Market Stability Reserve to suppress the price. In practice, this makes &euro;45 function less like a floor and more like a ceiling, at least through the early years of the system.</p>
+
+  <p>What does that translate to at the pump and the boiler? At &euro;45 per tonne, the carbon cost adds roughly 2.5 euro cents per litre of petrol. At &euro;100 per tonne, that rises to around 5 cents. These are not numbers that move behaviour on their own.</p>
+
+  <div class="callout">
+    One analysis puts the actual CO&#x2082; avoidance cost in buildings and road transport at between &euro;100 and &euro;300 per tonne, far above the initial ETS 2 price. At &euro;45, the system is not compensating for the true cost of the emissions it is pricing. It is sending a signal. Whether that signal is legible is a different question.
+  </div>
+
+  <h2>Road transport and buildings: two different problems</h2>
+
+  <p>The two sectors ETS 2 covers face structurally different barriers to decarbonisation. The price signal interacts with each of them differently.</p>
+
+  <div class="sectors-grid">
+    <div class="sector-card">
+      <div class="sector-label">Road transport</div>
+      <div class="sector-title">Lost in the noise</div>
+      <div class="sector-text">Oil price volatility routinely swings fuel costs by 10&ndash;20 cents per litre within a single year. A carbon signal of 2&ndash;3 cents per litre will not register. It will not trigger an EV switch, change commuting decisions, or force fleet managers to replace vehicles ahead of schedule. Decarbonisation in transport will be driven by vehicle emissions standards and EV subsidies far more than by ETS 2.</div>
+    </div>
+    <div class="sector-card">
+      <div class="sector-label">Buildings</div>
+      <div class="sector-title">The split incentive problem</div>
+      <div class="sector-text">Heating costs are more static than fuel prices, so the carbon signal is more legible here. But the fundamental barrier is structural: the landlord bears the capital cost of a heat pump or insulation upgrade, while the tenant pays the gas bill and therefore absorbs the ETS 2 cost. The person who pays the higher bill cannot install the heat pump. The person who can install it does not pay the higher bill.</div>
+    </div>
+  </div>
+
+  <p>Germany has partially addressed the split incentive through its existing national carbon pricing system, using a 10-step model that allocates CO&#x2082; costs between landlords and tenants based on a building's energy efficiency rating. If a building's emissions exceed 52 kg/m&sup2;, landlords must bear 95% of the CO&#x2082; costs alone, creating direct financial pressure to renovate. If emissions fall below 12 kg/m&sup2;, costs rest entirely with the tenant. This is a meaningful mechanism. But it is a national solution, and most EU member states have no equivalent in place.</p>
+
+  <p>Without complementary policy (mandatory energy performance standards, retrofit subsidies, green lease requirements) the split incentive will substantially blunt ETS 2's effectiveness in buildings, regardless of where the price sits.</p>
+
+  <h2>The real question: trajectory, not level</h2>
+
+  <p>The &euro;45 ceiling matters less than what the market believes comes after it.</p>
+
+  <p>If regulated entities (fuel suppliers, real estate investors, fleet operators) perceive &euro;45 as a temporary constraint that will give way to &euro;100+ by the early 2030s, they will begin pulling forward investment decisions today. A carbon price does not need to be high now if it is credibly going higher. This is how ETS 1 worked: it was the post-2021 Phase 4 reform that drove the price from single digits to over &euro;80, but the investment decisions that preceded that surge were shaped by the expectation that reform was coming.</p>
+
+  <p>BloombergNEF's base case has ETS 2 prices reaching approximately &euro;103 by 2030 and rising to around &euro;214 by 2035. If that trajectory is credible, the window for low-cost abatement investment is already narrowing, regardless of where the price sits today. Forward-looking entities will act on the direction of travel, not the current level.</p>
+
+  <div class="callout">
+    The instrument is not the obstacle. The obstacle is credibility. If the market believes ETS 2 will be managed and suppressed indefinitely by political intervention, the price signal fails, not because &euro;45 is the wrong number, but because no one trusts where it goes next.
+  </div>
+
+  <h2>What the postponement signals</h2>
+
+  <p>The November 2025 decision to delay ETS 2 by one year was not a technical adjustment. It was a political concession, driven by member states structurally opposed to the instrument, that revealed something important about the fragility of the system's political foundation.</p>
+
+  <p>Officials framed the delay as a measure to prevent social backlash similar to the yellow vest protests that shook France in 2018. That is a legitimate concern: ETS 2 will raise the cost of heating and driving, and its impact will fall disproportionately on lower-income households in countries with older building stock and limited public transport alternatives. The Social Climate Fund, financed through ETS 2 auction revenues, was designed to mitigate this, but its effectiveness depends on member states actually deploying the funds for that purpose.</p>
+
+  <p>The deeper problem is what the postponement signals to the market. Every delay is a month in which regulated entities cannot form a credible price, investment decisions are deferred, and the 42% reduction target for 2030 becomes harder to reach. For Germany specifically, which already operates a national carbon price on fuels at &euro;55 per tonne in 2025 rising to a corridor of &euro;55&ndash;65 in 2026, the delay means an extra year of competitive disadvantage for companies already internalising a cost their European peers are not.</p>
+
+  <ul class="changes-list">
+    <li><strong>Market liquidity suffers:</strong> The delay prolongs thin trading conditions in ETS 2 futures markets. Without auctions and a functioning price, the market cannot deepen. Active secondary trading, the feature that gives ETS 1 its price discovery function, requires volume that a one-year delay suppresses.</li>
+    <li><strong>Investment signals weaken:</strong> Companies planning heat pump installations, building retrofits, or fleet electrification use the expected carbon price as an input to their business case. Uncertainty about when and at what level ETS 2 will operate makes those calculations harder, not easier.</li>
+    <li><strong>Political precedent is set:</strong> The ease with which a one-year delay was agreed, at a late-night Council meeting bundled into a broader climate deal, signals that further delays or weakening are politically achievable if the price rises too quickly. That perception itself suppresses ambition.</li>
+  </ul>
+
+  <h2>The verdict</h2>
+
+  <p>&euro;45 is not enough to transform road transport or buildings on its own. The fuel price signal is too small to override the economics of EV adoption or major renovation decisions without complementary policy. The split incentive problem in buildings requires regulatory solutions that a carbon price alone cannot provide. And the political dynamics that produced the 2028 delay have not resolved. They have been deferred.</p>
+
+  <p>But the level is not the point. The point is whether the market believes the trajectory.</p>
+
+  <p>If ETS 2 launches in 2028 with strong member state implementation, a credible path toward uncapped pricing post-2030, and the Social Climate Fund functioning as designed, the current price is irrelevant to the long-run investment calculus. Regulated entities will act on where the price is going, not where it is today.</p>
+
+  <p>If the political pressure that produced the postponement continues (price caps extended, member states opting out, the MSR repeatedly loosened) then ETS 2 will underperform not because the instrument was flawed, but because it was never allowed to be believed.</p>
+
+  <p>That distinction, between instrument design and political will, is where the outcome will be decided.</p>
+
+  <div class="closing-note">
+    Prepared as an independent portfolio article on EU carbon markets. Sources include European Commission ETS 2 Directive and associated delegated acts, International Carbon Action Partnership (ICAP) ETS 2 tracker, Veyt carbon market analysis, Germanwatch policy briefings, Transport &amp; Environment ETS 2 analysis, BloombergNEF price projections, and Energy Post regulatory commentary.
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">EU ETS 2</span>
+    <span class="tag">Carbon markets</span>
+    <span class="tag">EUA pricing</span>
+    <span class="tag">Buildings decarbonisation</span>
+    <span class="tag">Road transport</span>
+    <span class="tag">Carbon pricing</span>
+    <span class="tag">Split incentive</span>
+    <span class="tag">Market Stability Reserve</span>
+    <span class="tag">Social Climate Fund</span>
+  </div>
+
+</article>
+
+<footer>
+  &copy; 2026 Shivam Asthana &middot; Sustainability &amp; Strategy
+</footer>
+
+</body>
+</html>

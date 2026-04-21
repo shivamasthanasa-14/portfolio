@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EUA Market Note — April 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid #e8e8e4;
+      background: #fafaf8;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover { color: #1a1a1a; }
+
+    .article-header {
+      max-width: 720px;
+      margin: 4rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .article-tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      border: 1px solid #ddd;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-family: 'Georgia', serif;
+      font-size: 2.4rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .article-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid #e8e8e4;
+      border-bottom: 1px solid #e8e8e4;
+      margin-bottom: 3rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .article-meta .sep { color: #ccc; }
+
+    .article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      font-family: 'Georgia', serif;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #1a1a1a;
+    }
+
+    .article-body p { margin-bottom: 1.4rem; }
+
+    .article-body h2 {
+      font-family: 'Georgia', serif;
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #1a1a1a;
+      margin: 2.5rem 0 1rem;
+    }
+
+    .article-body strong { font-weight: bold; }
+
+    .callout {
+      border-left: 3px solid #1a1a1a;
+      padding: 0.9rem 1.5rem;
+      margin: 2rem 0;
+      background: #f2f2ee;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    /* Price snapshot bar */
+    .price-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 1.75rem 0;
+    }
+
+    .price-card {
+      background: #f7f7f4;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .price-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 0.35rem;
+    }
+
+    .price-value {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.2rem;
+    }
+
+    .price-sub {
+      font-size: 0.78rem;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    /* Scenarios block */
+    .criteria-block {
+      margin: 1.75rem 0;
+      border: 1px solid #e4e4e0;
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .criteria-header {
+      background: #f2f2ee;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      border-bottom: 1px solid #e4e4e0;
+    }
+
+    .criteria-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid #e8e8e4;
+    }
+
+    .criteria-row:last-child { border-bottom: none; }
+
+    .criteria-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      min-width: 64px;
+      padding-top: 1px;
+    }
+
+    .criteria-desc {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.55;
+    }
+
+    .prob {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #888;
+      background: #efefeb;
+      border-radius: 10px;
+      padding: 1px 8px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* Watch list */
+    .changes-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .changes-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+
+    .changes-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #aaa;
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+
+    .changes-list strong { font-weight: 600; }
+
+    /* View box */
+    .view-box {
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .view-box-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    .view-box-text {
+      font-size: 0.97rem;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e8e8e4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      color: #777;
+    }
+
+    .closing-note {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #e8e8e4;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .article-title { font-size: 1.8rem; }
+      .price-bar { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#projects">Work</a></li>
+    <li><a href="/#experience">Experience</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="article-header">
+  <div class="article-tag">Market Analysis</div>
+  <h1 class="article-title">EUA market note: April 2026</h1>
+  <p class="article-subtitle">European carbon allowances are caught between structurally bullish supply dynamics and genuine near-term policy uncertainty. That tension will not resolve until Q3 2026. This note sets out the current picture, the key scenarios, and a stated directional view.</p>
+  <div class="article-meta">
+    <span>Shivam Asthana</span>
+    <span class="sep">&middot;</span>
+    <span>April 2026</span>
+    <span class="sep">&middot;</span>
+    <span>5 min read</span>
+    <span class="sep">&middot;</span>
+    <span>EUA &middot; Carbon Markets &middot; EU ETS &middot; Price Analysis</span>
+  </div>
+</header>
+
+<article class="article-body">
+
+  <h2>Where the market is</h2>
+
+  <div class="price-bar">
+    <div class="price-card">
+      <div class="price-label">Current level</div>
+      <div class="price-value">&euro;72&ndash;75</div>
+      <div class="price-sub">Late April 2026, recovering from March lows</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">52-week range</div>
+      <div class="price-value">&euro;61.78&ndash;93.80</div>
+      <div class="price-sub">Wide band reflecting political uncertainty</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">CBAM first price</div>
+      <div class="price-value">&euro;75.36</div>
+      <div class="price-sub">Published 7 April 2026, world's first carbon border price</div>
+    </div>
+  </div>
+
+  <p>EUAs are trading in the low-to-mid &euro;70s, down from a 52-week high of &euro;93.80 but recovering from the March lows that followed the European Council summit. The recovery reflects a more measured read of regulatory risk: the Commission's 1 April proposal to reform the Market Stability Reserve was less bearish than the market had feared, and the Brussels Summit stopped well short of direct intervention in carbon pricing.</p>
+
+  <p>The underlying picture is a market caught between structurally bullish fundamentals and genuine near-term policy uncertainty. That tension will not resolve until Q3 2026, when the Commission is expected to table its full ETS Directive revision.</p>
+
+  <h2>The bullish structural case</h2>
+
+  <p>The supply side of the EUA market is tightening on multiple fronts simultaneously. These are not speculative drivers. They are legislated and already in motion.</p>
+
+  <ul class="changes-list">
+    <li><strong>Cap continues to fall.</strong> The linear reduction factor increases to 4.3% from 2028, accelerating the rate at which the ceiling on total emissions drops each year. Fewer allowances in the system, all else equal, means higher prices.</li>
+    <li><strong>Free allocation is being removed.</strong> Aviation free allocation was eliminated entirely in 2026. For CBAM-covered sectors (steel, aluminium, cement, fertilisers), free allocation is being cut by 2.5% in 2026 and 5% in 2027, with full phase-out by 2034. Each reduction removes a cushion that previously shielded industrial players from the full cost of carbon.</li>
+    <li><strong>The MSR is withdrawing supply.</strong> Between September 2025 and August 2026, 276 million allowances are being placed into the Market Stability Reserve. The Commission's 1 April proposal to stop the invalidation mechanism (which permanently destroys allowances above the 400 million threshold) adds a further structural support: a larger buffer in the reserve reduces the overhang risk that has historically capped upside.</li>
+    <li><strong>CBAM is now operational.</strong> On 7 April 2026, the European Commission published the first official CBAM price at &euro;75.36 per tonne. This confirms the EU's carbon pricing architecture is expanding, not retreating, and places a direct financial cost on imported goods from countries without equivalent carbon pricing.</li>
+  </ul>
+
+  <div class="callout">
+    The March selloff overshot the fundamental deterioration. What changed in March was the perceived probability of political intervention, not the actual supply-demand balance. The cap is still tightening. The MSR is still withdrawing allowances. Free allocation is still being phased out. The fundamentals did not move. The politics did.
+  </div>
+
+  <h2>The risk: political intervention at the Q3 revision</h2>
+
+  <p>The bearish case is not fundamental. It is political.</p>
+
+  <p>Ten member states sent a letter to the Commission in March demanding an accelerated ETS review, citing industrial competitiveness pressures and energy cost concerns linked to ongoing Middle East supply tensions. The demand is for relief: extended free allocation, a slower cap reduction, or some form of price intervention. Commission President von der Leyen's pre-summit letter explicitly placed carbon costs on the agenda alongside electricity prices and grid charges.</p>
+
+  <p>The ETS Directive revision, expected in Q3 2026, is the single most consequential near-term event for EUA prices. Three scenarios are plausible:</p>
+
+  <div class="criteria-block">
+    <div class="criteria-header">Q3 2026 revision: scenario analysis</div>
+    <div class="criteria-row">
+      <div class="criteria-label">Scenario 1 <span class="prob">45%</span></div>
+      <div class="criteria-desc"><strong>Reform preserves the price signal.</strong> The Commission proposes MSR strengthening and modest, conditioned free allocation extensions. Structural supply tightening reasserts itself. EUAs recover toward &euro;80&ndash;85 by Q4 2026 as the compliance deadline approaches and political uncertainty clears.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">Scenario 2 <span class="prob">30%</span></div>
+      <div class="criteria-desc"><strong>Substantive weakening.</strong> Political pressure produces a material extension of free allocation or a slower cap trajectory. Investment funds unwind long positions. EUAs test the &euro;58&ndash;62 support zone established in the March selloff. This would represent a genuine impairment of the carbon price signal, not short-term volatility.</div>
+    </div>
+    <div class="criteria-row">
+      <div class="criteria-label">Scenario 3 <span class="prob">25%</span></div>
+      <div class="criteria-desc"><strong>Energy shock overrides everything.</strong> Escalation of Middle East tensions disrupts LNG supply materially, forcing European utilities back to coal. Demand for allowances spikes. EUAs push back toward the high &euro;80s to low &euro;90s regardless of the regulatory outcome. Price disconnects from policy in the short term.</div>
+    </div>
+  </div>
+
+  <p>The probabilities are informed judgements based on the current weight of analyst and policy evidence, not model outputs. The point is not precision. It is to make the relative stakes explicit: the base case is cautiously constructive, the downside is real but requires a policy capitulation, and the tail risk runs in both directions.</p>
+
+  <h2>The September compliance deadline</h2>
+
+  <p>One near-term catalyst that is structural rather than uncertain: the annual EUA surrender deadline falls at end of September. Industrial operators must submit allowances covering their verified 2025 emissions. This creates predictable demand-side pressure in Q3, historically supportive of prices in the August-September window. In a market already recovering from the March lows, the compliance deadline removes one bearish tail risk from the near-term picture regardless of which regulatory scenario materialises.</p>
+
+  <h2>A stated view</h2>
+
+  <div class="view-box">
+    <div class="view-box-label">Directional view</div>
+    <div class="view-box-text">Cautiously long, with the Q3 Directive revision as the stop-loss event. The structural supply dynamics are intact and are not reversible in the near term. The March selloff overshot the fundamental deterioration. If the Commission holds the core price signal together in Q3, EUAs have a credible path toward &euro;80&ndash;85 by year end, driven by the compliance deadline, continued MSR withdrawal, and reduced political uncertainty. A substantive weakening of the revision changes that view immediately.</div>
+  </div>
+
+  <h2>What to watch</h2>
+
+  <ul class="changes-list">
+    <li><strong>May-June 2026:</strong> Commission's initial legislative framing of the ETS Directive revision. The approach to free allocation extensions and MSR changes will be the first real signal of which scenario is materialising.</li>
+    <li><strong>July 2026:</strong> Expected tabling of the full ETS revision proposal. Market reaction is likely to be sharp in either direction. This is the key event.</li>
+    <li><strong>August-September 2026:</strong> Compliance demand builds ahead of the surrender deadline. Seasonal tailwind for prices regardless of regulatory direction.</li>
+    <li><strong>Ongoing:</strong> Gas prices and Middle East supply dynamics. A normalisation of energy costs reduces political pressure for ETS intervention and removes the coal-switching demand that has supported prices through H1 2026.</li>
+    <li><strong>Ongoing:</strong> UK-EU ETS linkage discussions. A merger would improve liquidity and likely narrow the current price gap, but could also introduce downward pressure if UK allowances trade at a discount. Timeline remains unclear.</li>
+  </ul>
+
+  <div class="closing-note">
+    Independent market analysis prepared as a portfolio piece. Price data sourced from Investing.com and Trading Economics (April 2026). Scenario analysis informed by Veyt carbon market intelligence, ABN AMRO Carbon Market Strategist (December 2025), Homaio 2026 EUA Guide, and European Parliament ETS revision briefing (January 2026). Scenario probabilities represent the author's judgement based on the weight of available evidence and are not model outputs.
+  </div>
+
+  <div class="tag-row">
+    <span class="tag">EUA</span>
+    <span class="tag">EU ETS</span>
+    <span class="tag">Carbon markets</span>
+    <span class="tag">Market analysis</span>
+    <span class="tag">CBAM</span>
+    <span class="tag">MSR</span>
+    <span class="tag">ETS revision 2026</span>
+    <span class="tag">Carbon pricing</span>
+    <span class="tag">Price outlook</span>
+  </div>
+
+</article>
+
+<footer>
+  &copy; 2026 Shivam Asthana &middot; Sustainability &amp; Strategy
+</footer>
+
+</body>
+</html>
