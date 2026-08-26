@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consolidating ESG Data Across a Multi-Site Manufacturer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1a3328; --moss: #2d5a3d; --sage: #4a7c59; --leaf: #6aab7a; --mist: #a8c5b0;
+      --cream: #f4f0e8; --parchment: #ede8dc; --warm-white: #faf8f4; --ink: #1c1c1a;
+      --stone: #6b6b64; --gold: #c9a84c; --gold-light: #e8c97a; --amber: #b0472a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--ink); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; padding: 20px 60px;
+      background: rgba(244,240,232,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--forest); text-decoration: none; }
+
+    .hero { background: var(--forest); padding: 64px 60px 44px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; top: -160px; right: -160px; width: 500px; height: 500px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .eyebrow {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 8px var(--leaf); }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif; font-size: clamp(1.9rem, 3.8vw, 2.7rem);
+      color: var(--cream); line-height: 1.22; margin-bottom: 14px; max-width: 780px;
+    }
+    .hero-sub { font-size: 0.98rem; font-weight: 300; color: var(--mist); line-height: 1.7; max-width: 620px; }
+
+    .stat-strip {
+      display: flex; gap: 0; background: var(--parchment); border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .stat-item {
+      flex: 1; padding: 16px 24px; text-align: center; border-right: 1px solid rgba(74,124,89,0.12);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--forest); }
+    .stat-label { font-size: 0.68rem; color: var(--stone); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+    .stat-note {
+      width: 100%; text-align: center; font-size: 0.68rem; color: var(--stone); padding: 6px 0 10px;
+      background: var(--parchment); font-style: italic;
+    }
+
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 48px 60px; }
+    .section-head {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 6px;
+    }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--forest); margin-bottom: 20px; }
+
+    /* Diagram */
+    .diagram-card { background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 16px; padding: 28px; margin-bottom: 56px; }
+    .diagram-caption { font-size: 0.82rem; color: var(--stone); line-height: 1.6; margin-top: 16px; }
+    svg text { font-family: 'DM Sans', sans-serif; }
+    svg .mono-svg { font-family: 'JetBrains Mono', monospace; }
+
+    /* Tabs */
+    .stage-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .stage-btn {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; padding: 10px 16px; border-radius: 8px;
+      border: 1px solid rgba(74,124,89,0.25); background: white; color: var(--stone); cursor: pointer;
+      transition: all 0.2s; text-align: left; flex: 1; min-width: 110px;
+    }
+    .stage-btn:hover { border-color: var(--sage); color: var(--forest); }
+    .stage-btn.active { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+    .stage-btn .sb-num { display: block; font-size: 0.7rem; color: var(--gold); margin-bottom: 3px; }
+    .stage-btn.active .sb-num { color: var(--gold-light); }
+
+    .stage-panel {
+      background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 16px; padding: 32px 36px;
+      min-height: 240px;
+    }
+    .stage-panel h3 { font-family: 'DM Serif Display', serif; font-size: 1.35rem; color: var(--forest); margin-bottom: 14px; }
+    .stage-panel p { font-size: 0.95rem; line-height: 1.75; color: #2e2e2a; margin-bottom: 16px; font-weight: 300; }
+    .stage-panel strong { font-weight: 600; color: var(--ink); }
+    .callout {
+      border-radius: 0 8px 8px 0; padding: 12px 16px; font-size: 0.85rem; line-height: 1.6; margin-top: 12px;
+    }
+    .callout.friction { background: rgba(176,71,42,0.06); border-left: 3px solid var(--amber); }
+    .callout.friction strong { color: var(--amber); }
+    .callout.good { background: rgba(74,124,89,0.06); border-left: 3px solid var(--sage); }
+    .callout.good strong { color: var(--moss); }
+    .progress-dots { display: flex; gap: 6px; margin-top: 24px; }
+    .pdot { width: 8px; height: 8px; border-radius: 50%; background: rgba(74,124,89,0.2); }
+    .pdot.active { background: var(--leaf); }
+    .stage-arrows { display: flex; justify-content: space-between; margin-top: 22px; }
+    .arrow-btn {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: none; border: none;
+      color: var(--sage); cursor: pointer; padding: 6px 4px;
+    }
+    .arrow-btn:hover { color: var(--moss); }
+    .arrow-btn:disabled { opacity: 0.3; cursor: default; }
+
+    /* Scope 3 spotlight, compact */
+    .spotlight {
+      background: var(--forest); border-radius: 16px; padding: 28px 32px; margin: 48px 0;
+    }
+    .spotlight-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .spotlight h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--cream); margin-bottom: 12px; }
+    .spotlight p { color: var(--mist); font-size: 0.88rem; line-height: 1.7; margin-bottom: 14px; }
+    .spotlight-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+    .sp-stat { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 14px 16px; }
+    .sp-stat-num { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--leaf); }
+    .sp-stat-label { font-size: 0.74rem; color: var(--mist); line-height: 1.5; margin-top: 2px; }
+
+    .closing p { font-size: 0.98rem; line-height: 1.8; color: #2e2e2a; font-weight: 300; margin-bottom: 16px; }
+    .methodology {
+      background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px;
+      padding: 20px 24px; margin-top: 40px; font-size: 0.8rem; color: var(--stone); line-height: 1.7;
+    }
+    .methodology strong { color: var(--ink); }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.4); text-align: center; padding: 26px; font-size: 0.8rem; }
+
+    @media (max-width: 800px) {
+      nav, .hero, .wrap { padding-left: 24px; padding-right: 24px; }
+      .stat-strip { flex-wrap: wrap; }
+      .stat-item { flex: 1 1 33%; }
+      .stage-nav { flex-direction: column; }
+      .stage-panel { padding: 24px 22px; }
+      .spotlight-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav><a href="#" class="nav-logo">SA</a></nav>
+
+<section class="hero">
+  <p class="eyebrow"><span class="dot"></span>Methodology &middot; Corporate Sustainability Reporting</p>
+  <h1>Consolidating ESG Data Across a Multi-Site Manufacturer</h1>
+  <p class="hero-sub">A working process for turning fragmented, site-level data into one audit-ready dataset, illustrated against a representative industrial group.</p>
+</section>
+
+<div class="stat-strip">
+  <div class="stat-item"><div class="stat-num">~7,000</div><div class="stat-label">Employees</div></div>
+  <div class="stat-item"><div class="stat-num">~20</div><div class="stat-label">Sites</div></div>
+  <div class="stat-item"><div class="stat-num">~11</div><div class="stat-label">Countries</div></div>
+  <div class="stat-item"><div class="stat-num">Materials + Packaging</div><div class="stat-label">Product lines</div></div>
+</div>
+<p class="stat-note">Composite illustrative company. Not a real employer.</p>
+
+<div class="wrap">
+
+  <p class="section-head">The Starting Point</p>
+  <h2 class="section-title">What the data actually looks like before this process runs</h2>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 900 340" style="width:100%; height:auto;">
+      <!-- Site sources, left column -->
+      <g class="mono-svg">
+        <rect x="10" y="10" width="190" height="38" rx="8" fill="#ede8dc" stroke="#4a7c59" stroke-opacity="0.3"/>
+        <text x="24" y="33" font-size="12" fill="#1c1c1a">Site A &middot; ERP export</text>
+
+        <rect x="10" y="58" width="190" height="38" rx="8" fill="#ede8dc" stroke="#4a7c59" stroke-opacity="0.3"/>
+        <text x="24" y="81" font-size="12" fill="#1c1c1a">Site B &middot; Excel workbook</text>
+
+        <rect x="10" y="106" width="190" height="38" rx="8" fill="#ede8dc" stroke="#4a7c59" stroke-opacity="0.3"/>
+        <text x="24" y="129" font-size="12" fill="#1c1c1a">Site C &middot; Utility invoices</text>
+
+        <rect x="10" y="154" width="190" height="38" rx="8" fill="#ede8dc" stroke="#4a7c59" stroke-opacity="0.3"/>
+        <text x="24" y="177" font-size="12" fill="#1c1c1a">Site D &middot; Paper logs</text>
+
+        <rect x="10" y="202" width="190" height="38" rx="8" fill="#ede8dc" stroke="#4a7c59" stroke-opacity="0.3"/>
+        <text x="24" y="225" font-size="12" fill="#1c1c1a">Site E &middot; Regional system</text>
+
+        <rect x="10" y="250" width="190" height="38" rx="8" fill="none" stroke="#6b6b64" stroke-dasharray="3,3"/>
+        <text x="24" y="273" font-size="12" fill="#6b6b64">+ 15 more sites, mixed formats</text>
+      </g>
+
+      <!-- Connectors -->
+      <g stroke="#a8c5b0" stroke-width="1.5" fill="none">
+        <path d="M200,29 C280,29 280,150 380,150"/>
+        <path d="M200,77 C280,77 280,150 380,150"/>
+        <path d="M200,125 C280,125 280,150 380,150"/>
+        <path d="M200,173 C280,173 280,150 380,150"/>
+        <path d="M200,221 C280,221 280,150 380,150"/>
+        <path d="M200,269 C280,269 280,150 380,150"/>
+      </g>
+
+      <!-- Bottleneck -->
+      <rect x="382" y="105" width="200" height="90" rx="10" fill="#b0472a" fill-opacity="0.08" stroke="#b0472a" stroke-opacity="0.5" stroke-width="1.5"/>
+      <text x="482" y="140" font-size="13" fill="#8a3820" text-anchor="middle" font-weight="600">Manual</text>
+      <text x="482" y="158" font-size="13" fill="#8a3820" text-anchor="middle" font-weight="600">consolidation</text>
+      <text x="482" y="178" font-size="10.5" fill="#8a3820" text-anchor="middle" class="mono-svg">3 to 6 month cycle</text>
+
+      <!-- Dashed uncertain connector to report -->
+      <path d="M582,150 C650,150 650,150 700,150" stroke="#b0472a" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
+      <text x="640" y="135" font-size="10" fill="#b0472a" text-anchor="middle">weak trail</text>
+
+      <!-- Report box -->
+      <rect x="702" y="108" width="185" height="84" rx="10" fill="#1a3328" />
+      <text x="794" y="145" font-size="13" fill="#f4f0e8" text-anchor="middle" font-weight="600">Sustainability</text>
+      <text x="794" y="163" font-size="13" fill="#f4f0e8" text-anchor="middle" font-weight="600">Report</text>
+      <text x="794" y="181" font-size="10" fill="#a8c5b0" text-anchor="middle" class="mono-svg">audit risk: high</text>
+    </svg>
+    <p class="diagram-caption">Twenty sites, five or more distinct data formats, converging on one manual bottleneck with no consistent audit trail on the way out. This is the actual starting condition the methodology below is built to fix, not a hypothetical worst case.</p>
+  </div>
+
+  <p class="section-head">The Process</p>
+  <h2 class="section-title">Seven stages, click through in order</h2>
+
+  <div class="stage-nav" id="stageNav"></div>
+
+  <div class="stage-panel" id="stagePanel"></div>
+
+  <div class="progress-dots" id="progressDots"></div>
+
+  <div class="spotlight">
+    <p class="spotlight-label">Where Stage 4 Gets Hardest</p>
+    <h3>Scope 3, Categories 1 and 4. Not "Scope 3" in general.</h3>
+    <p>Purchased goods and services, plus upstream transportation. Both depend on suppliers self-reporting at inconsistent maturity, often several tiers removed from direct visibility. The workable fix is tiered: primary data from the highest-impact suppliers, spend-based estimation for the rest.</p>
+    <div class="spotlight-stats">
+      <div class="sp-stat"><div class="sp-stat-num">62%</div><div class="sp-stat-label">of European companies rate supplier data quality poor or very poor for these two categories (Sustainable Procurement Pledge, 2025)</div></div>
+      <div class="sp-stat"><div class="sp-stat-num">~75%</div><div class="sp-stat-label">of Scope 3 emissions typically captured from the top 100 to 200 suppliers by impact</div></div>
+    </div>
+  </div>
+
+  <div class="closing">
+    <p>Run well, this stops being an annual scramble. Ownership, templates, and validation logic already exist before the next cycle opens, and the dataset becomes usable for more than compliance: benchmarking sites against each other, catching drift before it becomes a target miss, answering a customer's due diligence questionnaire without starting from zero.</p>
+  </div>
+
+  <div class="methodology">
+    <strong>Sources and methodology note:</strong> general operating framework, not a description of any real employer's systems. Stage structure and failure modes synthesized from current ESG data management practice (Anthesis, Dcycle, Watershed, IRIS Carbon, GISuser industry analysis, 2025 to 2026) and the EU Accounting Directive, Article 29a, on consolidated sustainability reporting. Scope 3 statistics from the Sustainable Procurement Pledge's 2025 survey and EcoVadis and GEP industry reporting. The tiered data approach reflects methodology publicly described by Persefoni, pattern matched against Carbmee's documented approach for EU manufacturing clients. The illustrative company profile is composite.
+  </div>
+
+</div>
+
+<footer><p>&copy; 2026 Shivam Asthana</p></footer>
+
+<script>
+const stages = [
+  {
+    title: "Scope and governance",
+    body: "Define the consolidation perimeter first: entity level or group level. Under Article 29a of the EU Accounting Directive, a parent meeting the size thresholds publishes one group-level statement covering all subsidiaries, not separate site reports. Assign a named owner per metric before any data request goes out.",
+    friction: "Nobody owns a metric until the week before the deadline, so ownership gets assigned by availability, not context."
+  },
+  {
+    title: "Gap analysis and mapping",
+    body: "Compare existing data against what the target frameworks actually require, site by site. A furnace-heavy site and a packaging line don't share material topics. Map shared datapoints once: Scope 1 to 3 figures feed CSRD, GRI, ISSB, and CDP alike, so one validated number can route to four outputs.",
+    good: "A single data dictionary tagging each datapoint with every framework it feeds, so nothing gets re-requested under a different name."
+  },
+  {
+    title: "Collection",
+    body: "Structured templates per site, distributed with real lead time. Across eleven countries this stage also has to handle language, local unit conventions, and local system access. A site on a regional ERP instance needs a different extraction path than one already integrated into the group system.",
+    friction: "An open-ended request ('please send your energy data') instead of a fixed-field template, which guarantees the next stage becomes cleanup."
+  },
+  {
+    title: "Validation",
+    body: "The stage where the well-documented failures live: unit mismatches, missing fields, stale figures carried over, and no clear owner to resolve a flagged discrepancy. A real validation pass checks completeness, internal consistency against production volume, and plausibility versus the prior period.",
+    friction: "See the Scope 3 spotlight below. This is where Categories 1 and 4 specifically break down."
+  },
+  {
+    title: "Consolidation",
+    body: "Aggregation from site to entity to group, following the boundary set in Stage 1. A divested or acquired site mid-year needs consistent handling, and so does a site whose production mix shifts which material topics apply to it.",
+    good: "A configurable roll-up logic that doesn't need to be rebuilt by hand every time the site portfolio changes."
+  },
+  {
+    title: "Audit trail",
+    body: "Every datapoint traceable back to its site, system, approver, and date. Most manual processes lose this quietly: by the time a number has passed through three spreadsheets, the chain back to its origin is gone. Under CSRD's mandatory external assurance, this is the line between a clean opinion and a qualified one.",
+    friction: "A number that's correct but unexplainable is functionally the same as a number that's wrong, from an auditor's chair."
+  },
+  {
+    title: "Output",
+    body: "One validated, governed dataset formatted for whichever framework needs it: CSRD's ESRS structure, GRI's disclosure format, ISSB's IFRS S1/S2 metrics, a CDP response. Because Stage 2 mapped shared datapoints once, this becomes a formatting exercise, not a re-collection exercise.",
+    good: "The report is the last five percent of the work once the data underneath it is solid."
+  }
+];
+
+let current = 0;
+const nav = document.getElementById('stageNav');
+const panel = document.getElementById('stagePanel');
+const dots = document.getElementById('progressDots');
+
+stages.forEach((s, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'stage-btn';
+  btn.innerHTML = `<span class="sb-num mono">STAGE 0${i+1}</span>${s.title}`;
+  btn.addEventListener('click', () => render(i));
+  nav.appendChild(btn);
+
+  const dot = document.createElement('div');
+  dot.className = 'pdot';
+  dots.appendChild(dot);
+});
+
+function render(i) {
+  current = i;
+  document.querySelectorAll('.stage-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+  document.querySelectorAll('.pdot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+  const s = stages[i];
+  let html = `<h3>0${i+1} &middot; ${s.title}</h3><p>${s.body}</p>`;
+  if (s.friction) html += `<div class="callout friction"><strong>Common failure:</strong> ${s.friction}</div>`;
+  if (s.good) html += `<div class="callout good"><strong>Done well:</strong> ${s.good}</div>`;
+  html += `<div class="stage-arrows">
+    <button class="arrow-btn" id="prevBtn" ${i===0?'disabled':''}>&larr; Previous stage</button>
+    <button class="arrow-btn" id="nextBtn" ${i===stages.length-1?'disabled':''}>Next stage &rarr;</button>
+  </div>`;
+  panel.innerHTML = html;
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  if (prevBtn) prevBtn.addEventListener('click', () => render(i-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => render(i+1));
+}
+
+render(0);
+</script>
+
+</body>
+</html>

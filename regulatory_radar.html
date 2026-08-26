@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regulatory Radar: Manufacturing and Industrial Compliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1a3328; --moss: #2d5a3d; --sage: #4a7c59; --leaf: #6aab7a; --mist: #a8c5b0;
+      --cream: #f4f0e8; --parchment: #ede8dc; --warm-white: #faf8f4; --ink: #1c1c1a;
+      --stone: #6b6b64; --gold: #c9a84c; --gold-light: #e8c97a; --amber: #b0472a; --grey: #8a8a80;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--ink); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; align-items: center;
+      padding: 20px 60px; background: rgba(244,240,232,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--forest); text-decoration: none; }
+
+    .hero { background: var(--forest); padding: 64px 60px 44px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; top: -160px; right: -160px; width: 500px; height: 500px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .eyebrow {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 8px var(--leaf); }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif; font-size: clamp(1.9rem, 3.8vw, 2.7rem);
+      color: var(--cream); line-height: 1.22; margin-bottom: 14px; max-width: 780px;
+    }
+    .hero-sub { font-size: 0.98rem; font-weight: 300; color: var(--mist); line-height: 1.7; max-width: 640px; }
+    .as-of { font-size: 0.74rem; color: rgba(168,197,176,0.7); margin-top: 16px; }
+
+    .wrap { max-width: 1050px; margin: 0 auto; padding: 48px 60px; }
+    .section-head {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 6px;
+    }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--forest); margin-bottom: 20px; }
+
+    .diagram-card { background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 16px; padding: 28px; margin-bottom: 56px; }
+    .diagram-caption { font-size: 0.82rem; color: var(--stone); line-height: 1.6; margin-top: 16px; }
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.76rem; color: var(--stone); }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+    /* Industry selector */
+    .industry-picker {
+      background: var(--forest); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px;
+    }
+    .industry-picker-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    select#industrySelect {
+      width: 100%; padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 1rem;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);
+      color: var(--cream); cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23c9a84c' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
+    }
+    select#industrySelect option { background: var(--forest); color: var(--cream); }
+
+    .industry-focus {
+      background: white; border: 1px solid rgba(201,168,76,0.4); border-left: 4px solid var(--gold);
+      border-radius: 12px; padding: 22px 26px; margin-bottom: 24px; display: none;
+    }
+    .industry-focus.visible { display: block; }
+    .industry-focus-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 10px;
+    }
+    .industry-focus p { font-size: 0.9rem; color: var(--ink); line-height: 1.75; }
+    .industry-focus strong { color: var(--forest); }
+
+    .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .filter-btn {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; padding: 8px 14px; border-radius: 100px;
+      border: 1px solid rgba(74,124,89,0.25); background: white; color: var(--stone); cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--sage); color: var(--forest); }
+    .filter-btn.active { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+
+    .reg-list { display: flex; flex-direction: column; gap: 10px; }
+    .reg-row {
+      background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px; padding: 18px 22px;
+      cursor: pointer; transition: box-shadow 0.2s, opacity 0.2s;
+    }
+    .reg-row:hover { box-shadow: 0 6px 20px rgba(26,51,40,0.08); }
+    .reg-row.hidden { display: none; }
+    .reg-row.dimmed { opacity: 0.45; }
+    .reg-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .reg-name-wrap { display: flex; align-items: center; gap: 10px; }
+    .reg-status-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .reg-name { font-family: 'DM Serif Display', serif; font-size: 1.08rem; color: var(--forest); }
+    .reg-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .reg-status-chip {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; padding: 3px 10px; border-radius: 100px;
+      white-space: nowrap;
+    }
+    .reg-relevance-chip {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; padding: 3px 9px; border-radius: 100px;
+      white-space: nowrap; font-weight: 600;
+    }
+    .reg-func { font-size: 0.76rem; color: var(--stone); white-space: nowrap; }
+    .reg-caret { font-size: 0.9rem; color: var(--sage); transition: transform 0.2s; }
+    .reg-row.open .reg-caret { transform: rotate(90deg); }
+    .reg-summary { font-size: 0.85rem; color: var(--ink); margin-top: 10px; line-height: 1.6; }
+    .reg-detail { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .reg-row.open .reg-detail { max-height: 320px; margin-top: 14px; }
+    .reg-detail-inner {
+      border-top: 1px solid rgba(74,124,89,0.12); padding-top: 12px; font-size: 0.85rem;
+      color: var(--stone); line-height: 1.7;
+    }
+    .reg-detail-inner strong { color: var(--ink); }
+
+    .methodology {
+      background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px;
+      padding: 20px 24px; margin-top: 40px; font-size: 0.8rem; color: var(--stone); line-height: 1.7;
+    }
+    .methodology strong { color: var(--ink); }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.4); text-align: center; padding: 26px; font-size: 0.8rem; }
+
+    @media (max-width: 800px) {
+      nav, .hero, .wrap { padding-left: 24px; padding-right: 24px; }
+      .reg-top { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav><a href="#" class="nav-logo">SA</a></nav>
+
+<section class="hero">
+  <p class="eyebrow"><span class="dot"></span>Regulatory Radar &middot; Manufacturing and Industrial</p>
+  <h1>Ten EU Regulations, Filtered by Industry</h1>
+  <p class="hero-sub">A live-format tracker for the rules actually shaping manufacturing operations in 2026 and beyond. Pick an industry to see which regulations actually apply and why, not a generic list.</p>
+  <p class="as-of">Last reviewed: August 2026. Dates and statuses on regulation like this shift, this page reflects the latest confirmed position at time of writing.</p>
+</section>
+
+<div class="wrap">
+
+  <p class="section-head">The Landscape</p>
+  <h2 class="section-title">Plotted by urgency and disruption</h2>
+
+  <div class="diagram-card">
+    <svg viewBox="0 0 900 420" style="width:100%; height:auto;">
+      <line x1="70" y1="370" x2="870" y2="370" stroke="#6b6b64" stroke-width="1.2"/>
+      <line x1="70" y1="370" x2="70" y2="20" stroke="#6b6b64" stroke-width="1.2"/>
+      <text x="470" y="405" font-size="12" fill="#6b6b64" text-anchor="middle" font-family="DM Sans">Time to binding effect, now toward later</text>
+      <text x="30" y="200" font-size="12" fill="#6b6b64" text-anchor="middle" font-family="DM Sans" transform="rotate(-90 30 200)">Operational disruption</text>
+      <g stroke="#4a7c59" stroke-opacity="0.08">
+        <line x1="70" y1="290" x2="870" y2="290"/>
+        <line x1="70" y1="210" x2="870" y2="210"/>
+        <line x1="70" y1="130" x2="870" y2="130"/>
+        <line x1="70" y1="50" x2="870" y2="50"/>
+        <line x1="270" y1="20" x2="270" y2="370"/>
+        <line x1="470" y1="20" x2="470" y2="370"/>
+        <line x1="670" y1="20" x2="670" y2="370"/>
+      </g>
+      <g font-family="DM Sans">
+        <circle cx="130" cy="65" r="9" fill="#6aab7a"/>
+        <text x="130" y="50" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">CBAM</text>
+
+        <circle cx="150" cy="90" r="9" fill="#6aab7a"/>
+        <text x="150" y="122" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">PPWR</text>
+
+        <circle cx="180" cy="115" r="9" fill="#6aab7a"/>
+        <text x="180" y="103" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">CPR</text>
+
+        <circle cx="230" cy="135" r="9" fill="#6aab7a"/>
+        <text x="230" y="150" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">EED</text>
+
+        <circle cx="270" cy="160" r="9" fill="#6aab7a"/>
+        <text x="270" y="185" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">ESPR</text>
+
+        <circle cx="310" cy="235" r="9" fill="#c9a84c"/>
+        <text x="310" y="223" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">EmpCo</text>
+
+        <circle cx="380" cy="255" r="9" fill="#c9a84c"/>
+        <text x="380" y="280" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">Batteries</text>
+
+        <circle cx="470" cy="140" r="9" fill="#b0472a"/>
+        <text x="470" y="128" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">EUDR</text>
+
+        <circle cx="640" cy="260" r="9" fill="#8a8a80"/>
+        <text x="640" y="285" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">CSDDD</text>
+
+        <circle cx="760" cy="330" r="9" fill="#8a8a80"/>
+        <text x="760" y="320" font-size="11" text-anchor="middle" fill="#1c1c1a" font-weight="600">Green Claims Dir.</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#6aab7a"></span>Live now</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#c9a84c"></span>Applying soon</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#b0472a"></span>Delayed, watch closely</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#8a8a80"></span>Long horizon or stalled</div>
+    </div>
+    <p class="diagram-caption">Position is illustrative, not a precise index. CBAM, PPWR, CPR, EED, and ESPR are already live and already disruptive. EUDR has been delayed twice, worth tracking rather than trusting the date. CSDDD's direct application is years out, but its supply chain pass through effect is closer than the date suggests.</p>
+  </div>
+
+  <p class="section-head">Filter by Industry</p>
+  <h2 class="section-title">Which of these actually apply to you</h2>
+
+  <div class="industry-picker">
+    <p class="industry-picker-label">View relevance for</p>
+    <select id="industrySelect">
+      <option value="all">All industries, unfiltered</option>
+      <option value="steel">Steel &amp; Metals</option>
+      <option value="auto">Automotive &amp; Auto Parts</option>
+      <option value="chemicals">Chemicals</option>
+      <option value="packaging">Packaging &amp; Containers</option>
+      <option value="machinery">Machinery &amp; Industrial Equipment</option>
+      <option value="electronics">Electronics &amp; Semiconductors</option>
+      <option value="food">Food &amp; Beverage Manufacturing</option>
+      <option value="building">Building Materials &amp; Construction Products</option>
+    </select>
+  </div>
+
+  <div class="industry-focus" id="industryFocus">
+    <p class="industry-focus-label">Where to actually focus</p>
+    <p id="industryFocusText"></p>
+  </div>
+
+  <div class="filter-row" id="filterRow"></div>
+  <div class="reg-list" id="regList"></div>
+
+  <div class="methodology">
+    <strong>Sources and methodology note:</strong> Compiled from EU Official Journal texts, European Commission implementation pages, and current legal and compliance analysis (DEHSt, EY, ICAP, Consilium, Hogan Lovells, Anthesis, Assent, Coolset, CIRS Group, AEM, and others), current as of August 2026. Industry relevance ratings reflect each regulation's own defined legal scope (named CBAM sectors, EUDR commodities, CPR and ESPR priority product categories) cross-referenced with sector-specific compliance guidance, not a formal scoring model. Steel, Automotive, Chemicals, Packaging, Machinery, Food & Beverage, and Building Materials entries are based on dedicated industry-specific research. Electronics is the one industry where a real gap remains: RoHS and WEEE, arguably the two most consequential regulations for that sector day to day, are not among the 10 tracked here and would need to be added for this filter to be genuinely complete for that industry. Status and dates on several regulations, particularly EUDR and CSDDD, have shifted more than once and may shift again. This is a general tracking framework, not advice specific to any employer or product scope.
+  </div>
+
+</div>
+
+<footer><p>&copy; 2026 Shivam Asthana</p></footer>
+
+<script>
+const statusColors = {
+  live: { bg: 'rgba(106,171,122,0.12)', text: '#2d5a3d', dot: '#6aab7a' },
+  soon: { bg: 'rgba(201,168,76,0.15)', text: '#8a6a1f', dot: '#c9a84c' },
+  delayed: { bg: 'rgba(176,71,42,0.1)', text: '#8a3820', dot: '#b0472a' },
+  long: { bg: 'rgba(138,138,128,0.12)', text: '#5a5a52', dot: '#8a8a80' }
+};
+
+const relevanceColors = {
+  high: { bg: 'rgba(106,171,122,0.15)', text: '#2d5a3d', label: 'CRITICAL' },
+  medium: { bg: 'rgba(201,168,76,0.18)', text: '#8a6a1f', label: 'RELEVANT' },
+  low: { bg: 'rgba(138,138,128,0.15)', text: '#5a5a52', label: 'MINOR' },
+  none: { bg: 'rgba(138,138,128,0.08)', text: '#8a8a80', label: 'NOT TYPICAL' }
+};
+
+const regs = [
+  {
+    id: "cbam", name: "CBAM", fullName: "Carbon Border Adjustment Mechanism",
+    status: "live", statusLabel: "LIVE", func: "Trade &amp; Customs, Procurement",
+    applies: "Definitive regime since 1 Jan 2026",
+    summary: "Import declarations for steel, aluminium, cement, fertilisers, hydrogen, and electricity now carry a real carbon cost liability, even though certificates are not purchased until 2027.",
+    detail: "Importers above the 50 tonne threshold need Authorised CBAM Declarant status. Emissions must be reported at the individual production installation level. Without supplier specific data, conservative default values apply. Named sectors only: iron and steel, aluminium, cement, fertilisers, hydrogen, electricity. A proposal to expand to roughly 180 downstream products (auto parts, machinery, household goods with embedded steel or aluminium) is in play for 2028.",
+    industry: {
+      steel: { level: "high", note: "The sector CBAM was built around. Dual data prep now required: CBAM reporting to customs, plus ESPR Digital Product Passport documentation in parallel. Ferrous scrap is CBAM exempt, a real advantage for EAF producers." },
+      auto: { level: "high", note: "Steel and aluminium in vehicle frames, panels, and battery casings carry embedded CBAM cost today. The proposed 2028 downstream expansion would pull auto parts in directly." },
+      chemicals: { level: "high", note: "Fertilisers are a named CBAM sector. Any chemicals producer importing or exporting fertiliser inputs is directly in scope." },
+      packaging: { level: "low", note: "Only relevant at meaningful volume for metal cans or aluminium packaging formats." },
+      machinery: { level: "high", note: "The Commission's December 2025 expansion proposal explicitly names machinery and industrial equipment as a target downstream category, with steel and aluminium averaging 79% of content by value in the products under consideration. Certificate obligations would begin January 2028 if adopted." },
+      electronics: { level: "low", note: "Currently outside CBAM's six named sectors and not named in the proposed downstream expansion, which focuses on steel and aluminium heavy goods." },
+      food: { level: "none", note: "Not a CBAM sector. No direct exposure." },
+      building: { level: "high", note: "Cement is a named CBAM sector, one of the most exposed in the entire mechanism." }
+    }
+  },
+  {
+    id: "ppwr", name: "PPWR", fullName: "Packaging and Packaging Waste Regulation",
+    status: "live", statusLabel: "LIVE", func: "Product Design, Packaging, Procurement",
+    applies: "Applies from 12 Aug 2026",
+    summary: "Every unique packaging type now needs a Declaration of Conformity and technical file. PFAS limits on food contact packaging are already binding.",
+    detail: "Applies to all packaging placed on the EU market regardless of material or sector. Substances of Concern definition pulls in the REACH SVHC list, the POPs list, and CLP Annex VI hazard classifications, roughly 3,000+ entries combined. The 2030 wave, recycled content quotas and recyclability grades, is the one that will force material and supplier changes.",
+    industry: {
+      steel: { level: "low", note: "Only relevant if the company also produces or uses metal packaging or containers." },
+      auto: { level: "low", note: "Minor relevance, mostly for component and parts packaging rather than the vehicle itself." },
+      chemicals: { level: "medium", note: "The Substances of Concern definition directly pulls in REACH SVHC and CLP hazard data that chemicals producers already track, and chemicals often end up as inputs into regulated packaging materials." },
+      packaging: { level: "high", note: "This regulation was essentially written for this industry. Every SKU variant now needs its own Declaration of Conformity." },
+      machinery: { level: "low", note: "Relevant mainly for equipment packaging and shipping materials, not core product." },
+      electronics: { level: "medium", note: "Product packaging for consumer and industrial electronics falls fully in scope, including PFAS and substances of concern rules." },
+      food: { level: "high", note: "Food contact packaging is the first, hardest deadline in PPWR. The PFAS ban hits baking paper, takeaway containers, and barrier films directly, no grace period." },
+      building: { level: "none", note: "Construction products themselves are governed by CPR, not PPWR, though packaging for building products still falls under PPWR." }
+    }
+  },
+  {
+    id: "cpr", name: "CPR", fullName: "Construction Products Regulation (revised)",
+    status: "live", statusLabel: "LIVE, PHASED", func: "Product Design, Compliance",
+    applies: "Applies from 8 Jan 2026 for priority categories",
+    summary: "Concrete, steel, and insulation manufacturers must now declare Global Warming Potential as part of CE marking, not as a voluntary add on.",
+    detail: "Regulation (EU) 2024/3110 entered into force 7 Jan 2025, applying from 8 Jan 2026 for products covered by updated harmonised standards. GWP declaration (per EN 15804) is now part of the mandatory Declaration of Performance for priority categories. Scope expands to 13 environmental indicators by 2030 and all 19 by 2032. Runs on a parallel logic to ESPR but is the more specific, binding instrument for construction products.",
+    industry: {
+      steel: { level: "medium", note: "Steel is one of the CPR's priority categories when sold into construction applications, meaning GWP declaration is already mandatory for structural and reinforcing steel." },
+      auto: { level: "none", note: "Not applicable, CPR covers products permanently incorporated into buildings and civil works." },
+      chemicals: { level: "medium", note: "Adhesives and construction chemicals are named as additional priority categories under CPR's phased rollout." },
+      packaging: { level: "none", note: "Not applicable." },
+      machinery: { level: "low", note: "Relevant only where equipment qualifies as a prefabricated construction system or kit." },
+      electronics: { level: "none", note: "Not applicable." },
+      food: { level: "none", note: "Not applicable." },
+      building: { level: "high", note: "This is the sector's defining regulation. Concrete, steel, and insulation lead the priority list, with GWP declaration already mandatory and full lifecycle reporting phasing in through 2032." }
+    }
+  },
+  {
+    id: "eed", name: "EED", fullName: "Energy Efficiency Directive (recast)",
+    status: "live", statusLabel: "LIVE, TRANSPOSED", func: "Operations, Facilities",
+    applies: "Audits by 11 Oct 2026, energy management systems by 11 Oct 2027",
+    summary: "Large energy users face mandatory energy audits and, for the largest consumers, a certified energy management system such as ISO 50001.",
+    detail: "Companies averaging over 85 TJ (23.6 GWh) annual energy consumption need a certified energy or environmental management system by October 2027. Companies over 10 TJ (2.8 GWh) need a first energy audit by October 2026. Applies by energy consumption threshold, not by sector, so it hits whichever industries run energy intensive facilities.",
+    industry: {
+      steel: { level: "high", note: "Steel production is one of the most energy intensive processes in manufacturing. Continued receipt of free ETS allowances is now conditional on complying with energy audit recommendations, a 25 percent allowance cut applies for non-compliance." },
+      auto: { level: "medium", note: "Large assembly and stamping plants can cross the audit and EnMS thresholds, though the sector is less energy intensive per unit than primary materials production." },
+      chemicals: { level: "high", note: "Chemicals processing is consistently among the most energy intensive manufacturing sectors, making the EnMS threshold a near certainty for large sites." },
+      packaging: { level: "low", note: "Relevant only for large-scale converting or extrusion operations that cross the consumption thresholds." },
+      machinery: { level: "medium", note: "Applies directly to a manufacturer's own energy-intensive production facilities, separate from any product-level efficiency requirements." },
+      electronics: { level: "medium", note: "Semiconductor fabrication is highly energy intensive and frequently crosses EnMS thresholds. A dedicated data centre energy efficiency package is also expected within 2026." },
+      food: { level: "low", note: "Relevant mainly for large-scale processing and cold chain operations with high energy draw." },
+      building: { level: "medium", note: "Cement and other building material production is energy intensive, and EED interacts with EPBD requirements for the buildings these materials go into." }
+    }
+  },
+  {
+    id: "espr", name: "ESPR", fullName: "Ecodesign for Sustainable Products Regulation",
+    status: "live", statusLabel: "LIVE FRAMEWORK, PHASED", func: "Product Design",
+    applies: "Textile destruction ban live since 19 Jul 2026, iron and steel delegated act expected within 2026",
+    summary: "A framework regulation that adds binding product rules category by category. The Digital Product Passport requirement is the one with real data architecture implications.",
+    detail: "Unlike a regulation with one applicability date, ESPR bites gradually as the Commission adopts delegated acts per product category. Iron and steel is expected to get its delegated act within 2026, making it one of the first heavy industry categories covered.",
+    industry: {
+      steel: { level: "high", note: "Iron and steel are explicitly prioritised in the ESPR working plan, with a delegated act indicatively expected within 2026, ahead of most other product categories." },
+      auto: { level: "medium", note: "Not yet a first-wave category, but the battery passport under the Batteries Regulation is explicitly framed as pioneering the DPP approach ESPR will extend more broadly." },
+      chemicals: { level: "medium", note: "Chemicals feed into most prioritised ESPR product categories as material inputs, meaning traceability obligations flow upstream even before chemicals face direct product rules." },
+      packaging: { level: "medium", note: "Shares its Substances of Concern definition directly with PPWR, so packaging materials are affected by both regulations using the same underlying data." },
+      machinery: { level: "medium", note: "Durability, reparability, and spare parts availability requirements are a natural fit for industrial equipment as ESPR's category list expands." },
+      electronics: { level: "medium", note: "Electronics and ICT are confirmed priority categories, but Digital Product Passport obligations are not early-wave here: phased in 2028 to 2029, with mobile phones and tablets not covered until 2030. Further out than steel or textiles." },
+      food: { level: "low", note: "Food products are not a current or announced ESPR priority category." },
+      building: { level: "medium", note: "Conceptually aligned with CPR, though CPR remains the more specific, binding instrument for this sector." }
+    }
+  },
+  {
+    id: "empco", name: "EmpCo", fullName: "Empowering Consumers for the Green Transition Directive",
+    status: "soon", statusLabel: "APPLYING 27 SEP 2026", func: "Marketing, Legal, Sustainability Communications",
+    applies: "Applies from 27 Sep 2026",
+    summary: "The companion law to the stalled Green Claims Directive. Bans generic environmental claims and offset based climate neutral labels regardless of what happens to Green Claims.",
+    detail: "Independently bans vague terms like environmentally friendly without evidence, and bans climate neutral claims based purely on offsets. Applies across all sectors that make consumer-facing environmental claims.",
+    industry: {
+      steel: { level: "low", note: "Relevant mainly for B2B green steel marketing claims, less exposure than consumer-facing sectors." },
+      auto: { level: "medium", note: "EV and sustainability marketing claims across the automotive sector face direct scrutiny under this rule." },
+      chemicals: { level: "low", note: "Mostly a B2B sector, lower direct consumer claims exposure than FMCG categories." },
+      packaging: { level: "medium", note: "Recyclable and sustainable packaging claims, common on consumer packaging, are directly in scope." },
+      machinery: { level: "low", note: "Limited consumer-facing claims exposure for industrial equipment." },
+      electronics: { level: "medium", note: "Consumer electronics marketing frequently uses environmental claims now subject to substantiation requirements." },
+      food: { level: "high", note: "Natural, sustainable, and climate neutral claims are common on food and beverage packaging and marketing, placing this sector squarely in scope." },
+      building: { level: "low", note: "Mostly a B2B sector with lower direct consumer claims exposure." }
+    }
+  },
+  {
+    id: "batteries", name: "Batteries Regulation", fullName: "EU Batteries Regulation",
+    status: "soon", statusLabel: "PHASED, ACTIVE NOW", func: "Product Design, Compliance",
+    applies: "Carbon footprint declaration expanded 18 Feb 2026, labelling Aug 2026, passport Feb 2027, due diligence Aug 2027",
+    summary: "Relevant for any manufacturer whose products contain industrial or EV batteries, not just battery makers themselves.",
+    detail: "Due diligence obligations were pushed from 2025 to August 2027, applying mainly to operators above 40 million euro turnover. The Digital Battery Passport, live from February 2027, is one of the first real world tests of the Digital Product Passport concept ESPR will extend elsewhere.",
+    industry: {
+      steel: { level: "low", note: "Relevant only if producing battery casings or structural battery components." },
+      auto: { level: "high", note: "EV and industrial vehicle batteries are directly covered. Due diligence guidelines are being aligned with CSDDD guidance to reduce duplicate burden." },
+      chemicals: { level: "medium", note: "Battery chemistry material suppliers, particularly for cathode and electrolyte inputs, face upstream due diligence pass-through." },
+      packaging: { level: "none", note: "Not applicable." },
+      machinery: { level: "medium", note: "Increasingly relevant for battery-powered material handling and industrial equipment." },
+      electronics: { level: "high", note: "Portable and industrial batteries embedded in electronics products are directly covered by carbon footprint and labelling requirements." },
+      food: { level: "none", note: "Not applicable." },
+      building: { level: "none", note: "Not applicable." }
+    }
+  },
+  {
+    id: "eudr", name: "EUDR", fullName: "EU Deforestation Regulation",
+    status: "delayed", statusLabel: "DELAYED TWICE, WATCH CLOSELY", func: "Procurement, Supply Chain",
+    applies: "Large and medium operators from 30 Dec 2026, small and micro from 30 Jun 2027",
+    summary: "Geolocation level due diligence for cattle, cocoa, coffee, palm oil, rubber, soy, wood, and derived products. Delayed from the original 2024 date, then 2025, now 2026.",
+    detail: "A simplification package published in May 2026 confirmed no further postponement and reduced compliance costs by an estimated 75 percent while keeping core due diligence obligations intact. Applies strictly to the seven named commodities and their derivatives, not manufacturing broadly.",
+    industry: {
+      steel: { level: "none", note: "Not a covered commodity. No direct exposure." },
+      auto: { level: "medium", note: "Natural rubber, used in tyres, is one of the seven EUDR commodities, creating exposure that is easy to overlook." },
+      chemicals: { level: "low", note: "Relevant only for chemicals derived from covered commodities, such as certain bio-based inputs." },
+      packaging: { level: "medium", note: "Paper and cardboard packaging made from wood fibre falls under both EUDR and PPWR simultaneously, the same physical box regulated by two different laws for two different reasons." },
+      machinery: { level: "none", note: "Not a covered commodity for most industrial equipment." },
+      electronics: { level: "none", note: "Not a covered commodity." },
+      food: { level: "high", note: "Cocoa, coffee, palm oil, and soy are core food and beverage inputs. This is one of the most consequential regulations for the sector, with plot-level geolocation traceability required." },
+      building: { level: "low", note: "Relevant only where wood-based construction materials are sourced from covered supply chains." }
+    }
+  },
+  {
+    id: "csddd", name: "CSDDD", fullName: "Corporate Sustainability Due Diligence Directive, post Omnibus",
+    status: "long", statusLabel: "AMENDED, LONG APPLICATION HORIZON", func: "Procurement, Legal, Contracts",
+    applies: "Amendments in force since 18 Mar 2026, application from Jul 2029 for in-scope companies",
+    summary: "Direct scope narrowed to a few thousand giants. For everyone else, the real exposure is contractual pass-through from customers who are in scope, well before 2029.",
+    detail: "Due diligence effort concentrated on tier one suppliers means a company selling directly to a large in-scope customer becomes the primary point of contact for that customer's due diligence process, not a distant afterthought. See the full article on the Manufacturing sector page.",
+    industry: {
+      steel: { level: "medium", note: "Raw material sourcing, iron ore, scrap, alloying metals, faces due diligence pass-through from large downstream customers." },
+      auto: { level: "high", note: "Critical minerals sourcing, lithium, cobalt, nickel, graphite, is a primary due diligence focus, compounded by parallel battery due diligence obligations." },
+      chemicals: { level: "medium", note: "Hazardous substance and feedstock sourcing chains face due diligence scrutiny from large industrial customers." },
+      packaging: { level: "low", note: "Lower direct exposure unless supplying large in-scope customers with complex material sourcing." },
+      machinery: { level: "medium", note: "Multi-tier component supply chains create meaningful pass-through exposure from large OEM customers." },
+      electronics: { level: "high", note: "Conflict minerals and complex multi-tier electronics supply chains have long been a due diligence focus area, now reinforced by CSDDD." },
+      food: { level: "medium", note: "Agricultural supply chain due diligence pass-through from large retail and food service customers." },
+      building: { level: "low", note: "Lower direct exposure relative to sectors with more complex global supply chains." }
+    }
+  },
+  {
+    id: "greenclaims", name: "Green Claims Directive", fullName: "Green Claims Directive (proposal)",
+    status: "long", statusLabel: "STALLED, STATUS UNRESOLVED", func: "Marketing, Legal",
+    applies: "Legislative process paused since June 2025, not formally withdrawn",
+    summary: "The Commission signalled intent to withdraw this proposal, then said it had not formally done so. As of mid 2026, no trilogue has resumed and no revival date exists.",
+    detail: "Worth tracking specifically because of what it is not: it is not dead, and reviving it would not need to start from zero. EmpCo, listed separately above, already covers the most consequential claims restrictions independent of what happens here.",
+    industry: {
+      steel: { level: "low", note: "Lower relevance, mostly a B2C consumer claims instrument." },
+      auto: { level: "medium", note: "Would have added formal verification requirements for EV and sustainability marketing claims if adopted." },
+      chemicals: { level: "low", note: "Lower relevance for a predominantly B2B sector." },
+      packaging: { level: "medium", note: "Would have added verification requirements for recyclability and sustainability claims on packaging." },
+      machinery: { level: "low", note: "Lower relevance for a predominantly B2B sector." },
+      electronics: { level: "medium", note: "Would have affected consumer electronics environmental marketing claims directly." },
+      food: { level: "medium", note: "Would have added formal verification requirements for natural and sustainable claims common in food marketing." },
+      building: { level: "low", note: "Lower relevance for a predominantly B2B sector." }
+    }
+  }
+];
+
+const industryFocusText = {
+  all: "",
+  steel: "Three regulations do the real work here: <strong>CBAM</strong> because steel is one of six named sectors, <strong>ESPR</strong> because iron and steel are prioritised for an early delegated act, and <strong>EED</strong> because energy audit compliance now directly affects free ETS allowance retention. <strong>CPR</strong> matters too if selling into construction.",
+  auto: "The core triangle is <strong>Batteries Regulation</strong>, <strong>CBAM</strong>, and <strong>CSDDD</strong>: batteries for carbon footprint and passport obligations, CBAM for embedded steel and aluminium, CSDDD for critical minerals sourcing. Don't overlook <strong>EUDR</strong>, natural rubber in tyres is a covered commodity most teams miss.",
+  chemicals: "<strong>CBAM</strong> applies directly through the fertilisers sector, and <strong>EED</strong> is close to unavoidable given how energy intensive chemicals processing is. The less obvious one is <strong>PPWR</strong>, its Substances of Concern definition pulls straight from the REACH SVHC list this sector already tracks.",
+  packaging: "<strong>PPWR</strong> is the defining regulation for this industry, full stop. The pairing worth watching is with <strong>EUDR</strong>: paper and cardboard packaging is regulated by both laws simultaneously, the same box counted as packaging under one and as a wood product under the other.",
+  machinery: "Start with your own operations under <strong>EED</strong>, energy audits and management systems apply to the facility, not just the product. <strong>CBAM</strong> matters more than it first appears: the Commission's own December 2025 proposal names machinery and industrial equipment directly for a 2028 downstream expansion. Watch <strong>ESPR</strong> for coming durability and reparability rules.",
+  electronics: "Be aware this radar has a real gap for this sector: <strong>RoHS</strong> and <strong>WEEE</strong>, the two regulations that actually govern electronics substance restrictions and e-waste today, aren't among the 10 tracked here yet. Of what is tracked, <strong>Batteries Regulation</strong> is the most immediate. <strong>ESPR</strong> is a confirmed priority category but its Digital Product Passport obligations don't bite until 2028 to 2030, later than steel or textiles. <strong>CSDDD</strong> matters for conflict minerals sourcing.",
+  food: "<strong>PPWR</strong> and <strong>EUDR</strong> converge hard on this sector: PPWR for food contact packaging PFAS limits, EUDR for cocoa, coffee, palm oil, and soy. Add <strong>EmpCo</strong> for marketing claims scrutiny on natural and sustainable labelling.",
+  building: "<strong>CPR</strong> is written for this sector specifically, GWP declaration for concrete, steel, and insulation is already mandatory. <strong>CBAM</strong> layers on top through the cement sector. The two regulations run on parallel but distinct logic, and both need attention."
+};
+
+const filters = ["All", "Live now", "Applying soon", "Delayed", "Long horizon"];
+const filterMap = { "Live now": "live", "Applying soon": "soon", "Delayed": "delayed", "Long horizon": "long" };
+
+const filterRow = document.getElementById('filterRow');
+const regList = document.getElementById('regList');
+const industrySelect = document.getElementById('industrySelect');
+const industryFocus = document.getElementById('industryFocus');
+const industryFocusTextEl = document.getElementById('industryFocusText');
+let activeFilter = "All";
+let activeIndustry = "all";
+
+filters.forEach(f => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (f === 'All' ? ' active' : '');
+  btn.textContent = f;
+  btn.addEventListener('click', () => {
+    activeFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderList();
+  });
+  filterRow.appendChild(btn);
+});
+
+industrySelect.addEventListener('change', () => {
+  activeIndustry = industrySelect.value;
+  if (activeIndustry === 'all') {
+    industryFocus.classList.remove('visible');
+  } else {
+    industryFocusTextEl.innerHTML = industryFocusText[activeIndustry];
+    industryFocus.classList.add('visible');
+  }
+  renderList();
+});
+
+function renderList() {
+  regList.innerHTML = '';
+  let sorted = [...regs];
+  const levelRank = { high: 0, medium: 1, low: 2, none: 3 };
+  if (activeIndustry !== 'all') {
+    sorted.sort((a, b) => levelRank[a.industry[activeIndustry].level] - levelRank[b.industry[activeIndustry].level]);
+  }
+  sorted.forEach(r => {
+    const statusMatch = activeFilter === 'All' || r.status === filterMap[activeFilter];
+    const row = document.createElement('div');
+    let dimmed = false;
+    if (activeIndustry !== 'all') {
+      const lvl = r.industry[activeIndustry].level;
+      if (lvl === 'low' || lvl === 'none') dimmed = true;
+    }
+    row.className = 'reg-row' + (statusMatch ? '' : ' hidden') + (dimmed ? ' dimmed' : '');
+    const c = statusColors[r.status];
+
+    let relevanceChip = '';
+    let summaryText = r.summary;
+    if (activeIndustry !== 'all') {
+      const ind = r.industry[activeIndustry];
+      const rc = relevanceColors[ind.level];
+      relevanceChip = `<span class="reg-relevance-chip" style="background:${rc.bg};color:${rc.text}">${rc.label}</span>`;
+      summaryText = ind.note;
+    }
+
+    row.innerHTML = `
+      <div class="reg-top">
+        <div class="reg-name-wrap">
+          <span class="reg-status-dot" style="background:${c.dot}"></span>
+          <span class="reg-name">${r.name}</span>
+        </div>
+        <div class="reg-meta">
+          ${relevanceChip}
+          <span class="reg-status-chip" style="background:${c.bg};color:${c.text}">${r.statusLabel}</span>
+          <span class="reg-func">${r.func}</span>
+          <span class="reg-caret">&#8250;</span>
+        </div>
+      </div>
+      <p class="reg-summary">${summaryText}</p>
+      <div class="reg-detail"><div class="reg-detail-inner"><strong>${r.fullName}.</strong> ${r.applies}. ${r.detail}</div></div>
+    `;
+    row.addEventListener('click', () => row.classList.toggle('open'));
+    regList.appendChild(row);
+  });
+}
+
+renderList();
+</script>
+
+</body>
+</html>

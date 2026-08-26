@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carbon Footprint Calculator: A Single-Factor Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1a3328; --moss: #2d5a3d; --sage: #4a7c59; --leaf: #6aab7a; --mist: #a8c5b0;
+      --cream: #f4f0e8; --parchment: #ede8dc; --warm-white: #faf8f4; --ink: #1c1c1a;
+      --stone: #6b6b64; --gold: #c9a84c; --gold-light: #e8c97a; --amber: #b0472a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--ink); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100; display: flex; align-items: center;
+      padding: 20px 60px; background: rgba(244,240,232,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--forest); text-decoration: none; }
+    .nav-back { color: var(--sage); text-decoration: none; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-left: auto; }
+
+    .hero { background: var(--forest); padding: 64px 60px 44px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -160px; right: -160px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); }
+    .eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 8px var(--leaf); }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.9rem, 3.8vw, 2.7rem); color: var(--cream); line-height: 1.22; margin-bottom: 14px; max-width: 780px; }
+    .hero-sub { font-size: 0.98rem; font-weight: 300; color: var(--mist); line-height: 1.7; max-width: 660px; }
+
+    .wrap { max-width: 1050px; margin: 0 auto; padding: 48px 60px; }
+    .section-head { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); margin-bottom: 6px; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--forest); margin-bottom: 20px; }
+
+    /* Factor disclosure card */
+    .scope-context-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .scope-context-card { border-radius: 14px; padding: 22px 24px; border: 1px solid rgba(74,124,89,0.15); }
+    .scope-context-card.muted { background: var(--parchment); }
+    .scope-context-card.active { background: var(--forest); border-color: var(--forest); }
+    .scope-context-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; color: var(--sage); display: block; margin-bottom: 10px; }
+    .scope-context-card.active .scope-context-tag { color: var(--gold); }
+    .scope-context-card h4 { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--forest); margin-bottom: 10px; }
+    .scope-context-card.active h4 { color: var(--cream); }
+    .scope-context-card p { font-size: 0.82rem; color: var(--ink); line-height: 1.6; margin-bottom: 10px; }
+    .scope-context-card.active p { color: var(--mist); }
+    .scope-context-card a { color: var(--sage); }
+    .scope-context-card.active a { color: var(--gold-light); }
+    .scope-context-note { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--stone) !important; margin-bottom: 0 !important; }
+    .scope-context-card.active .scope-context-note { color: var(--gold-light) !important; font-weight: 600; }
+
+    .factor-card { background: var(--forest); border-radius: 16px; padding: 28px 32px; margin-bottom: 40px; display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+    .factor-num { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: var(--leaf); line-height: 1; white-space: nowrap; }
+    .factor-text { flex: 1; min-width: 240px; }
+    .factor-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .factor-desc { font-size: 0.88rem; color: var(--mist); line-height: 1.7; }
+
+    /* Calculator */
+    .calc-card { background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 16px; padding: 32px 36px; margin-bottom: 24px; }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+    .input-group { margin-bottom: 26px; }
+    .input-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+    .input-label-text { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
+    .input-val { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 500; color: var(--forest); }
+    .slider { width: 100%; height: 4px; border-radius: 2px; background: var(--parchment); outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; margin-bottom: 6px; }
+    .slider::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--forest); border: 3px solid var(--leaf); cursor: pointer; }
+    .slider-range { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--stone); font-family: 'JetBrains Mono', monospace; }
+
+    .output-stack { display: flex; flex-direction: column; gap: 14px; }
+    .output-card { background: var(--parchment); border-radius: 12px; padding: 20px 22px; }
+    .output-card.primary { background: var(--forest); }
+    .output-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; }
+    .output-card.primary .output-label { color: var(--gold); }
+    .output-num { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--forest); line-height: 1; }
+    .output-card.primary .output-num { color: var(--cream); font-size: 2.3rem; }
+    .output-sub { font-size: 0.78rem; color: var(--stone); margin-top: 6px; line-height: 1.5; }
+    .output-card.primary .output-sub { color: var(--mist); }
+
+    /* Limitation callout */
+    .limit-card { background: white; border: 1px solid rgba(176,71,42,0.2); border-left: 4px solid var(--amber); border-radius: 12px; padding: 24px 28px; margin-bottom: 40px; }
+    .limit-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; }
+    .limit-card p { font-size: 0.9rem; color: var(--ink); line-height: 1.75; margin-bottom: 12px; }
+    .limit-card p:last-child { margin-bottom: 0; }
+    .limit-card strong { color: var(--forest); }
+
+    .revision-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85rem; }
+    .revision-table th { text-align: left; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sage); padding: 8px 12px; border-bottom: 2px solid rgba(74,124,89,0.2); }
+    .revision-table td { padding: 8px 12px; border-bottom: 1px solid rgba(74,124,89,0.1); color: var(--ink); }
+    .revision-table td.mono { font-family: 'JetBrains Mono', monospace; }
+
+    .closing p { font-size: 0.98rem; line-height: 1.8; color: #2e2e2a; font-weight: 300; margin-bottom: 16px; }
+    .methodology { background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px; padding: 20px 24px; margin-top: 40px; font-size: 0.8rem; color: var(--stone); line-height: 1.7; }
+    .methodology strong { color: var(--ink); }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.4); text-align: center; padding: 26px; font-size: 0.8rem; }
+
+    @media (max-width: 800px) {
+      nav, .hero, .wrap { padding-left: 24px; padding-right: 24px; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .factor-card { flex-direction: column; align-items: flex-start; }
+      .scope-context-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="reporting-track-index.html" class="nav-logo">SA</a>
+  <a href="reporting-track-index.html" class="nav-back">&larr; Corporate Sustainability Reporting</a>
+</nav>
+
+<section class="hero">
+  <p class="eyebrow"><span class="dot"></span>Methodology &middot; Emissions Calculation</p>
+  <h1>A Carbon Footprint Calculator, Built on One Factor on Purpose</h1>
+  <p class="hero-sub">A real Scope 2 inventory needs a different emission factor for every country, sometimes every site. This demo deliberately uses only one, to show the mechanism clearly and to show exactly where a single-factor approach breaks down.</p>
+</section>
+
+<div class="wrap">
+
+  <p class="section-head">Scope, First</p>
+  <h2 class="section-title">Three scopes. Only one of them works this way.</h2>
+  <div class="scope-context-grid">
+    <div class="scope-context-card muted">
+      <span class="scope-context-tag">SCOPE 1</span>
+      <h4>Direct emissions</h4>
+      <p>Needs a different combustion factor per fuel type, natural gas, diesel, petrol. No single number covers it.</p>
+      <p class="scope-context-note">Not calculated here</p>
+    </div>
+    <div class="scope-context-card active">
+      <span class="scope-context-tag">SCOPE 2</span>
+      <h4>Purchased electricity</h4>
+      <p>Consumption &times; grid factor. The one scope where a single factor is methodologically legitimate, not a shortcut.</p>
+      <p class="scope-context-note">This demo</p>
+    </div>
+    <div class="scope-context-card muted">
+      <span class="scope-context-tag">SCOPE 3</span>
+      <h4>Value chain</h4>
+      <p>15 categories, each with its own methodology. Doesn't reduce to a factor at all.</p>
+      <p class="scope-context-note">See the <a href="esg_data_consolidation_methodology.html">consolidation methodology</a></p>
+    </div>
+  </div>
+
+  <p class="section-head">The Factor</p>
+  <h2 class="section-title">One number, sourced and dated</h2>
+
+  <div class="factor-card">
+    <div class="factor-num">344 g<br>CO&#8322;/kWh</div>
+    <div class="factor-text">
+      <p class="factor-label">German grid electricity, 2025</p>
+      <p class="factor-desc">Published by the Umweltbundesamt (German Federal Environment Agency), covering electricity consumed in Germany in 2025. This is a generation-mix figure in CO&#8322; only, not the full CO&#8322;e basket, and not adjusted for Germany's electricity import and export balance. A real Scope 2 disclosure would need to state which variant it uses.</p>
+    </div>
+  </div>
+
+  <p class="section-head">Try It</p>
+  <h2 class="section-title">Electricity use across the composite company</h2>
+
+  <div class="calc-card">
+    <div class="calc-grid">
+      <div>
+        <div class="input-group">
+          <div class="input-label">
+            <span class="input-label-text">Number of sites</span>
+            <span class="input-val" id="v-sites">20</span>
+          </div>
+          <input type="range" class="slider" id="sl-sites" min="1" max="40" step="1" value="20">
+          <div class="slider-range"><span>1</span><span>40</span></div>
+        </div>
+        <div class="input-group">
+          <div class="input-label">
+            <span class="input-label-text">Avg. annual electricity use per site</span>
+            <span class="input-val" id="v-kwh">500,000 kWh</span>
+          </div>
+          <input type="range" class="slider" id="sl-kwh" min="50000" max="3000000" step="10000" value="500000">
+          <div class="slider-range"><span>50,000 kWh</span><span>3,000,000 kWh</span></div>
+        </div>
+        <div class="input-group" style="margin-bottom:0;">
+          <div class="input-label">
+            <span class="input-label-text">Share of sites treated as Germany-factor</span>
+            <span class="input-val" id="v-share">100%</span>
+          </div>
+          <input type="range" class="slider" id="sl-share" min="0" max="100" step="5" value="100">
+          <div class="slider-range"><span>0%</span><span>100%</span></div>
+        </div>
+      </div>
+
+      <div class="output-stack">
+        <div class="output-card">
+          <div class="output-label">Total electricity use</div>
+          <div class="output-num" id="o-kwh">10,000,000 kWh</div>
+          <div class="output-sub">Sites &times; average annual use per site</div>
+        </div>
+        <div class="output-card primary">
+          <div class="output-label">Estimated Scope 2 emissions</div>
+          <div class="output-num" id="o-co2">3,440 t CO&#8322;</div>
+          <div class="output-sub" id="o-co2-sub">Using the single German grid factor across 100% of the sites entered above</div>
+        </div>
+        <div class="output-card">
+          <div class="output-label">Household equivalent</div>
+          <div class="output-num" id="o-hh">~491</div>
+          <div class="output-sub">European households' average annual carbon footprint, illustrative comparison only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="limit-card">
+    <p class="limit-label">Where This Breaks Down, On Purpose</p>
+    <p>The composite company used across this track operates roughly 20 sites across 11 countries. Applying one Germany-specific factor to all of them, as the slider above lets you do, is not a real calculation, it is a demonstration of what happens when a single factor gets stretched further than it should. France's grid, dominated by nuclear power, runs at a small fraction of Germany's carbon intensity per kWh. Poland's, still coal-heavy, runs well above it. A real Scope 2 inventory needs a location-based factor per country at minimum, and ideally a market-based calculation using suppliers' own residual mix data where renewable energy certificates are in play.</p>
+    <p><strong>The honest use of a tool like this:</strong> a fast, defensible order-of-magnitude estimate for a single-country operation, or a first-pass sanity check before building the real multi-factor version. Not a substitute for one.</p>
+  </div>
+
+  <p class="section-head">Why The Factor Itself Moves</p>
+  <h2 class="section-title">Even the "one number" isn't static</h2>
+  <p style="font-size:0.92rem;color:var(--ink);line-height:1.8;margin-bottom:16px;">The Umweltbundesamt revises prior years as better generation and trade data comes in. The figure this calculator uses for 2025 could itself be revised downward next year, the same way 2024's estimate already was.</p>
+  <table class="revision-table">
+    <thead><tr><th>Year</th><th>First published estimate</th><th>Later revised figure</th></tr></thead>
+    <tbody>
+      <tr><td>2023</td><td class="mono">386 g CO&#8322;/kWh</td><td class="mono">379 g CO&#8322;/kWh</td></tr>
+      <tr><td>2024</td><td class="mono">363 g CO&#8322;/kWh</td><td class="mono">353 g CO&#8322;/kWh</td></tr>
+      <tr><td>2025</td><td class="mono">344 g CO&#8322;/kWh</td><td class="mono">not yet revised</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem;color:var(--stone);line-height:1.7;">Worth building into any real reporting process: a note on which vintage of the factor was used, and a plan to re-check it before the number gets locked into an assured disclosure.</p>
+
+  <div class="closing" style="margin-top:40px;">
+    <p>This calculator does one thing honestly: it shows exactly how consumption times a factor becomes a headline emissions number, and it makes the single biggest simplification, one factor for every site, impossible to miss. The consolidation methodology piece on this site covers what a real multi-site, multi-factor process actually requires.</p>
+  </div>
+
+  <div class="methodology">
+    <strong>Sources and methodology note:</strong> Emission factor from the Umweltbundesamt's "CO&#8322;-Emissionen pro Kilowattstunde Strom" series, 2025 figure (344 g CO&#8322;/kWh), published covering 2025 generation data. This is the "Emissionsfaktor Strommix" figure, not the "Strominlandsverbrauch" variant that additionally accounts for Germany's electricity trade balance, which UBA reports as running a few grams per kWh higher. Household equivalent uses a 7 t CO&#8322;e/year average European household footprint (EEA) for illustrative scale only. The composite company profile is the same one used throughout this track and does not represent a real employer. This tool intentionally applies one national factor across a multi-country profile to demonstrate the limitation, not to model a real inventory.
+  </div>
+
+</div>
+
+<footer><p>&copy; 2026 Shivam Asthana</p></footer>
+
+<script>
+function fN(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+const FACTOR = 0.344; // kg CO2 per kWh
+
+function calc() {
+  const sites = +document.getElementById('sl-sites').value;
+  const kwhPerSite = +document.getElementById('sl-kwh').value;
+  const share = +document.getElementById('sl-share').value;
+
+  document.getElementById('v-sites').textContent = sites;
+  document.getElementById('v-kwh').textContent = fN(kwhPerSite) + ' kWh';
+  document.getElementById('v-share').textContent = share + '%';
+
+  const totalKwh = sites * kwhPerSite;
+  const coveredKwh = totalKwh * (share / 100);
+  const totalCO2kg = coveredKwh * FACTOR;
+  const totalCO2t = totalCO2kg / 1000;
+  const householdEq = Math.round(totalCO2t / 7);
+
+  document.getElementById('o-kwh').textContent = fN(totalKwh) + ' kWh';
+  document.getElementById('o-co2').textContent = fN(totalCO2t) + ' t CO\u2082';
+  document.getElementById('o-hh').textContent = '~' + fN(householdEq);
+  document.getElementById('o-co2-sub').textContent = 'Using the single German grid factor across ' + share + '% of the sites entered above';
+}
+
+['sl-sites', 'sl-kwh', 'sl-share'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+calc();
+</script>
+
+</body>
+</html>

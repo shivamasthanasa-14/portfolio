@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The GHG Protocol: The Accounting System Behind Every Carbon Number</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1a3328; --moss: #2d5a3d; --sage: #4a7c59; --leaf: #6aab7a; --mist: #a8c5b0;
+      --cream: #f4f0e8; --parchment: #ede8dc; --warm-white: #faf8f4; --ink: #1c1c1a;
+      --stone: #6b6b64; --gold: #c9a84c; --gold-light: #e8c97a; --amber: #b0472a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--ink); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; padding: 20px 60px; background: rgba(244,240,232,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(74,124,89,0.15); }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--forest); text-decoration: none; }
+    .nav-back { color: var(--sage); text-decoration: none; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-left: auto; }
+    .article-hero { background: var(--forest); padding: 72px 60px 56px; position: relative; overflow: hidden; }
+    .article-hero::before { content: ''; position: absolute; top: -180px; right: -180px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); }
+    .article-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .article-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 8px var(--leaf); }
+    .article-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.1rem, 4.2vw, 3rem); color: var(--cream); line-height: 1.2; margin-bottom: 16px; max-width: 820px; }
+    .article-sub { font-size: 1rem; font-weight: 300; color: var(--mist); line-height: 1.7; max-width: 680px; }
+    .article-meta { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.78rem; color: rgba(168,197,176,0.7); margin-top: 20px; }
+    .article-body { max-width: 760px; margin: 0 auto; padding: 56px 60px 40px; }
+    .article-body p { font-size: 1rem; line-height: 1.85; color: #2e2e2a; margin-bottom: 20px; font-weight: 300; }
+    .article-body h2 { font-family: 'DM Serif Display', serif; font-size: 1.45rem; color: var(--forest); margin: 44px 0 18px; line-height: 1.3; }
+    .article-body h2:first-of-type { margin-top: 0; }
+    .article-body strong { font-weight: 600; color: var(--ink); }
+    .lede { font-size: 1.1rem; color: var(--ink); }
+    .scope-grid { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+    .scope-item { background: var(--parchment); border-radius: 10px; padding: 18px 20px; }
+    .scope-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--forest); background: rgba(74,124,89,0.12); padding: 3px 10px; border-radius: 100px; margin-bottom: 8px; display: inline-block; }
+    .scope-item h4 { font-family: 'DM Serif Display', serif; font-size: 1.02rem; color: var(--forest); margin-bottom: 6px; }
+    .scope-item p { font-size: 0.85rem; color: var(--ink); line-height: 1.6; margin: 0 0 4px; }
+    .scope-item p.eg { color: var(--stone); font-style: italic; font-size: 0.8rem; }
+    .timeline-wrap { margin: 24px 0; }
+    .tl-row { display: grid; grid-template-columns: 70px 1fr; gap: 18px; padding: 14px 0; border-top: 1px solid rgba(74,124,89,0.12); }
+    .tl-row:first-child { border-top: none; }
+    .tl-date { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 500; color: var(--forest); }
+    .tl-content { font-size: 0.88rem; color: var(--stone); line-height: 1.65; }
+    .tl-content strong { color: var(--ink); }
+    .change-list { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+    .change-item { padding: 14px 0; border-top: 1px solid rgba(74,124,89,0.12); font-size: 0.92rem; line-height: 1.7; color: var(--ink); }
+    .change-item:first-child { border-top: none; }
+    .change-item strong { color: var(--forest); }
+    .pull-quote { font-family: 'DM Serif Display', serif; font-size: 1.25rem; font-style: italic; color: var(--forest); line-height: 1.5; padding: 8px 0 8px 24px; border-left: 3px solid var(--gold); margin: 32px 0; }
+    .methodology { background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px; padding: 20px 24px; margin-top: 40px; font-size: 0.8rem; color: var(--stone); line-height: 1.7; }
+    .article-nav-back { max-width: 760px; margin: 0 auto; padding: 0 60px 60px; }
+    .back-link { color: var(--sage); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+    footer { background: var(--ink); color: rgba(255,255,255,0.4); text-align: center; padding: 26px; font-size: 0.8rem; }
+    @media (max-width: 768px) { nav, .article-hero, .article-body, .article-nav-back { padding-left: 24px; padding-right: 24px; } .tl-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="reporting-track-index.html" class="nav-logo">SA</a>
+  <a href="reporting-track-index.html" class="nav-back">&larr; Corporate Sustainability Reporting</a>
+</nav>
+
+<section class="article-hero">
+  <p class="article-eyebrow"><span class="dot"></span>Frameworks &middot; GHG Protocol</p>
+  <h1>The GHG Protocol: The Accounting System Behind Every Corporate Emissions Number</h1>
+  <p class="article-sub">Before a company can report its emissions under CSRD, ISSB, CDP, or any other framework, it needs a methodology for counting them. That methodology is almost always the GHG Protocol. For the first time since 2011, it is being rewritten.</p>
+  <div class="article-meta"><span>Shivam Asthana</span><span>April 2026</span></div>
+</section>
+
+<div class="article-body">
+  <p class="lede">Many major corporate climate-disclosure and target-setting initiatives, CSRD, ISSB, CDP, SBTi, use, reference, or substantially align with the GHG Protocol's emissions-accounting architecture. If you do not understand how emissions are counted, you cannot meaningfully interpret what any of those disclosures actually say.</p>
+
+  <h2>The three-scope structure</h2>
+  <div class="scope-grid">
+    <div class="scope-item">
+      <span class="scope-tag">SCOPE 1</span>
+      <h4>Direct emissions</h4>
+      <p>Emissions from sources owned or controlled by the company, combustion in boilers, furnaces, vehicles, and industrial processes.</p>
+      <p class="eg">e.g. fuel burned in a company-owned factory or fleet</p>
+    </div>
+    <div class="scope-item">
+      <span class="scope-tag">SCOPE 2</span>
+      <h4>Purchased energy</h4>
+      <p>Indirect emissions from the generation of electricity, heat, or steam the company buys and consumes.</p>
+      <p class="eg">e.g. emissions from the power grid used to run a data centre</p>
+    </div>
+    <div class="scope-item">
+      <span class="scope-tag">SCOPE 3</span>
+      <h4>Value chain emissions</h4>
+      <p>All other indirect emissions across the upstream and downstream value chain, 15 categories in total.</p>
+      <p class="eg">e.g. supplier production, business travel, product use, end-of-life disposal</p>
+    </div>
+  </div>
+  <p>This structure is deceptively simple. Scope 3 is often the largest component of a company's value-chain emissions, particularly in sectors such as automotive, consumer goods, food, and technology. A car manufacturer's biggest emission source is not the factory floor, it is the fuel burned by vehicles after they are sold. A company managing only Scope 1 and 2 may be accounting for a small fraction of its true footprint, the exact share varies significantly by sector and business model.</p>
+
+  <h2>Why it became the global standard</h2>
+  <p>Developed jointly by the World Resources Institute and the World Business Council for Sustainable Development, first published 2004, updated with the Scope 3 Standard in 2011. It achieved dominance not through regulation but adoption: thousands of companies converged on the same framework because the alternative, fragmented, incompatible methodologies, made comparison impossible. CSRD and ESRS require GHG Protocol-aligned accounting. ISSB's IFRS S2 is built on the same scope structure. CDP scores companies using it. SBTi sets targets in terms of it.</p>
+
+  <h2>The standards are now being rewritten</h2>
+  <p>The Corporate Standard has not been updated since 2004. The Scope 3 Standard dates from 2011. In 2025, the GHG Protocol launched a formal revision process across all three standards simultaneously. The timeline below reflects the GHG Protocol's published Standard Development Plan as of late 2025 and is indicative, the process is ongoing and dates may shift as the working groups progress.</p>
+  <div class="timeline-wrap">
+    <div class="tl-row"><span class="tl-date">2025</span><span class="tl-content">Public consultations opened on <strong>Scope 2</strong> and consequential accounting methods. Working groups formed for Corporate Standard and Scope 3.</span></div>
+    <div class="tl-row"><span class="tl-date">2026</span><span class="tl-content">Draft revised standards, Corporate, Scope 2, and Scope 3, scheduled for <strong>public consultation</strong> mid-year.</span></div>
+    <div class="tl-row"><span class="tl-date">2027</span><span class="tl-content"><strong>Final revised standards published.</strong> Current standards remain in effect until transition timelines are confirmed.</span></div>
+    <div class="tl-row"><span class="tl-date">2028</span><span class="tl-content">New guidance on <strong>Actions and Market Instruments</strong>, covering carbon credits, RECs, and decarbonisation project accounting.</span></div>
+  </div>
+
+  <h2>What's actually under revision</h2>
+  <div class="change-list">
+    <div class="change-item"><strong>Scope 2, hourly matching:</strong> the current method allows annual renewable energy certificates. The revision proposes hourly matching by location, closing a loophole letting companies claim clean energy that doesn't correspond to actual consumption timing.</div>
+    <div class="change-item"><strong>Scope 3, data quality:</strong> spend-based estimation is widely used but imprecise. The revision pushes toward activity-based and supplier-specific data, more accurate but harder to obtain.</div>
+    <div class="change-item"><strong>Alignment with ISSB and CSRD:</strong> explicitly harmonising definitions and boundaries with IFRS S2 and ESRS to reduce the interpretive gap.</div>
+    <div class="change-item"><strong>Market instruments:</strong> clearer rules on carbon credits in inventory accounting, addressing the debate over genuine reductions versus offset claims.</div>
+  </div>
+
+  <p class="pull-quote">Companies that have already invested in supplier-level data and granular energy tracking will find the revision represents validation, not disruption.</p>
+
+  <h2>What this means for practitioners</h2>
+  <p>Current standards stay in effect until revised versions are published and adopted by disclosure programs. Nothing changes immediately. But the direction is clear: less interpretive flexibility, stronger data requirements, tighter alignment with mandatory disclosure. Understanding the existing framework well enough to identify where the revisions will bite, Scope 2 matching, Scope 3 data quality, market instrument rules, is the kind of analytical work that adds genuine value ahead of a regulatory shift.</p>
+
+  <div class="methodology"><strong>Sources:</strong> GHG Protocol Corporate Standard (2004), Scope 3 Standard (2011), GHG Protocol Standard Development Plan (December 2025), analysis from Carbon Direct and Terrascope (2025 to 2026).</div>
+</div>
+
+<div class="article-nav-back"><a href="reporting-track-index.html" class="back-link">&larr; Back to Corporate Sustainability Reporting</a></div>
+<footer><p>&copy; 2026 Shivam Asthana</p></footer>
+</body>
+</html>

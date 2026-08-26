@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSDDD After Omnibus | Shivam Asthana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --forest: #1a3328; --moss: #2d5a3d; --sage: #4a7c59; --leaf: #6aab7a; --mist: #a8c5b0;
+      --cream: #f4f0e8; --parchment: #ede8dc; --warm-white: #faf8f4; --ink: #1c1c1a;
+      --stone: #6b6b64; --gold: #c9a84c; --gold-light: #e8c97a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--warm-white); color: var(--ink); overflow-x: hidden; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 60px;
+      background: rgba(244,240,232,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--forest); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--stone); font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--moss); }
+    .nav-back { color: var(--sage) !important; }
+
+    .article-hero { background: var(--forest); padding: 72px 60px 56px; position: relative; overflow: hidden; }
+    .article-hero::before {
+      content: ''; position: absolute; top: -180px; right: -180px; width: 600px; height: 600px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .article-eyebrow {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .article-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 8px var(--leaf); }
+    .status-chip {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; padding: 3px 10px; border-radius: 100px;
+      background: rgba(106,171,122,0.15); color: var(--leaf); border: 1px solid rgba(106,171,122,0.35);
+    }
+    .article-hero h1 {
+      font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 4.4vw, 3.2rem);
+      color: var(--cream); line-height: 1.18; margin-bottom: 18px; max-width: 840px;
+    }
+    .article-sub { font-size: 1.02rem; font-weight: 300; color: var(--mist); line-height: 1.75; max-width: 680px; margin-bottom: 24px; }
+    .article-meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.78rem; color: rgba(168,197,176,0.7); }
+
+    .article-body { max-width: 760px; margin: 0 auto; padding: 64px 60px 40px; }
+    .article-body p { font-size: 1.02rem; line-height: 1.85; color: #2e2e2a; margin-bottom: 22px; font-weight: 300; }
+    .article-body h2 {
+      font-family: 'DM Serif Display', serif; font-size: 1.55rem; color: var(--forest);
+      margin: 48px 0 20px; line-height: 1.3;
+    }
+    .article-body h2:first-of-type { margin-top: 0; }
+    .article-body strong { font-weight: 600; color: var(--ink); }
+    .lede { font-size: 1.15rem; color: var(--ink); font-weight: 400; }
+
+    .obligation-box {
+      background: var(--parchment); border-radius: 14px; padding: 28px 32px; margin: 32px 0;
+      border-left: 4px solid var(--leaf);
+    }
+    .obligation-box-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 16px;
+    }
+    .obligation-item { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid rgba(74,124,89,0.15); }
+    .obligation-item:first-of-type { border-top: none; padding-top: 0; }
+    .obligation-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--moss);
+      white-space: nowrap; padding-top: 2px; min-width: 92px;
+    }
+    .obligation-text { font-size: 0.9rem; color: var(--ink); line-height: 1.6; }
+    .obligation-text strong { color: var(--forest); }
+
+    .timeline-wrap { margin: 32px 0; }
+    .tl-row {
+      display: grid; grid-template-columns: 110px 1fr; gap: 20px; padding: 16px 0;
+      border-top: 1px solid rgba(74,124,89,0.15);
+    }
+    .tl-row:first-of-type { border-top: none; }
+    .tl-date { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 500; color: var(--forest); }
+    .tl-content { font-size: 0.9rem; color: var(--stone); line-height: 1.7; }
+    .tl-content strong { color: var(--ink); font-weight: 600; }
+
+    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+    .ba-col { border-radius: 12px; padding: 22px 24px; }
+    .ba-before { background: rgba(176,71,42,0.06); border: 1px solid rgba(176,71,42,0.15); }
+    .ba-after { background: rgba(74,124,89,0.06); border: 1px solid rgba(74,124,89,0.18); }
+    .ba-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+    .ba-before .ba-label { color: #b0472a; }
+    .ba-after .ba-label { color: var(--sage); }
+    .ba-col ul { padding-left: 18px; font-size: 0.85rem; color: var(--ink); line-height: 1.7; }
+    .ba-col li { margin-bottom: 8px; }
+
+    .germany-box {
+      background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px;
+      padding: 24px 28px; margin: 32px 0; display: flex; gap: 18px; align-items: flex-start;
+    }
+    .germany-flag { font-size: 1.4rem; line-height: 1; margin-top: 2px; }
+    .germany-box p { margin-bottom: 0; font-size: 0.92rem; }
+
+    .pull-quote {
+      font-family: 'DM Serif Display', serif; font-size: 1.35rem; font-style: italic; color: var(--forest);
+      line-height: 1.5; padding: 8px 0 8px 24px; border-left: 3px solid var(--gold); margin: 36px 0;
+    }
+
+    .methodology {
+      background: white; border: 1px solid rgba(74,124,89,0.15); border-radius: 12px;
+      padding: 22px 26px; margin-top: 48px; font-size: 0.82rem; color: var(--stone); line-height: 1.7;
+    }
+    .methodology strong { color: var(--ink); }
+
+    .article-nav-back { max-width: 760px; margin: 0 auto; padding: 0 60px 80px; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--sage);
+      font-size: 0.88rem; font-weight: 600; transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--moss); }
+
+    footer { background: var(--ink); color: rgba(255,255,255,0.4); text-align: center; padding: 28px; font-size: 0.82rem; }
+    footer a { color: var(--leaf); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; } .nav-links { gap: 14px; }
+      .article-hero, .article-body, .article-nav-back { padding-left: 24px; padding-right: 24px; }
+      .obligation-box { padding: 22px 20px; }
+      .tl-row { grid-template-columns: 1fr; gap: 6px; }
+      .before-after { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">SA</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-back">← Portfolio</a></li>
+    <li><a href="manufacturing.html">← Manufacturing</a></li>
+  </ul>
+</nav>
+
+<section class="article-hero">
+  <p class="article-eyebrow">
+    <span class="dot"></span>Manufacturing · Regulation
+    <span class="status-chip">IN FORCE SINCE 18 MAR 2026</span>
+  </p>
+  <h1>CSDDD Just Got Smaller. For a 50-Person Supplier, That's When It Started Mattering.</h1>
+  <p class="article-sub">The Omnibus package cut the number of companies directly bound by the Corporate Sustainability Due Diligence Directive down to a few thousand giants. For everyone below that line, the directive doesn't disappear. It just stops arriving as regulation and starts arriving as a clause in a supplier contract.</p>
+  <div class="article-meta">
+    <span>Shivam Asthana</span>
+    <span>Manufacturing Regulation Series · 2 of 3</span>
+  </div>
+</section>
+
+<div class="article-body">
+
+  <p class="lede">On 24 February 2026, EU member states gave final approval to the "Omnibus I" package, which significantly narrowed the Corporate Sustainability Due Diligence Directive, CSDDD, sometimes written CS3D. The amendments were published in the Official Journal on 26 February and entered into force on 19 March 2026. Most coverage framed this as deregulation: fewer companies in scope, lighter obligations, a directive that had been "hollowed out."</p>
+
+  <p>That's an accurate description of the legal text. It's a misleading description of what it means operationally for a mid-size manufacturer, because CSDDD was never going to reach a 50-person supplier through direct regulation. It was always going to reach them through a contract, and the Omnibus changes actually make that pass-through channel more concentrated, not less relevant.</p>
+
+  <h2>What the Omnibus actually changed</h2>
+
+  <div class="obligation-box">
+    <p class="obligation-box-label">Key amendments, in force since March 2026</p>
+    <div class="obligation-item">
+      <span class="obligation-tag">Scope</span>
+      <span class="obligation-text">Direct obligations now apply only to EU companies with <strong>more than 5,000 employees and over €1.5bn net worldwide turnover</strong>. Non-EU companies are scoped by EU-generated turnover above the same threshold; employee count is no longer decisive for them.</span>
+    </div>
+    <div class="obligation-item">
+      <span class="obligation-tag">Chain depth</span>
+      <span class="obligation-text">Due diligence obligations are narrowed from the full value chain to primarily <strong>direct (tier-1) business partners</strong>. Deeper-tier suppliers only come into scope where there's plausible information indicating a specific risk.</span>
+    </div>
+    <div class="obligation-item">
+      <span class="obligation-tag">Climate</span>
+      <span class="obligation-text">The requirement to adopt a <strong>Paris-aligned climate transition plan</strong> with Scope 1-3 targets, previously binding on companies above 1,500 employees, has been deleted entirely.</span>
+    </div>
+    <div class="obligation-item">
+      <span class="obligation-tag">Liability</span>
+      <span class="obligation-text">The <strong>EU-wide civil liability regime</strong> has been removed; liability questions revert to national law.</span>
+    </div>
+  </div>
+
+  <h2>Timeline</h2>
+  <div class="timeline-wrap">
+    <div class="tl-row">
+      <span class="tl-date">Jul 2024</span>
+      <span class="tl-content">Original CSDDD (Directive (EU) 2024/1760) enters into force.</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-date">Mar 2026</span>
+      <span class="tl-content">Omnibus amendments (Directive (EU) 2026/470) enter into force, narrowing scope as above.</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-date">Jul 2028</span>
+      <span class="tl-content">Deadline for <strong>member state transposition</strong> of the amended directive into national law.</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-date">Jul 2029</span>
+      <span class="tl-content"><strong>Application begins</strong> for companies that meet the revised thresholds.</span>
+    </div>
+  </div>
+
+  <p>The Commission's implementation guidelines and model contract clauses are the next concrete step. A consultation on CSDDD implementation guidance ran through mid-August 2026. Those model clauses matter more to a small supplier than the directive text itself, because they're what large customers will actually paste into procurement contracts.</p>
+
+  <h2>Why this concentrates the pressure on smaller suppliers rather than removing it</h2>
+
+  <p>Before Omnibus, a manufacturer several tiers removed from an in-scope company might reasonably have been asked, indirectly, about a wide swath of its own supply chain. After Omnibus, the in-scope company's due diligence effort is concentrated almost entirely on its <strong>direct</strong> business partners, which means if you sell directly to a large in-scope customer, you are now the primary, not secondary, object of their due diligence process.</p>
+
+  <div class="before-after">
+    <div class="ba-col ba-before">
+      <p class="ba-label">Before Omnibus</p>
+      <ul>
+        <li>Diligence effort spread across the full value chain</li>
+        <li>Deep-tier suppliers occasionally reached indirectly</li>
+        <li>Direct suppliers were one node among many</li>
+      </ul>
+    </div>
+    <div class="ba-col ba-after">
+      <p class="ba-label">After Omnibus</p>
+      <ul>
+        <li>Diligence effort concentrated on tier-1 partners</li>
+        <li>Deep-tier suppliers reached only if risk-flagged</li>
+        <li>Direct suppliers are now the primary contact point</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>For a manufacturer that sells directly into a large EU or EU-facing customer's supply chain, that's a meaningful shift. The paperwork doesn't come from Brussels. It comes from the customer's procurement team, in the form of a supplier code of conduct addendum, a due diligence questionnaire, or contractual assurances tied to the OECD's six-step due diligence process, even though the supplier itself has no independent legal obligation under CSDDD at all.</p>
+
+  <div class="germany-box">
+    <span class="germany-flag">🇩🇪</span>
+    <p>For manufacturers operating in Germany specifically: the Omnibus text explicitly permits member states to realign existing national due diligence laws, including Germany's Supply Chain Due Diligence Act (LkSG), with the new, narrower CSDDD scope. Whether the German legislator actually narrows the LkSG to match is still an open legislative question, which means a German supplier could plausibly face a stricter national standard than the EU floor for some time yet.</p>
+  </div>
+
+  <h2>The operations angle</h2>
+
+  <p class="pull-quote">The directive shrank. The paperwork didn't move upstream. It moved to whoever signs the supply contract.</p>
+
+  <p>The mistake would be filing this under "regulation we don't need to worry about" because the employee and revenue thresholds are so clearly out of reach. The more useful read is that <strong>contract and procurement teams</strong>, not sustainability teams, are the right owners of this risk for a smaller manufacturer, because the exposure arrives as a clause a customer's legal team wants signed, on a timeline set by that customer's own compliance program, not by the EU's transposition calendar.</p>
+
+  <p>Practically, that means treating supplier code-of-conduct requests and due diligence questionnaires from large customers as a standard part of contract review going forward, rather than one-off asks, and being ready to answer the same handful of questions (labor practices, subcontractor oversight, environmental controls in your own operations) repeatedly, from different customers, on different templates, well before 2029.</p>
+
+  <div class="methodology">
+    <strong>Sources:</strong> Directive (EU) 2024/1760 (original CSDDD) and Directive (EU) 2026/470 (Omnibus I amendments), Official Journal of the European Union. Scope thresholds, chain-depth narrowing, and removed provisions per current legal analysis from Business & Human Rights Resource Centre, Continuuiti, and Global Policy Watch (current as of August 2026). Commission implementation guidelines and model contract clauses were still pending following a consultation that closed 14 August 2026. The practical mechanics of supplier-level pass-through may be refined once those are published.
+  </div>
+
+</div>
+
+<div class="article-nav-back">
+  <a href="manufacturing.html" class="back-link">← Back to Manufacturing</a>
+</div>
+
+<footer>
+  <p>© 2026 Shivam Asthana · <a href="index.html">← Back to portfolio</a></p>
+</footer>
+
+</body>
+</html>
